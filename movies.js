@@ -1,28 +1,8 @@
 export const movies = [
-  { 
-    title: "Inception", 
-    url: "#", 
-    date: "2010-07-16", 
-    poster: "https://via.placeholder.com/300x450?text=Inception"
-  },
-  { 
-    title: "Interstellar", 
-    url: "#", 
-    date: "2014-11-07",
-    poster: "https://via.placeholder.com/300x450?text=Interstellar"
-  },
-  { 
-    title: "Tenet", 
-    url: "#", 
-    date: "2020-08-26",
-    poster: "https://via.placeholder.com/300x450?text=Tenet"
-  },
-  { 
-    title: "Avatar: The Way of Water", 
-    url: "#", 
-    date: "2022-12-16",
-    poster: "https://via.placeholder.com/300x450?text=Avatar+2"
-  },
+  
+
+
+      
   { 
     title: "Hi Nanna", 
     url: "hinanna.html", 
@@ -45,7 +25,7 @@ export const movies = [
   },
   { 
     title: "They Call Him OG", 
-    url: "#", 
+    url: "og.html", 
     date: "2025-09-25", 
     isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdSZE1333EkF8-5y4Ja4UHji81Kbv4oBaQI25locVVqw&s=10"
