@@ -86,6 +86,25 @@ header{
 }
 .search svg{color:var(--muted);}
 
+/* Welcome message */
+.welcome-msg {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeSlideUp 1s ease forwards;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Grid */
 .grid{
   display:grid;
@@ -237,10 +256,12 @@ header{
 }
 @media(max-width:600px){
   .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+  .welcome-msg { font-size:16px; }
 }
 @media(max-width:400px){
   .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
   .card{max-width:100%;}
+  .welcome-msg { font-size:14px; }
 }
 </style>
 </head>
@@ -258,6 +279,7 @@ header{
 </header>
 
 <main>
+  <div class="welcome-msg">Welcome to YOTT — Enjoy Streaming</div>
   <div id="moviesGrid" class="grid"></div>
 </main>
 
@@ -289,10 +311,8 @@ function render(list){
   sorted.forEach(movie=>{
     const card=document.createElement('div'); card.className='card';
 
-    // Thumbnail container
     const thumb=document.createElement('div'); thumb.className='thumbnail';
 
-    // Background poster
     const bgImg=document.createElement('img');
     bgImg.className='poster-bg';
     bgImg.src=movie.poster || 'https://via.placeholder.com/300x450?text=No+Image';
@@ -300,7 +320,6 @@ function render(list){
     bgImg.onerror=()=>bgImg.src='https://via.placeholder.com/300x450?text=No+Image';
     thumb.appendChild(bgImg);
 
-    // Front small image (fixed size)
     const frontImg=document.createElement('img');
     frontImg.className='poster-front';
     frontImg.src=movie.poster || 'https://via.placeholder.com/200x300?text=No+Image';
@@ -308,7 +327,6 @@ function render(list){
     frontImg.onerror=()=>frontImg.src='https://via.placeholder.com/200x300?text=No+Image';
     thumb.appendChild(frontImg);
 
-    // Play button
     const play=document.createElement('a'); 
     play.className='play-btn'; 
     play.textContent='▶';
@@ -317,7 +335,6 @@ function render(list){
     play.rel="noopener noreferrer";
     thumb.appendChild(play);
 
-    // Overlay with title and NEW badge
     const overlay=document.createElement('div'); overlay.className='overlay';
     const titleDiv=document.createElement('div'); titleDiv.className='title';
     titleDiv.textContent=movie.title;
