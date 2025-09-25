@@ -6,6 +6,6 @@ export const movies = [
   { title: "Oppenheimer", url: "#", date: "2023-07-21" },
   { title: "New Sci-Fi Movie", url: "#", date: "2025-09-25" },
   // Manual new movies with badge
-  { title: "Manual New Sci-Fi", url: "#", date: "2025-09-20", isNew: true },
+  { title: "Mirai", url: "mirai.html", date: "2025-09-25", isNew: true },
   { title: "Exclusive New Thriller", url: "#", date: "2025-09-22", isNew: true }
 ];
