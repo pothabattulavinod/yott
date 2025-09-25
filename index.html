@@ -36,7 +36,7 @@ header{
   padding:12px 16px;
   background:rgba(255,255,255,0.02);
   border-radius:var(--radius);
-  flex-wrap: wrap; /* allow wrapping on small screens */
+  flex-wrap: wrap;
 }
 .brand{
   display:flex;
@@ -59,11 +59,11 @@ header{
 .brand h1{font-size:18px; margin:0;}
 .controls{
   display:flex;
-  flex-wrap: wrap; /* allow wrapping */
+  flex-wrap: wrap;
   align-items:center;
   gap:12px;
-  flex: 1 1 auto; /* allow it to grow/shrink */
-  min-width:0; /* prevent overflow */
+  flex: 1 1 auto;
+  min-width:0;
 }
 .search{
   display:flex;
@@ -72,7 +72,7 @@ header{
   background:rgba(255,255,255,0.05);
   padding:6px 10px;
   border-radius:var(--radius);
-  flex: 1 1 auto; /* allow input to shrink/grow */
+  flex: 1 1 auto;
   min-width:0;
 }
 .search input{
@@ -80,7 +80,7 @@ header{
   border:0;
   outline:0;
   color:inherit;
-  width:100%; /* take full width of container */
+  width:100%;
   min-width:0;
 }
 .search svg{color:var(--muted);}
@@ -130,8 +130,6 @@ header{
 
 /* ✅ Meta info */
 .meta{flex:1; display:flex; flex-direction:column; gap:6px;}
-.title{font-size:16px; margin:0; display:flex; align-items:center; gap:8px;}
-.new-badge{font-size:12px; background:var(--accent); color:#fff; padding:2px 6px; border-radius:6px;}
 .actions .btn{
   background:var(--accent);
   padding:6px 12px;
@@ -142,12 +140,14 @@ header{
 }
 .actions .btn:hover{background:#0891b2;}
 
+/* Hide movie title */
+.title{display:none;}
+
 /* ✅ Responsive TV */
 @media (min-width:1600px){
   body{padding:40px;}
   .brand h1{font-size:24px;}
   .search input{width:250px;}
-  .title{font-size:20px;}
 }
 
 /* ✅ Mobile adjustments */
@@ -163,6 +163,36 @@ header{
   .search{
     width:100%;
   }
+}
+
+/* ✅ Custom "No movies found" design */
+.no-results{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:40px;
+  background:rgba(255,255,255,0.05);
+  border-radius:var(--radius);
+  text-align:center;
+  color:var(--muted);
+}
+.no-results svg{
+  width:80px;
+  height:80px;
+  stroke:var(--muted);
+  stroke-width:2;
+  fill:none;
+}
+.no-results h3{
+  margin:0;
+  font-size:20px;
+  color:var(--muted);
+}
+.no-results p{
+  margin:0;
+  color:var(--muted);
 }
 </style>
 </head>
@@ -195,9 +225,20 @@ header{
   function render(list){
     grid.innerHTML = '';
     if(!list.length){
-      grid.innerHTML = `<div style="padding:16px;color:var(--muted)">No movies found.</div>`;
+      grid.innerHTML = `
+      <div class="no-results">
+        <svg viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="30"/>
+          <line x1="20" y1="20" x2="44" y2="44"/>
+          <line x1="44" y1="20" x2="20" y2="44"/>
+        </svg>
+        <h3>No movies found</h3>
+        <p>Try searching with a different keyword</p>
+      </div>
+      `;
       return;
     }
+
     const sorted = [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
     sorted.forEach(movie=>{
       const card = document.createElement('div'); card.className='card';
@@ -208,17 +249,10 @@ header{
       thumb.appendChild(play);
 
       const meta = document.createElement('div'); meta.className='meta';
-      const title = document.createElement('h3'); title.className='title'; title.textContent = movie.title;
-      if(movie.isNew){
-        const badge = document.createElement('span'); badge.className='new-badge'; badge.textContent='New';
-        title.appendChild(badge);
-      }
-
       const actions = document.createElement('div'); actions.className='actions';
       const btn = document.createElement('a'); btn.className='btn'; btn.href = movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
       actions.appendChild(btn);
 
-      meta.appendChild(title);
       meta.appendChild(actions);
 
       card.appendChild(thumb);
