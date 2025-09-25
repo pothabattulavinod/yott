@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>YOTT — Movies</title>
+<style>
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --muted:#9aa4b2;
+  --accent:#06b6d4;
+  --radius:12px;
+  --maxw:1200px;
+  --gap:18px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color-scheme: dark;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:#061021;
+  color:#e6eef6;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+}
+.wrap{width:100%; max-width:var(--maxw); display:flex; flex-direction:column; gap:24px;}
+
+/* Header */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 16px;
+  background:rgba(255,255,255,0.02);
+  border-radius:var(--radius);
+  flex-wrap: wrap;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:inherit;
+}
+.logo{
+  width:40px;
+  height:40px;
+  background:linear-gradient(135deg,#06b6d4,#4f46e5);
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  font-weight:700;
+  font-size:18px;
+  color:#fff;
+}
+.brand h1{font-size:18px; margin:0;}
+.controls{
+  display:flex;
+  flex-wrap: wrap;
+  align-items:center;
+  gap:12px;
+  flex: 1 1 auto;
+  min-width:0;
+}
+.search{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.05);
+  padding:6px 10px;
+  border-radius:var(--radius);
+  flex: 1 1 auto;
+  min-width:0;
+}
+.search input{
+  background:transparent;
+  border:0;
+  outline:0;
+  color:inherit;
+  width:100%;
+  min-width:0;
+}
+.search svg{color:var(--muted);}
+
+/* Grid */
+.grid{display:grid; gap:var(--gap); grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+
+/* Card */
+.card{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:12px;
+  border-radius:var(--radius);
+  background:var(--card);
+  border:1px solid rgba(255,255,255,0.06);
+  transition:transform 0.25s, box-shadow 0.25s;
+}
+.card:hover{transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.6);}
+
+/* Thumbnail + Play */
+.thumbnail{
+  position:relative;
+  width:100%;
+  padding-top:150%; /* 2:3 aspect ratio */
+  border-radius:12px;
+  overflow:hidden;
+  background:#111827;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.thumbnail img{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:12px;
+}
+.play-btn{
+  position:absolute;
+  z-index:1;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:rgba(6,182,212,0.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+  text-decoration:none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.play-btn:hover{transform:scale(1.1); box-shadow:0 0 12px rgba(6,182,212,0.7);}
+
+/* Meta info */
+.meta{flex:1; display:flex; flex-direction:column; gap:6px;}
+.title{
+  font-weight:600;
+  font-size:14px;
+  color:#e6eef6;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap: wrap;
+}
+.actions .btn{
+  background:var(--accent);
+  padding:6px 12px;
+  border-radius:8px;
+  text-decoration:none;
+  color:white;
+  font-size:14px;
+  display:inline-block;
+  text-align:center;
+}
+.actions .btn:hover{background:#0891b2;}
+
+/* Responsive adjustments */
+@media (min-width:1600px){
+  body{padding:40px;}
+  .brand h1{font-size:24px;}
+  .search input{width:250px;}
+}
+
+@media (max-width:600px){
+  header{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls{
+    width:100%;
+    justify-content:flex-start;
+  }
+  .search{
+    width:100%;
+  }
+}
+
+/* No movies found */
+.no-results{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:40px;
+  background:rgba(255,255,255,0.05);
+  border-radius:var(--radius);
+  text-align:center;
+  color:var(--muted);
+}
+.no-results svg{
+  width:80px;
+  height:80px;
+  stroke:var(--muted);
+  stroke-width:2;
+  fill:none;
+}
+.no-results h3{
+  margin:0;
+  font-size:20px;
+  color:var(--muted);
+}
+.no-results p{
+  margin:0;
+  color:var(--muted);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="#"><div class="logo">Y</div><h1>YOTT</h1></a>
+  <div class="controls">
+    <div class="search" title="Search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input id="q" type="search" placeholder="Search movies"/>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="moviesGrid" class="grid"></div>
+</main>
+
+</div>
+
+<script type="module">
+  import { movies } from './movies.js';  // Import from your separate movies.js
+
+  const grid = document.getElementById('moviesGrid');
+  const qInput = document.getElementById('q');
+
+  function render(list){
+    grid.innerHTML = '';
+    if(!list.length){
+      grid.innerHTML = `
+      <div class="no-results">
+        <svg viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="30"/>
+          <line x1="20" y1="20" x2="44" y2="44"/>
+          <line x1="44" y1="20" x2="20" y2="44"/>
+        </svg>
+        <h3>No movies found</h3>
+        <p>Try searching with a different keyword</p>
+      </div>
+      `;
+      return;
+    }
+
+    const sorted = [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
+    sorted.forEach(movie=>{
+      const card = document.createElement('div'); card.className='card';
+
+      // Thumbnail
+      const thumb = document.createElement('div'); thumb.className='thumbnail';
+      if(movie.poster){
+        const img = document.createElement('img');
+        img.src = movie.poster;
+        img.alt = movie.title;
+        thumb.appendChild(img);
+      }
+
+      const play = document.createElement('a'); play.className='play-btn'; play.textContent='▶';
+      play.href = movie.url; play.target="_blank"; play.rel="noopener noreferrer";
+      thumb.appendChild(play);
+
+      // Meta
+      const meta = document.createElement('div'); meta.className='meta';
+
+      const title = document.createElement('div'); title.className='title';
+      title.textContent = movie.title;
+      if(movie.isNew){
+        const badge = document.createElement('span');
+        badge.textContent = 'NEW';
+        badge.style.background = '#06b6d4';
+        badge.style.color = '#fff';
+        badge.style.fontSize = '10px';
+        badge.style.fontWeight = '700';
+        badge.style.padding = '2px 6px';
+        badge.style.borderRadius = '4px';
+        title.appendChild(badge);
+      }
+      meta.appendChild(title);
+
+      const actions = document.createElement('div'); actions.className='actions';
+      const btn = document.createElement('a'); btn.className='btn'; btn.href = movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
+      actions.appendChild(btn);
+      meta.appendChild(actions);
+
+      card.appendChild(thumb);
+      card.appendChild(meta);
+      grid.appendChild(card);
+    });
+  }
+
+  qInput.addEventListener('input', ()=>{
+    const q = qInput.value.toLowerCase();
+    const filtered = movies.filter(m => m.title.toLowerCase().includes(q));
+    render(filtered);
+  });
+
+  render(movies);
+</script>
+</body>
+</html>
