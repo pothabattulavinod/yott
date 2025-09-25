@@ -25,13 +25,13 @@ export const movies = [
   },
   { 
     title: "Hi Nanna", 
-    url: "#", 
+    url: "hinanna.html", 
     date: "2023-07-21",
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3QCTJgrdACL3SX4Y-SUi4kB_nJVKJtGqNr-PPemRhNw&s=10"
   },
   { 
     title: "Pushpa 2: The Rule", 
-    url: "#", 
+    url: "pushpa2.html", 
     date: "2025-09-20",
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4WXrgDKE21Bh5vBiquqoBYo1SINe3kem8g3YYG7HIRw&s=10"
   },
