@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>YOTT — Movies</title>
 <style>
 :root{
@@ -16,6 +16,7 @@
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   color-scheme: dark;
 }
+
 *{box-sizing:border-box;}
 body{
   margin:0;
@@ -86,104 +87,108 @@ header{
 .search svg{color:var(--muted);}
 
 /* Grid */
-.grid{display:grid; gap:var(--gap); grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+.grid{
+  display:grid;
+  gap:var(--gap);
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  justify-items:center;
+}
 
 /* Card */
 .card{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  padding:12px;
-  border-radius:var(--radius);
+  position:relative;
+  width:200px;
   background:var(--card);
-  border:1px solid rgba(255,255,255,0.06);
+  border-radius:var(--radius);
+  overflow:hidden;
   transition:transform 0.25s, box-shadow 0.25s;
 }
-.card:hover{transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.6);}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.7);
+}
 
-/* Thumbnail + Play */
+/* Poster & Play button */
 .thumbnail{
   position:relative;
   width:100%;
-  padding-top:150%; /* 2:3 aspect ratio */
-  border-radius:12px;
-  overflow:hidden;
+  height:300px;
   background:#111827;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 .thumbnail img{
-  position:absolute;
-  top:0; left:0;
   width:100%;
   height:100%;
   object-fit:cover;
-  border-radius:12px;
+  display:block;
 }
 .play-btn{
   position:absolute;
-  z-index:1;
-  width:48px;
-  height:48px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:50px;
+  height:50px;
   border-radius:50%;
   background:rgba(6,182,212,0.9);
+  color:#fff;
+  font-size:18px;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#fff;
-  font-size:18px;
-  cursor:pointer;
   text-decoration:none;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:transform 0.2s, box-shadow 0.2s;
 }
-.play-btn:hover{transform:scale(1.1); box-shadow:0 0 12px rgba(6,182,212,0.7);}
+.play-btn:hover{
+  transform:translate(-50%,-50%) scale(1.15);
+  box-shadow:0 0 15px rgba(6,182,212,0.7);
+}
 
-/* Meta info */
-.meta{flex:1; display:flex; flex-direction:column; gap:6px;}
+/* Overlay for title, badge, watch button */
+.overlay{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:10px;
+  background:linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  color:#fff;
+}
+
+/* Title and NEW badge */
 .title{
   font-weight:600;
   font-size:14px;
-  color:#e6eef6;
   display:flex;
   align-items:center;
   gap:6px;
   flex-wrap: wrap;
 }
+.title span{
+  background:#06b6d4;
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  padding:2px 6px;
+  border-radius:4px;
+}
+
+/* Watch button */
 .actions .btn{
   background:var(--accent);
   padding:6px 12px;
   border-radius:8px;
   text-decoration:none;
   color:white;
-  font-size:14px;
-  display:inline-block;
+  font-size:12px;
+  width:fit-content;
   text-align:center;
 }
 .actions .btn:hover{background:#0891b2;}
 
-/* Responsive adjustments */
-@media (min-width:1600px){
-  body{padding:40px;}
-  .brand h1{font-size:24px;}
-  .search input{width:250px;}
-}
-
-@media (max-width:600px){
-  header{
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .controls{
-    width:100%;
-    justify-content:flex-start;
-  }
-  .search{
-    width:100%;
-  }
-}
-
-/* No movies found */
+/* No results */
 .no-results{
   display:flex;
   flex-direction:column;
@@ -212,6 +217,16 @@ header{
   margin:0;
   color:var(--muted);
 }
+
+/* Responsive adjustments */
+@media(max-width:600px){
+  .card{width:45%;}
+  .thumbnail{height:220px;}
+}
+@media(max-width:400px){
+  .card{width:100%;}
+  .thumbnail{height:180px;}
+}
 </style>
 </head>
 <body>
@@ -234,15 +249,15 @@ header{
 </div>
 
 <script type="module">
-  import { movies } from './movies.js';  // Import from your separate movies.js
+import { movies } from './movies.js'; // Your external movies.js
 
-  const grid = document.getElementById('moviesGrid');
-  const qInput = document.getElementById('q');
+const grid = document.getElementById('moviesGrid');
+const qInput = document.getElementById('q');
 
-  function render(list){
-    grid.innerHTML = '';
-    if(!list.length){
-      grid.innerHTML = `
+function render(list){
+  grid.innerHTML='';
+  if(!list.length){
+    grid.innerHTML=`
       <div class="no-results">
         <svg viewBox="0 0 64 64">
           <circle cx="32" cy="32" r="30"/>
@@ -251,64 +266,57 @@ header{
         </svg>
         <h3>No movies found</h3>
         <p>Try searching with a different keyword</p>
-      </div>
-      `;
-      return;
-    }
-
-    const sorted = [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
-    sorted.forEach(movie=>{
-      const card = document.createElement('div'); card.className='card';
-
-      // Thumbnail
-      const thumb = document.createElement('div'); thumb.className='thumbnail';
-      if(movie.poster){
-        const img = document.createElement('img');
-        img.src = movie.poster;
-        img.alt = movie.title;
-        thumb.appendChild(img);
-      }
-
-      const play = document.createElement('a'); play.className='play-btn'; play.textContent='▶';
-      play.href = movie.url; play.target="_blank"; play.rel="noopener noreferrer";
-      thumb.appendChild(play);
-
-      // Meta
-      const meta = document.createElement('div'); meta.className='meta';
-
-      const title = document.createElement('div'); title.className='title';
-      title.textContent = movie.title;
-      if(movie.isNew){
-        const badge = document.createElement('span');
-        badge.textContent = 'NEW';
-        badge.style.background = '#06b6d4';
-        badge.style.color = '#fff';
-        badge.style.fontSize = '10px';
-        badge.style.fontWeight = '700';
-        badge.style.padding = '2px 6px';
-        badge.style.borderRadius = '4px';
-        title.appendChild(badge);
-      }
-      meta.appendChild(title);
-
-      const actions = document.createElement('div'); actions.className='actions';
-      const btn = document.createElement('a'); btn.className='btn'; btn.href = movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
-      actions.appendChild(btn);
-      meta.appendChild(actions);
-
-      card.appendChild(thumb);
-      card.appendChild(meta);
-      grid.appendChild(card);
-    });
+      </div>`;
+    return;
   }
 
-  qInput.addEventListener('input', ()=>{
-    const q = qInput.value.toLowerCase();
-    const filtered = movies.filter(m => m.title.toLowerCase().includes(q));
-    render(filtered);
-  });
+  const sorted=[...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  sorted.forEach(movie=>{
+    const card=document.createElement('div'); card.className='card';
 
-  render(movies);
+    // Poster
+    const thumb=document.createElement('div'); thumb.className='thumbnail';
+    if(movie.poster){
+      const img=document.createElement('img');
+      img.src=movie.poster;
+      img.alt=movie.title;
+      thumb.appendChild(img);
+    }
+
+    const play=document.createElement('a'); play.className='play-btn'; play.textContent='▶';
+    play.href=movie.url; play.target="_blank"; play.rel="noopener noreferrer";
+    thumb.appendChild(play);
+
+    // Overlay
+    const overlay=document.createElement('div'); overlay.className='overlay';
+
+    const titleDiv=document.createElement('div'); titleDiv.className='title';
+    titleDiv.textContent=movie.title;
+    if(movie.isNew){
+      const badge=document.createElement('span'); badge.textContent='NEW';
+      titleDiv.appendChild(badge);
+    }
+    overlay.appendChild(titleDiv);
+
+    const actions=document.createElement('div'); actions.className='actions';
+    const btn=document.createElement('a'); btn.className='btn';
+    btn.href=movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
+    actions.appendChild(btn);
+    overlay.appendChild(actions);
+
+    thumb.appendChild(overlay);
+    card.appendChild(thumb);
+    grid.appendChild(card);
+  });
+}
+
+qInput.addEventListener('input',()=>{
+  const q=qInput.value.toLowerCase();
+  const filtered=movies.filter(m=>m.title.toLowerCase().includes(q));
+  render(filtered);
+});
+
+render(movies);
 </script>
 </body>
 </html>
