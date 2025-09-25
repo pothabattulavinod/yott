@@ -27,7 +27,7 @@ body{
 }
 .wrap{width:100%; max-width:var(--maxw); display:flex; flex-direction:column; gap:24px;}
 
-/* ✅ Header */
+/* Header */
 header{
   display:flex;
   align-items:center;
@@ -85,10 +85,10 @@ header{
 }
 .search svg{color:var(--muted);}
 
-/* ✅ Grid */
+/* Grid */
 .grid{display:grid; gap:var(--gap); grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
 
-/* ✅ Card */
+/* Card */
 .card{
   display:flex;
   flex-direction:row;
@@ -102,7 +102,7 @@ header{
 }
 .card:hover{transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.6);}
 
-/* ✅ Thumbnail + Play */
+/* Thumbnail + Play */
 .thumbnail{
   position:relative;
   width:70px;
@@ -128,8 +128,13 @@ header{
 }
 .play-btn:hover{transform:scale(1.1); box-shadow:0 0 12px rgba(6,182,212,0.7);}
 
-/* ✅ Meta info */
+/* Meta info */
 .meta{flex:1; display:flex; flex-direction:column; gap:6px;}
+.title{
+  font-weight:600;
+  font-size:14px;
+  color:#e6eef6;
+}
 .actions .btn{
   background:var(--accent);
   padding:6px 12px;
@@ -140,17 +145,14 @@ header{
 }
 .actions .btn:hover{background:#0891b2;}
 
-/* Hide movie title */
-.title{display:none;}
-
-/* ✅ Responsive TV */
+/* Responsive TV */
 @media (min-width:1600px){
   body{padding:40px;}
   .brand h1{font-size:24px;}
   .search input{width:250px;}
 }
 
-/* ✅ Mobile adjustments */
+/* Mobile adjustments */
 @media (max-width:600px){
   header{
     flex-direction: column;
@@ -165,7 +167,7 @@ header{
   }
 }
 
-/* ✅ Custom "No movies found" design */
+/* Custom "No movies found" design */
 .no-results{
   display:flex;
   flex-direction:column;
@@ -210,7 +212,6 @@ header{
 </header>
 
 <main>
-  <h2>All Movies</h2>
   <div id="moviesGrid" class="grid"></div>
 </main>
 
@@ -249,10 +250,17 @@ header{
       thumb.appendChild(play);
 
       const meta = document.createElement('div'); meta.className='meta';
+
+      // Movie title
+      const title = document.createElement('div');
+      title.className='title';
+      title.textContent = movie.title;
+      meta.appendChild(title);
+
+      // Actions
       const actions = document.createElement('div'); actions.className='actions';
       const btn = document.createElement('a'); btn.className='btn'; btn.href = movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
       actions.appendChild(btn);
-
       meta.appendChild(actions);
 
       card.appendChild(thumb);
