@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>YOTT — Movies</title>
+  <title>YOTT — Movies (Redesign, No Year & Language)</title>
   <meta name="description" content="YOTT — redesigned movie listing (title only, no year or language)" />
   <style>
     :root{
@@ -100,11 +100,15 @@
     }
     main{
       display:flex;
+      flex-direction:column;
       gap:20px;
-      align-items:flex-start;
+    }
+    .section-title{
+      font-weight:700;
+      font-size:18px;
+      margin-bottom:8px;
     }
     .content{
-      flex:1;
       display:flex;
       flex-direction:column;
       gap:16px;
@@ -219,9 +223,17 @@
     </header>
 
     <main>
-      <section class="content" aria-live="polite">
+      <!-- Latest Section -->
+      <div class="content">
+        <div class="section-title">Latest</div>
+        <div class="grid" id="latestGrid" aria-label="Latest movies"></div>
+      </div>
+
+      <!-- All Movies Section -->
+      <div class="content">
+        <div class="section-title">All Movies</div>
         <div class="grid" id="moviesGrid" aria-label="Movie list"></div>
-      </section>
+      </div>
     </main>
 
     <footer>
@@ -234,11 +246,11 @@
     </footer>
   </div>
 
-  <!-- Load external movies file first -->
   <script src="movies.js"></script>
 
   <script>
-    const grid = document.getElementById('moviesGrid');
+    const moviesGrid = document.getElementById('moviesGrid');
+    const latestGrid = document.getElementById('latestGrid');
     const qInput = document.getElementById('q');
 
     function createCard(m){
@@ -277,30 +289,48 @@
 
       a.appendChild(thumb);
       a.appendChild(meta);
+
+      // Add NEW badge if isNew
+      if(m.isNew){
+        const badge = document.createElement('span');
+        badge.textContent = 'NEW';
+        badge.style.cssText = 'color:#06b6d4;font-weight:700;font-size:12px;margin-left:6px;';
+        title.appendChild(badge);
+      }
+
       return a;
     }
 
-    function render(list){
+    function renderGrid(list, grid){
       grid.innerHTML = '';
       if(!list.length){
         grid.innerHTML = `<div style="color:var(--muted);padding:18px;border-radius:10px;background:rgba(255,255,255,0.01)">No titles found.</div>`;
-      } else {
-        const frag = document.createDocumentFragment();
-        list.forEach(m => frag.appendChild(createCard(m)));
-        grid.appendChild(frag);
+        return;
       }
+      const frag = document.createDocumentFragment();
+      list.forEach(m => frag.appendChild(createCard(m)));
+      grid.appendChild(frag);
+    }
+
+    function renderAll(filteredMovies = null){
+      // Latest movies (isNew true)
+      const latest = (filteredMovies || movies).filter(m => m.isNew);
+      renderGrid(latest, latestGrid);
+
+      // All movies
+      const all = (filteredMovies || movies);
+      renderGrid(all, moviesGrid);
     }
 
     function filterMovies(){
       const q = qInput.value.trim().toLowerCase();
-      const filtered = movies.filter(m=>{
-        return !q || m.title.toLowerCase().includes(q);
-      });
-      render(filtered);
+      const filtered = movies.filter(m => !q || m.title.toLowerCase().includes(q));
+      renderAll(filtered);
     }
 
     qInput.addEventListener('input', filterMovies);
-    render(movies);
+
+    renderAll();
   </script>
 </body>
 </html>
