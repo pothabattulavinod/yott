@@ -134,6 +134,9 @@ header{
   font-weight:600;
   font-size:14px;
   color:#e6eef6;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
 .actions .btn{
   background:var(--accent);
@@ -251,10 +254,23 @@ header{
 
       const meta = document.createElement('div'); meta.className='meta';
 
-      // Movie title
+      // Movie title with optional "New" badge
       const title = document.createElement('div');
       title.className='title';
       title.textContent = movie.title;
+
+      if (movie.isNew) {
+        const badge = document.createElement('span');
+        badge.textContent = 'NEW';
+        badge.style.background = '#06b6d4';
+        badge.style.color = '#fff';
+        badge.style.fontSize = '10px';
+        badge.style.fontWeight = '700';
+        badge.style.padding = '2px 6px';
+        badge.style.borderRadius = '4px';
+        title.appendChild(badge);
+      }
+
       meta.appendChild(title);
 
       // Actions
