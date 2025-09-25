@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YOTT — Movies</title>
+  <meta name="description" content="YOTT — redesigned movie listing (title only, no year or language)" />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent:#06b6d4;
+      --glass: rgba(255,255,255,0.04);
+      --radius:12px;
+      --maxw:1200px;
+      --gap:18px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 400px at 10% 10%, rgba(6,182,212,0.06), transparent 8%),
+        linear-gradient(180deg, #061021 0%, #071426 100%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      display:flex;
+      justify-content:center;
+      font-size:15px;
+      line-height:1.45;
+    }
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:16px 20px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:calc(var(--radius) + 4px);
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo {
+      width:48px;
+      height:48px;
+      background:linear-gradient(135deg,#06b6d4,#4f46e5);
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      font-size:18px;
+      box-shadow: 0 3px 12px rgba(6,182,212,0.08);
+      color:white;
+    }
+    .brand h1{
+      font-size:18px;
+      margin:0;
+    }
+    .controls{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .search{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:var(--glass);
+      padding:8px 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      min-width:250px;
+    }
+    .search input{
+      background:transparent;
+      border:0;
+      outline:0;
+      color:inherit;
+      width:100%;
+    }
+    main{
+      display:flex;
+      gap:20px;
+      align-items:flex-start;
+    }
+    .content{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+      gap:var(--gap);
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      padding:14px;
+      border-radius:12px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(2,6,23,0.6);
+    }
+    .thumbnail{
+      width:78px;
+      height:78px;
+      border-radius:8px;
+      background:linear-gradient(180deg,#111827,#0b1220);
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .thumbnail .play{
+      width:36px;height:36px;
+      display:grid;place-items:center;
+      background:rgba(6,182,212,0.12);
+      border-radius:999px;
+      backdrop-filter: blur(2px);
+    }
+    .meta{
+      flex:1;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .title{
+      font-weight:700;
+      margin:0;
+      font-size:16px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      word-break:break-word;
+    }
+    .actions{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .btn{
+      background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(79,70,229,0.06));
+      color:var(--accent);
+      border:1px solid rgba(6,182,212,0.12);
+      padding:8px 12px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:13px;
+      text-align:center;
+    }
+    .card .title, .card .btn {
+      text-decoration: none;
+    }
+    footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:12px 16px;
+      color:var(--muted);
+      font-size:13px;
+      border-radius:10px;
+    }
+    footer a {
+      color:var(--muted);
+      text-decoration:none;
+      margin-right:12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" role="application" aria-label="YOTT movie list (title only)">
+    <header>
+      <a class="brand" href="https://wvw.4raott.com/movies/" aria-label="YOTT homepage">
+        <div class="logo">Y</div>
+        <div>
+          <h1>YOTT</h1>
+          <div style="color:var(--muted);font-size:13px;">Watch YOTT Movies Online in HD (redesign)</div>
+        </div>
+      </a>
+      <div class="controls" role="search">
+        <div class="search" title="Search titles">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+          <input id="q" type="search" placeholder="Search movies" aria-label="Search movies" />
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="content" aria-live="polite">
+        <div class="grid" id="moviesGrid" aria-label="Movie list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <a href="https://wvw.4raott.com/contact/">Contact</a>
+        <a href="https://wvw.4raott.com/dmca/">DMCA</a>
+        <a href="https://wvw.4raott.com/terms/">T&C</a>
+      </div>
+      <div style="color:var(--muted)">Designed — Clean UI • Responsive</div>
+    </footer>
+  </div>
+
+  <!-- Load external movies file first -->
+  <script src="movies.js"></script>
+
+  <script>
+    const grid = document.getElementById('moviesGrid');
+    const qInput = document.getElementById('q');
+
+    function createCard(m){
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = m.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.setAttribute('aria-label', m.title);
+
+      const thumb = document.createElement('div');
+      thumb.className = 'thumbnail';
+      thumb.innerHTML = `<div class="play" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3v18l15-9L5 3z" fill="currentColor"/></svg>
+      </div>`;
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+
+      const title = document.createElement('h3');
+      title.className = 'title';
+      title.textContent = m.title;
+
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+      const watch = document.createElement('a');
+      watch.className = 'btn';
+      watch.href = m.url;
+      watch.target = '_blank';
+      watch.rel = 'noopener noreferrer';
+      watch.textContent = 'Watch';
+      actions.appendChild(watch);
+
+      meta.appendChild(title);
+      meta.appendChild(actions);
+
+      a.appendChild(thumb);
+      a.appendChild(meta);
+      return a;
+    }
+
+    function render(list){
+      grid.innerHTML = '';
+      if(!list.length){
+        grid.innerHTML = `<div style="color:var(--muted);padding:18px;border-radius:10px;background:rgba(255,255,255,0.01)">No titles found.</div>`;
+      } else {
+        const frag = document.createDocumentFragment();
+        list.forEach(m => frag.appendChild(createCard(m)));
+        grid.appendChild(frag);
+      }
+    }
+
+    function filterMovies(){
+      const q = qInput.value.trim().toLowerCase();
+      const filtered = movies.filter(m=>{
+        return !q || m.title.toLowerCase().includes(q);
+      });
+      render(filtered);
+    }
+
+    qInput.addEventListener('input', filterMovies);
+    render(movies);
+  </script>
+</body>
+</html>
