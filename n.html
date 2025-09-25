@@ -109,24 +109,36 @@ header{
   box-shadow:0 8px 20px rgba(0,0,0,0.7);
 }
 
-/* Poster & Play button */
+/* Poster & small front image */
 .thumbnail{
   position:relative;
   width:100%;
   aspect-ratio:2/3; 
-  background:#111827;
   border-radius:var(--radius);
   overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-.thumbnail img{
-  width:100%;
-  height:100%;
-  object-fit:cover; /* fill card with crop */
-  display:block;
-  background:#111827; 
+
+/* Background poster with opacity */
+.thumbnail .poster-bg{
+  position:absolute;
+  top:0; left:0; width:100%; height:100%;
+  object-fit:cover;
+  opacity:0.3;
+  filter:brightness(0.7);
+  z-index:1;
 }
-.thumbnail img.low-quality{
-  filter: blur(6px);
+
+/* Front clear small image */
+.thumbnail .poster-front{
+  position:relative;
+  width:80%;
+  height:auto;
+  object-fit:contain;
+  border-radius:8px;
+  z-index:2;
 }
 
 /* Play button */
@@ -146,6 +158,7 @@ header{
   justify-content:center;
   text-decoration:none;
   transition:transform 0.2s, box-shadow 0.2s;
+  z-index:3;
 }
 .play-btn:hover{
   transform:translate(-50%,-50%) scale(1.15);
@@ -164,6 +177,7 @@ header{
   flex-direction:column;
   gap:6px;
   color:#fff;
+  z-index:4;
 }
 
 /* Title and NEW badge */
@@ -272,17 +286,24 @@ function render(list){
   sorted.forEach(movie=>{
     const card=document.createElement('div'); card.className='card';
 
-    // Poster
+    // Thumbnail container
     const thumb=document.createElement('div'); thumb.className='thumbnail';
-    const img=document.createElement('img');
-    if(movie.poster){
-      img.src=movie.poster;
-      img.alt=movie.title;
-      img.onerror=()=>img.src='https://via.placeholder.com/300x450?text=No+Image';
-    } else {
-      img.src='https://via.placeholder.com/300x450?text=No+Image';
-    }
-    thumb.appendChild(img);
+
+    // Background poster with opacity
+    const bgImg=document.createElement('img');
+    bgImg.className='poster-bg';
+    bgImg.src=movie.poster || 'https://via.placeholder.com/300x450?text=No+Image';
+    bgImg.alt=movie.title;
+    bgImg.onerror=()=>bgImg.src='https://via.placeholder.com/300x450?text=No+Image';
+    thumb.appendChild(bgImg);
+
+    // Front clear image
+    const frontImg=document.createElement('img');
+    frontImg.className='poster-front';
+    frontImg.src=movie.poster || 'https://via.placeholder.com/200x300?text=No+Image';
+    frontImg.alt=movie.title;
+    frontImg.onerror=()=>frontImg.src='https://via.placeholder.com/200x300?text=No+Image';
+    thumb.appendChild(frontImg);
 
     // Play button
     const play=document.createElement('a'); 
@@ -302,8 +323,8 @@ function render(list){
       titleDiv.appendChild(badge);
     }
     overlay.appendChild(titleDiv);
-
     thumb.appendChild(overlay);
+
     card.appendChild(thumb);
     grid.appendChild(card);
   });
