@@ -155,7 +155,7 @@ header{
   position:absolute;
   top:50%;
   left:50%;
-  width:100px;       /* fixed width */
+  width:100px;
   height:auto;
   transform:translate(-50%, -50%);
   object-fit:contain;
@@ -285,9 +285,11 @@ header{
 
 </div>
 
-<script type="module">
-import { movies } from './movies.js'; // External movies.js
+<!-- Legacy movies.js -->
+<script src="./movie.js"></script>
 
+<script>
+const moviesList = window.movies || [];
 const grid=document.getElementById('moviesGrid');
 const qInput=document.getElementById('q');
 
@@ -352,11 +354,11 @@ function render(list){
 
 qInput.addEventListener('input',()=>{
   const q=qInput.value.toLowerCase();
-  const filtered=movies.filter(m=>m.title.toLowerCase().includes(q));
+  const filtered=moviesList.filter(m=>m.title.toLowerCase().includes(q));
   render(filtered);
 });
 
-render(movies);
+render(moviesList);
 </script>
 </body>
 </html>
