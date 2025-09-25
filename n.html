@@ -109,11 +109,11 @@ header{
   box-shadow:0 8px 20px rgba(0,0,0,0.7);
 }
 
-/* Poster & small front image */
+/* Thumbnail container */
 .thumbnail{
   position:relative;
   width:100%;
-  aspect-ratio:2/3; 
+  aspect-ratio:2/3;
   border-radius:var(--radius);
   overflow:hidden;
   display:flex;
@@ -121,7 +121,7 @@ header{
   justify-content:center;
 }
 
-/* Background poster with opacity */
+/* Background poster */
 .thumbnail .poster-bg{
   position:absolute;
   top:0; left:0; width:100%; height:100%;
@@ -131,11 +131,14 @@ header{
   z-index:1;
 }
 
-/* Front clear small image */
+/* Front clear small image: fixed size across devices */
 .thumbnail .poster-front{
-  position:relative;
-  width:80%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:100px;       /* fixed width */
   height:auto;
+  transform:translate(-50%, -50%);
   object-fit:contain;
   border-radius:8px;
   z-index:2;
@@ -230,13 +233,13 @@ header{
 
 /* Responsive adjustments */
 @media(max-width:800px){
-  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
 }
 @media(max-width:600px){
-  .grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
 }
 @media(max-width:400px){
-  .grid{grid-template-columns:repeat(auto-fill,minmax(100%,1fr));}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
   .card{max-width:100%;}
 }
 </style>
@@ -289,7 +292,7 @@ function render(list){
     // Thumbnail container
     const thumb=document.createElement('div'); thumb.className='thumbnail';
 
-    // Background poster with opacity
+    // Background poster
     const bgImg=document.createElement('img');
     bgImg.className='poster-bg';
     bgImg.src=movie.poster || 'https://via.placeholder.com/300x450?text=No+Image';
@@ -297,7 +300,7 @@ function render(list){
     bgImg.onerror=()=>bgImg.src='https://via.placeholder.com/300x450?text=No+Image';
     thumb.appendChild(bgImg);
 
-    // Front clear image
+    // Front small image (fixed size)
     const frontImg=document.createElement('img');
     frontImg.className='poster-front';
     frontImg.src=movie.poster || 'https://via.placeholder.com/200x300?text=No+Image';
