@@ -121,7 +121,7 @@ header{
 .thumbnail img{
   width:100%;
   height:100%;
-  object-fit:cover; /* changed from contain to cover */
+  object-fit:cover; /* fill card with crop */
   display:block;
   background:#111827; 
 }
@@ -152,7 +152,7 @@ header{
   box-shadow:0 0 15px rgba(6,182,212,0.7);
 }
 
-/* Overlay for title, badge, watch button */
+/* Overlay for title & badge */
 .overlay{
   position:absolute;
   bottom:0;
@@ -183,19 +183,6 @@ header{
   padding:2px 6px;
   border-radius:4px;
 }
-
-/* Watch button */
-.actions .btn{
-  background:var(--accent);
-  padding:6px 12px;
-  border-radius:8px;
-  text-decoration:none;
-  color:white;
-  font-size:12px;
-  width:fit-content;
-  text-align:center;
-}
-.actions .btn:hover{background:#0891b2;}
 
 /* No results */
 .no-results{
@@ -291,7 +278,7 @@ function render(list){
     if(movie.poster){
       img.src=movie.poster;
       img.alt=movie.title;
-      img.onerror=()=>img.src='https://via.placeholder.com/300x450?text=No+Image'; // fallback for broken image
+      img.onerror=()=>img.src='https://via.placeholder.com/300x450?text=No+Image';
     } else {
       img.src='https://via.placeholder.com/300x450?text=No+Image';
     }
@@ -306,7 +293,7 @@ function render(list){
     play.rel="noopener noreferrer";
     thumb.appendChild(play);
 
-    // Overlay
+    // Overlay with title and NEW badge
     const overlay=document.createElement('div'); overlay.className='overlay';
     const titleDiv=document.createElement('div'); titleDiv.className='title';
     titleDiv.textContent=movie.title;
@@ -315,12 +302,6 @@ function render(list){
       titleDiv.appendChild(badge);
     }
     overlay.appendChild(titleDiv);
-
-    const actions=document.createElement('div'); actions.className='actions';
-    const btn=document.createElement('a'); btn.className='btn';
-    btn.href=movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
-    actions.appendChild(btn);
-    overlay.appendChild(actions);
 
     thumb.appendChild(overlay);
     card.appendChild(thumb);
