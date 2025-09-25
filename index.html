@@ -6,12 +6,12 @@
 <title>YOTT — Movies</title>
 <style>
 :root{
-  --bg:#061021;
+  --bg:#0f1724;
   --card:#0b1220;
   --muted:#9aa4b2;
   --accent:#06b6d4;
   --radius:12px;
-  --maxw:1400px;
+  --maxw:1200px;
   --gap:18px;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   color-scheme: dark;
@@ -19,19 +19,13 @@
 *{box-sizing:border-box;}
 body{
   margin:0;
-  background:var(--bg);
+  background:#061021;
   color:#e6eef6;
   padding:20px;
   display:flex;
   justify-content:center;
 }
-.wrap{
-  width:100%;
-  max-width:var(--maxw);
-  display:flex;
-  flex-direction:column;
-  gap:24px;
-}
+.wrap{width:100%; max-width:var(--maxw); display:flex; flex-direction:column; gap:24px;}
 
 /* Header */
 header{
@@ -88,17 +82,11 @@ header{
   color:inherit;
   width:100%;
   min-width:0;
-  font-size:16px;
 }
 .search svg{color:var(--muted);}
 
 /* Grid */
-.grid{
-  display:grid;
-  gap:var(--gap);
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  align-items:start;
-}
+.grid{display:grid; gap:var(--gap); grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
 
 /* Card */
 .card{
@@ -112,10 +100,9 @@ header{
   border:1px solid rgba(255,255,255,0.06);
   transition:transform 0.25s, box-shadow 0.25s;
 }
-.card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 6px 18px rgba(0,0,0,0.6);
-}
+.card:hover{transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.6);}
+
+/* Thumbnail + Play */
 .thumbnail{
   position:relative;
   width:70px;
@@ -139,18 +126,10 @@ header{
   cursor:pointer;
   text-decoration:none;
 }
-.play-btn:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 12px rgba(6,182,212,0.7);
-}
+.play-btn:hover{transform:scale(1.1); box-shadow:0 0 12px rgba(6,182,212,0.7);}
 
 /* Meta info */
-.meta{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
+.meta{flex:1; display:flex; flex-direction:column; gap:6px;}
 .title{
   font-weight:600;
   font-size:14px;
@@ -158,7 +137,6 @@ header{
   display:flex;
   align-items:center;
   gap:6px;
-  flex-wrap:wrap;
 }
 .actions .btn{
   background:var(--accent);
@@ -170,7 +148,29 @@ header{
 }
 .actions .btn:hover{background:#0891b2;}
 
-/* No results */
+/* Responsive TV */
+@media (min-width:1600px){
+  body{padding:40px;}
+  .brand h1{font-size:24px;}
+  .search input{width:250px;}
+}
+
+/* Mobile adjustments */
+@media (max-width:600px){
+  header{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls{
+    width:100%;
+    justify-content:flex-start;
+  }
+  .search{
+    width:100%;
+  }
+}
+
+/* Custom "No movies found" design */
 .no-results{
   display:flex;
   flex-direction:column;
@@ -190,29 +190,14 @@ header{
   stroke-width:2;
   fill:none;
 }
-.no-results h3{margin:0;font-size:20px;color:var(--muted);}
-.no-results p{margin:0;color:var(--muted);}
-
-/* Responsive adjustments */
-
-/* Mobile */
-@media (max-width:600px){
-  header{flex-direction:column; align-items:stretch;}
-  .controls{width:100%; justify-content:flex-start;}
-  .search{width:100%;}
-  .card{flex-direction:column; align-items:flex-start;}
-  .thumbnail{width:100%; height:auto; aspect-ratio:16/9;}
-  .play-btn{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);}
+.no-results h3{
+  margin:0;
+  font-size:20px;
+  color:var(--muted);
 }
-
-/* TV / large screens */
-@media (min-width:1600px){
-  body{padding:40px;}
-  .brand h1{font-size:24px;}
-  .search input{width:300px;}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
-  .card{gap:18px; padding:20px;}
-  .title{font-size:16px;}
+.no-results p{
+  margin:0;
+  color:var(--muted);
 }
 </style>
 </head>
@@ -269,10 +254,12 @@ header{
 
       const meta = document.createElement('div'); meta.className='meta';
 
-      const title = document.createElement('div'); title.className='title';
+      // Movie title with optional "New" badge
+      const title = document.createElement('div');
+      title.className='title';
       title.textContent = movie.title;
 
-      if(movie.isNew){
+      if (movie.isNew) {
         const badge = document.createElement('span');
         badge.textContent = 'NEW';
         badge.style.background = '#06b6d4';
@@ -286,8 +273,9 @@ header{
 
       meta.appendChild(title);
 
+      // Actions
       const actions = document.createElement('div'); actions.className='actions';
-      const btn = document.createElement('a'); btn.className='btn'; btn.href=movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
+      const btn = document.createElement('a'); btn.className='btn'; btn.href = movie.url; btn.target="_blank"; btn.rel="noopener noreferrer"; btn.textContent='Watch';
       actions.appendChild(btn);
       meta.appendChild(actions);
 
@@ -297,9 +285,9 @@ header{
     });
   }
 
-  qInput.addEventListener('input',()=>{
+  qInput.addEventListener('input', ()=>{
     const q = qInput.value.toLowerCase();
-    const filtered = movies.filter(m=>m.title.toLowerCase().includes(q));
+    const filtered = movies.filter(m => m.title.toLowerCase().includes(q));
     render(filtered);
   });
 
