@@ -7,187 +7,150 @@
 <style>
 :root{
   --bg:#0f1724;
+  --card:#0b1220;
   --muted:#9aa4b2;
   --accent:#06b6d4;
   --radius:12px;
-  --maxw:1400px;
+  --maxw:1200px;
   --gap:18px;
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   color-scheme: dark;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
+*{box-sizing:border-box;}
 body{
-  min-height:100vh;
-  background:linear-gradient(180deg,#061021 0%,#071426 100%);
+  margin:0;
+  background:#061021;
   color:#e6eef6;
+  padding:20px;
   display:flex;
   justify-content:center;
-  padding:20px;
 }
-.wrap{
-  width:100%;
-  max-width:var(--maxw);
-  display:flex;
-  flex-direction:column;
-  gap:24px;
+.wrap{width:100%; max-width:var(--maxw); display:flex; flex-direction:column; gap:24px;}
+h2{margin:0 0 12px; font-size:22px;}
+
+/* ✅ Responsive grid */
+.grid{
+  display:grid;
+  gap:var(--gap);
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
 }
 
-/* HEADER */
-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  padding:16px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.02);
-  flex-wrap:wrap;
-}
-.brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit;}
-.logo{
-  width:44px; height:44px;
-  background:linear-gradient(135deg,#06b6d4,#4f46e5);
-  border-radius:10px; display:grid; place-items:center;
-  font-weight:700; font-size:18px; color:white;
-}
-.brand h1{font-size:20px;}
-.brand small{font-size:13px; color:var(--muted);}
-.controls{flex:1; display:flex; justify-content:flex-end;}
-
-/* SEARCH */
-.search{display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.05); padding:8px 12px; border-radius:10px; width:100%; max-width:300px;}
-.search input{background:transparent; border:0; outline:0; color:inherit; width:100%; font-size:14px;}
-
-/* CONTENT */
-main{display:flex; flex-direction:column; gap:28px;}
-.section-title{font-size:18px; font-weight:700; margin-bottom:8px;}
-.grid{display:grid; gap:var(--gap);}
+/* ✅ Card design */
 .card{
-  background:rgba(255,255,255,0.02);
-  border:1px solid rgba(255,255,255,0.05);
-  padding:12px;
-  border-radius:12px;
-  display:flex; gap:12px;
-  align-items:flex-start;
-}
-.thumbnail{width:70px;height:70px;border-radius:8px;background:#111827;display:grid;place-items:center;}
-.meta{flex:1;display:flex;flex-direction:column;}
-.title{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:6px;align-items:center;}
-.new-badge{background:#06b6d4;color:white;font-size:11px;padding:2px 6px;border-radius:6px;font-weight:700;}
-.actions{margin-top:auto;}
-.btn{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.2);padding:6px 12px;border-radius:8px;font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;}
-
-/* FOOTER */
-footer{
   display:flex;
-  justify-content:space-between;
+  flex-direction:row;
   align-items:center;
-  flex-wrap:wrap;
   gap:12px;
-  font-size:13px;
-  color:var(--muted);
-  padding:12px;
+  padding:14px;
+  border-radius:var(--radius);
+  background:var(--card);
+  border:1px solid rgba(255,255,255,0.06);
+  transition:transform 0.25s, box-shadow 0.25s;
 }
-footer a{color:var(--muted);text-decoration:none;margin-right:10px;}
+.card:hover{transform:translateY(-3px); box-shadow:0 6px 18px rgba(0,0,0,0.6);}
 
-/* 📱 MOBILE */
-@media(max-width:600px){
-  body{padding:12px;}
-  header{flex-direction:column; align-items:flex-start;}
-  .controls{width:100%; justify-content:flex-start;}
-  .search{max-width:100%;}
-  .grid{grid-template-columns:1fr;} /* single column */
-  .thumbnail{width:60px;height:60px;}
-  .title{font-size:14px;}
+/* ✅ Thumbnail + Play Button */
+.thumbnail{
+  position:relative;
+  width:70px;
+  height:70px;
+  border-radius:8px;
+  background:#111827;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.play-btn{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:rgba(6,182,212,0.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  transition:transform 0.25s, box-shadow 0.25s;
+  cursor:pointer;
+}
+.play-btn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 12px rgba(6,182,212,0.7);
 }
 
-/* 📟 TABLET */
-@media(min-width:601px) and (max-width:1024px){
-  .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
-  .title{font-size:15px;}
-  .thumbnail{width:70px;height:70px;}
+/* ✅ Meta info */
+.meta{flex:1; display:flex; flex-direction:column; gap:6px;}
+.title{font-size:16px; margin:0; display:flex; align-items:center; gap:8px;}
+.new-badge{
+  font-size:12px;
+  background:var(--accent);
+  color:#fff;
+  padding:2px 6px;
+  border-radius:6px;
 }
-
-/* 💻 DESKTOP */
-@media(min-width:1025px) and (max-width:1599px){
-  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
+.actions .btn{
+  background:var(--accent);
+  padding:6px 12px;
+  border-radius:8px;
+  text-decoration:none;
+  color:white;
+  font-size:14px;
 }
+.actions .btn:hover{background:#0891b2;}
 
-/* 📺 TV / LARGE SCREENS */
-@media(min-width:1600px){
-  body{font-size:18px;}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
-  .thumbnail{width:100px;height:100px;}
-  .title{font-size:18px;}
-  .btn{font-size:15px;padding:8px 14px;}
+/* ✅ Responsive for TV screens */
+@media (min-width:1600px){
+  body{padding:40px;}
+  h2{font-size:28px;}
+  .card{padding:20px;}
+  .title{font-size:20px;}
+  .actions .btn{font-size:16px;}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <a class="brand" href="#">
-    <div class="logo">Y</div>
-    <div>
-      <h1>YOTT</h1>
-      <small>Watch Movies in HD</small>
-    </div>
-  </a>
-  <div class="controls">
-    <div class="search"><input id="q" type="search" placeholder="Search movies"></div>
-  </div>
-</header>
-
-<main>
-  <div>
-    <div class="section-title">Latest</div>
-    <div class="grid" id="latestGrid"></div>
-  </div>
-  <div>
-    <div class="section-title">All Movies</div>
-    <div class="grid" id="moviesGrid"></div>
-  </div>
-</main>
-
-<footer>
-  <div><a href="#">Contact</a><a href="#">DMCA</a><a href="#">Terms</a></div>
-  <div>Designed — Responsive UI</div>
-</footer>
+  <h2>Latest Movies</h2>
+  <div id="moviesGrid" class="grid"></div>
 </div>
 
 <script type="module">
-import { movies } from './movies.js';
+  import { movies } from './movies.js';
 
-const latestGrid=document.getElementById('latestGrid');
-const moviesGrid=document.getElementById('moviesGrid');
-const qInput=document.getElementById('q');
+  const grid=document.getElementById('moviesGrid');
 
-function createCard(movie){
-  const card=document.createElement('div');card.className='card';
-  const thumb=document.createElement('div');thumb.className='thumbnail';thumb.textContent='▶';
-  const meta=document.createElement('div');meta.className='meta';
-  const title=document.createElement('h3');title.className='title';title.textContent=movie.title;
-  if(movie.isNew){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='New';title.appendChild(badge);}
-  const actions=document.createElement('div');actions.className='actions';
-  const btn=document.createElement('a');btn.className='btn';btn.href=movie.url;btn.textContent='Watch';
-  actions.appendChild(btn);meta.appendChild(title);meta.appendChild(actions);
-  card.appendChild(thumb);card.appendChild(meta);return card;
-}
+  // Sort by date (latest first)
+  const sorted=[...movies].sort((a,b)=>new Date(b.date)-new Date(a.date));
 
-function renderGrid(grid,list){
-  grid.innerHTML='';list.forEach(m=>grid.appendChild(createCard(m)));
-}
-function renderAll(filtered=null){
-  const sorted=(filtered||movies).slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
-  renderGrid(latestGrid,sorted.slice(0,5));
-  renderGrid(moviesGrid,sorted);
-}
-qInput.addEventListener('input',()=>{
-  const q=qInput.value.toLowerCase();
-  const filtered=movies.filter(m=>m.title.toLowerCase().includes(q));
-  renderAll(filtered);
-});
-renderAll();
+  sorted.forEach(movie=>{
+    const card=document.createElement('div');card.className='card';
+
+    // Thumbnail with play button
+    const thumb=document.createElement('div');thumb.className='thumbnail';
+    const play=document.createElement('div');play.className='play-btn';play.textContent='▶';
+    thumb.appendChild(play);
+
+    // Movie meta
+    const meta=document.createElement('div');meta.className='meta';
+    const title=document.createElement('h3');title.className='title';title.textContent=movie.title;
+    if(movie.isNew){
+      const badge=document.createElement('span');badge.className='new-badge';badge.textContent='New';
+      title.appendChild(badge);
+    }
+
+    const actions=document.createElement('div');actions.className='actions';
+    const btn=document.createElement('a');btn.className='btn';btn.href=movie.url;btn.textContent='Watch';
+    actions.appendChild(btn);
+
+    meta.appendChild(title);
+    meta.appendChild(actions);
+
+    card.appendChild(thumb);
+    card.appendChild(meta);
+    grid.appendChild(card);
+  });
 </script>
 </body>
 </html>
