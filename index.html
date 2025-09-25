@@ -7,136 +7,186 @@
 <style>
 :root{
   --bg:#0f1724;
-  --card:#0b1220;
   --muted:#9aa4b2;
   --accent:#06b6d4;
-  --glass: rgba(255,255,255,0.04);
   --radius:12px;
-  --maxw:1200px;
+  --maxw:1400px;
   --gap:18px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   color-scheme: dark;
 }
-*{box-sizing:border-box;}
-html,body{height:100%;}
+*{box-sizing:border-box;margin:0;padding:0;}
 body{
-  margin:0;
-  background:
-    radial-gradient(1200px 400px at 10% 10%, rgba(6,182,212,0.06), transparent 8%),
-    linear-gradient(180deg, #061021 0%, #071426 100%);
+  min-height:100vh;
+  background:linear-gradient(180deg,#061021 0%,#071426 100%);
   color:#e6eef6;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  padding:28px;
   display:flex;
   justify-content:center;
-  font-size:15px;
-  line-height:1.45;
+  padding:20px;
 }
-.wrap{width:100%; max-width:var(--maxw); display:flex; flex-direction:column; gap:24px;}
-header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 20px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:calc(var(--radius) + 4px); box-shadow: 0 6px 20px rgba(2,6,23,0.6); border: 1px solid rgba(255,255,255,0.03);}
-.brand{display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit;}
-.logo {width:48px; height:48px; background:linear-gradient(135deg,#06b6d4,#4f46e5); border-radius:10px; display:grid; place-items:center; font-weight:700; font-size:18px; box-shadow: 0 3px 12px rgba(6,182,212,0.08); color:white;}
-.brand h1{font-size:18px; margin:0;}
-.controls{display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
-.search{display:flex; align-items:center; gap:8px; background:var(--glass); padding:8px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); min-width:250px;}
-.search input{background:transparent; border:0; outline:0; color:inherit; width:100%;}
-main{display:flex; flex-direction:column; gap:20px;}
-.section-title{font-weight:700; font-size:18px; margin-bottom:8px;}
-.content{display:flex; flex-direction:column; gap:16px;}
-.grid{display:grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap:var(--gap);}
-.card{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); padding:14px; border-radius:12px; display:flex; gap:12px; align-items:flex-start; transition: transform .18s ease, box-shadow .18s ease; min-height:110px;}
-.card:hover{transform: translateY(-6px); box-shadow: 0 18px 40px rgba(2,6,23,0.6);}
-.thumbnail{width:78px; height:78px; border-radius:8px; background:linear-gradient(180deg,#111827,#0b1220); display:grid; place-items:center; flex-shrink:0; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.02);}
-.thumbnail .play{width:36px;height:36px; display:grid; place-items:center; background:rgba(6,182,212,0.12); border-radius:999px; backdrop-filter: blur(2px);}
-.meta{flex:1; display:flex; flex-direction:column; justify-content:space-between; min-height:78px;}
-.title{font-weight:700; margin:0 0 6px 0; font-size:16px; word-break:break-word; display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
-.new-badge {display:inline-block; background:#06b6d4; color:white; font-size:11px; font-weight:700; padding:2px 6px; border-radius:6px; line-height:1;}
-.actions{margin-top:auto; display:flex; gap:8px; align-items:center;}
-.btn{background:linear-gradient(90deg, rgba(6,182,212,0.12), rgba(79,70,229,0.06)); color:var(--accent); border:1px solid rgba(6,182,212,0.12); padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:600; font-size:13px; text-align:center;}
-footer{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 16px; color:var(--muted); font-size:13px; border-radius:10px;}
-footer a {color:var(--muted); text-decoration:none; margin-right:12px;}
+.wrap{
+  width:100%;
+  max-width:var(--maxw);
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:16px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.02);
+  flex-wrap:wrap;
+}
+.brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit;}
+.logo{
+  width:44px; height:44px;
+  background:linear-gradient(135deg,#06b6d4,#4f46e5);
+  border-radius:10px; display:grid; place-items:center;
+  font-weight:700; font-size:18px; color:white;
+}
+.brand h1{font-size:20px;}
+.brand small{font-size:13px; color:var(--muted);}
+.controls{flex:1; display:flex; justify-content:flex-end;}
+
+/* SEARCH */
+.search{display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.05); padding:8px 12px; border-radius:10px; width:100%; max-width:300px;}
+.search input{background:transparent; border:0; outline:0; color:inherit; width:100%; font-size:14px;}
+
+/* CONTENT */
+main{display:flex; flex-direction:column; gap:28px;}
+.section-title{font-size:18px; font-weight:700; margin-bottom:8px;}
+.grid{display:grid; gap:var(--gap);}
+.card{
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  padding:12px;
+  border-radius:12px;
+  display:flex; gap:12px;
+  align-items:flex-start;
+}
+.thumbnail{width:70px;height:70px;border-radius:8px;background:#111827;display:grid;place-items:center;}
+.meta{flex:1;display:flex;flex-direction:column;}
+.title{font-size:15px;font-weight:600;margin-bottom:6px;display:flex;gap:6px;align-items:center;}
+.new-badge{background:#06b6d4;color:white;font-size:11px;padding:2px 6px;border-radius:6px;font-weight:700;}
+.actions{margin-top:auto;}
+.btn{background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.2);padding:6px 12px;border-radius:8px;font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;}
+
+/* FOOTER */
+footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  font-size:13px;
+  color:var(--muted);
+  padding:12px;
+}
+footer a{color:var(--muted);text-decoration:none;margin-right:10px;}
+
+/* 📱 MOBILE */
+@media(max-width:600px){
+  body{padding:12px;}
+  header{flex-direction:column; align-items:flex-start;}
+  .controls{width:100%; justify-content:flex-start;}
+  .search{max-width:100%;}
+  .grid{grid-template-columns:1fr;} /* single column */
+  .thumbnail{width:60px;height:60px;}
+  .title{font-size:14px;}
+}
+
+/* 📟 TABLET */
+@media(min-width:601px) and (max-width:1024px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+  .title{font-size:15px;}
+  .thumbnail{width:70px;height:70px;}
+}
+
+/* 💻 DESKTOP */
+@media(min-width:1025px) and (max-width:1599px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
+}
+
+/* 📺 TV / LARGE SCREENS */
+@media(min-width:1600px){
+  body{font-size:18px;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+  .thumbnail{width:100px;height:100px;}
+  .title{font-size:18px;}
+  .btn{font-size:15px;padding:8px 14px;}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <a class="brand" href="#"><div class="logo">Y</div><div><h1>YOTT</h1><div style="color:var(--muted);font-size:13px;">Watch YOTT Movies Online in HD</div></div></a>
-  <div class="controls">
-    <div class="search" title="Search titles">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
-      <input id="q" type="search" placeholder="Search movies"/>
+  <a class="brand" href="#">
+    <div class="logo">Y</div>
+    <div>
+      <h1>YOTT</h1>
+      <small>Watch Movies in HD</small>
     </div>
+  </a>
+  <div class="controls">
+    <div class="search"><input id="q" type="search" placeholder="Search movies"></div>
   </div>
 </header>
 
 <main>
-  <div class="content">
+  <div>
     <div class="section-title">Latest</div>
     <div class="grid" id="latestGrid"></div>
   </div>
-  <div class="content">
+  <div>
     <div class="section-title">All Movies</div>
     <div class="grid" id="moviesGrid"></div>
   </div>
 </main>
 
 <footer>
-  <div>
-    <a href="#">Contact</a>
-    <a href="#">DMCA</a>
-    <a href="#">T&C</a>
-  </div>
-  <div style="color:var(--muted)">Designed — Clean UI • Responsive</div>
+  <div><a href="#">Contact</a><a href="#">DMCA</a><a href="#">Terms</a></div>
+  <div>Designed — Responsive UI</div>
 </footer>
 </div>
 
 <script type="module">
 import { movies } from './movies.js';
 
-const latestGrid = document.getElementById('latestGrid');
-const moviesGrid = document.getElementById('moviesGrid');
-const qInput = document.getElementById('q');
+const latestGrid=document.getElementById('latestGrid');
+const moviesGrid=document.getElementById('moviesGrid');
+const qInput=document.getElementById('q');
 
 function createCard(movie){
-  const card = document.createElement('div'); card.className='card';
-  const thumb = document.createElement('div'); thumb.className='thumbnail';
-  thumb.innerHTML=`<div class="play"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 3v18l15-9L5 3z" fill="currentColor"/></svg></div>`;
-  const meta = document.createElement('div'); meta.className='meta';
-  const title = document.createElement('h3'); title.className='title'; title.textContent=movie.title;
-  if(movie.isNew){
-    const badge = document.createElement('span'); badge.className='new-badge'; badge.textContent='New Movie'; title.appendChild(badge);
-  }
-  const actions=document.createElement('div'); actions.className='actions';
-  const watch=document.createElement('a'); watch.className='btn'; watch.href=movie.url; watch.target='_blank'; watch.rel='noopener noreferrer'; watch.textContent='Watch';
-  actions.appendChild(watch); meta.appendChild(title); meta.appendChild(actions); card.appendChild(thumb); card.appendChild(meta);
-  return card;
+  const card=document.createElement('div');card.className='card';
+  const thumb=document.createElement('div');thumb.className='thumbnail';thumb.textContent='▶';
+  const meta=document.createElement('div');meta.className='meta';
+  const title=document.createElement('h3');title.className='title';title.textContent=movie.title;
+  if(movie.isNew){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='New';title.appendChild(badge);}
+  const actions=document.createElement('div');actions.className='actions';
+  const btn=document.createElement('a');btn.className='btn';btn.href=movie.url;btn.textContent='Watch';
+  actions.appendChild(btn);meta.appendChild(title);meta.appendChild(actions);
+  card.appendChild(thumb);card.appendChild(meta);return card;
 }
 
-function renderGrid(grid, list){
-  grid.innerHTML='';
-  if(!list.length){
-    grid.innerHTML=`<div style="color:var(--muted);padding:18px;border-radius:10px;background:rgba(255,255,255,0.01)">No titles found.</div>`;
-    return;
-  }
-  const frag=document.createDocumentFragment();
-  list.forEach(m => frag.appendChild(createCard(m)));
-  grid.appendChild(frag);
+function renderGrid(grid,list){
+  grid.innerHTML='';list.forEach(m=>grid.appendChild(createCard(m)));
 }
-
 function renderAll(filtered=null){
-  const sorted = (filtered || movies).slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
-  // Latest: show top 5 movies
-  renderGrid(latestGrid, sorted.slice(0,5));
-  renderGrid(moviesGrid, sorted);
+  const sorted=(filtered||movies).slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
+  renderGrid(latestGrid,sorted.slice(0,5));
+  renderGrid(moviesGrid,sorted);
 }
-
 qInput.addEventListener('input',()=>{
-  const q = qInput.value.trim().toLowerCase();
-  const filtered = movies.filter(m => !q || m.title.toLowerCase().includes(q));
+  const q=qInput.value.toLowerCase();
+  const filtered=movies.filter(m=>m.title.toLowerCase().includes(q));
   renderAll(filtered);
 });
-
 renderAll();
 </script>
 </body>
