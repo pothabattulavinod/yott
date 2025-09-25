@@ -90,14 +90,15 @@ header{
 .grid{
   display:grid;
   gap:var(--gap);
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
   justify-items:center;
 }
 
 /* Card */
 .card{
   position:relative;
-  width:200px;
+  width:100%;
+  max-width:220px;
   background:var(--card);
   border-radius:var(--radius);
   overflow:hidden;
@@ -112,17 +113,23 @@ header{
 .thumbnail{
   position:relative;
   width:100%;
-  aspect-ratio:2/3; /* default portrait */
+  aspect-ratio:2/3; 
   background:#111827;
+  border-radius:var(--radius);
+  overflow:hidden;
 }
 .thumbnail img{
   width:100%;
   height:100%;
-  object-fit:contain; /* keep original aspect ratio */
+  object-fit:cover; /* changed from contain to cover */
   display:block;
-  border-radius:12px;
-  background:#111827; /* dark bg for empty spaces in landscape */
+  background:#111827; 
 }
+.thumbnail img.low-quality{
+  filter: blur(6px);
+}
+
+/* Play button */
 .play-btn{
   position:absolute;
   top:50%;
@@ -221,13 +228,15 @@ header{
 }
 
 /* Responsive adjustments */
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}
+}
 @media(max-width:600px){
-  .card{width:45%;}
-  .thumbnail{aspect-ratio:2/3;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
 }
 @media(max-width:400px){
-  .card{width:100%;}
-  .thumbnail{aspect-ratio:2/3;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(100%,1fr));}
+  .card{max-width:100%;}
 }
 </style>
 </head>
@@ -278,20 +287,27 @@ function render(list){
 
     // Poster
     const thumb=document.createElement('div'); thumb.className='thumbnail';
+    const img=document.createElement('img');
     if(movie.poster){
-      const img=document.createElement('img');
       img.src=movie.poster;
       img.alt=movie.title;
-      thumb.appendChild(img);
+      img.onerror=()=>img.src='https://via.placeholder.com/300x450?text=No+Image'; // fallback for broken image
+    } else {
+      img.src='https://via.placeholder.com/300x450?text=No+Image';
     }
+    thumb.appendChild(img);
 
-    const play=document.createElement('a'); play.className='play-btn'; play.textContent='▶';
-    play.href=movie.url; play.target="_blank"; play.rel="noopener noreferrer";
+    // Play button
+    const play=document.createElement('a'); 
+    play.className='play-btn'; 
+    play.textContent='▶';
+    play.href=movie.url; 
+    play.target="_blank"; 
+    play.rel="noopener noreferrer";
     thumb.appendChild(play);
 
     // Overlay
     const overlay=document.createElement('div'); overlay.className='overlay';
-
     const titleDiv=document.createElement('div'); titleDiv.className='title';
     titleDiv.textContent=movie.title;
     if(movie.isNew){
