@@ -1,11 +1,53 @@
 export const movies = [
-  { title: "Inception", url: "#", date: "2010-07-16" },
-  { title: "Interstellar", url: "#", date: "2014-11-07" },
-  { title: "Tenet", url: "#", date: "2020-08-26" },
-  { title: "Avatar: The Way of Water", url: "#", date: "2022-12-16" },
-  { title: "Oppenheimer", url: "#", date: "2023-07-21" },
-  { title: "New Sci-Fi Movie", url: "#", date: "2025-09-25" },
+  { 
+    title: "Inception", 
+    url: "#", 
+    date: "2010-07-16", 
+    poster: "https://via.placeholder.com/300x450?text=Inception"
+  },
+  { 
+    title: "Interstellar", 
+    url: "#", 
+    date: "2014-11-07",
+    poster: "https://via.placeholder.com/300x450?text=Interstellar"
+  },
+  { 
+    title: "Tenet", 
+    url: "#", 
+    date: "2020-08-26",
+    poster: "https://via.placeholder.com/300x450?text=Tenet"
+  },
+  { 
+    title: "Avatar: The Way of Water", 
+    url: "#", 
+    date: "2022-12-16",
+    poster: "https://via.placeholder.com/300x450?text=Avatar+2"
+  },
+  { 
+    title: "Oppenheimer", 
+    url: "#", 
+    date: "2023-07-21",
+    poster: "https://via.placeholder.com/300x450?text=Oppenheimer"
+  },
+  { 
+    title: "New Sci-Fi Movie", 
+    url: "#", 
+    date: "2025-09-25",
+    poster: "https://via.placeholder.com/300x450?text=New+Sci-Fi+Movie"
+  },
   // Manual new movies with badge
-  { title: "Mirai", url: "mirai.html", date: "2025-09-25", isNew: true },
-  { title: "Exclusive New Thriller", url: "#", date: "2025-09-22", isNew: true }
+  { 
+    title: "Mirai", 
+    url: "mirai.html", 
+    date: "2025-09-25", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAr-jxaZcAKqOt3O67coaD5X9ie_ABH_HBIwvzEx5RcA&s=10"
+  },
+  { 
+    title: "Exclusive New Thriller", 
+    url: "#", 
+    date: "2025-09-22", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdSZE1333EkF8-5y4Ja4UHji81Kbv4oBaQI25locVVqw&s=10"
+  }
 ];
