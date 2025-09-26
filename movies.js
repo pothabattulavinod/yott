@@ -4,7 +4,7 @@ export const movies = [
     title: "Little Hearts", 
     url: "lh.html", 
     date: "2025-09-24",
-    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3QCTJgrdACL3SX4Y-SUi4kB_nJVKJtGqNr-PPemRhNw&s=10"
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC4Le2yAHqP2Pz7neVXQ7GGIJHdau3pimK9yoVT9h6scM0NRwMlTANSFo&s"
   }
 
       
