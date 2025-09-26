@@ -1,6 +1,11 @@
 export const movies = [
   
-
+ { 
+    title: "Little Hearts", 
+    url: "lh.html", 
+    date: "2025-09-24",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3QCTJgrdACL3SX4Y-SUi4kB_nJVKJtGqNr-PPemRhNw&s=10"
+  }
 
       
   { 
