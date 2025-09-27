@@ -1,5 +1,41 @@
 export const movies = [
 { 
+    title: "Hit 3", 
+    url: "hit3.html", 
+    date: "2025-05-01",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-AAZTb4WecNMQtuuuBhaAGDKfyJih2FRepjAaZ5Jtcg&s=10"
+},
+
+    { 
+    title: "Gangleader", 
+    url: "gangleader.html", 
+    date: "2019-09-13",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl2H1_Z352zwLu2remeGityicy452PSfo5TnELhv_hhw&s=10"
+},
+
+    { 
+    title: "Devadas", 
+    url: "devadas.html", 
+    date: "2018-09-27",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAdeVjEF3bDGX6mhZHvgCW1hKVYVHwgzRRFloX8_jDSg&s=10"
+},
+
+    { 
+    title: "90ML", 
+    url: "90ml.html", 
+    date: "2019-12-06",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_si7xeB9PxKwatss6j8CX8fUiA-yylljH7TFFPQYNug&s=10"
+},
+    
+    
+    { 
+    title: "Jersey", 
+    url: "jersey.html", 
+    date: "2019-04-19",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcKd1_P-MZsRgh68UvKs7YcZvsBY9EfwfWkfnyF7nqqA&s=10"
+},
+    
+    { 
     title: "Mahavatar Narsimha", 
     url: "mn.html", 
     date: "2025-07-25",
