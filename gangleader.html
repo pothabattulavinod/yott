@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nani's Gang Leader 2019 — YOTT</title>
+<style>
+:root {
+  --bg: #0b0f1a;
+  --accent: #06b6d4;
+  --muted: #9aa4b2;
+  --radius: 8px;
+  --text-light: #e6eef6;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-light);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(8px, 1.5vw, 20px) clamp(12px, 2vw, 40px);
+  background: rgba(0,0,0,0.6);
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: clamp(18px, 2vw, 28px);
+  color: #fff;
+}
+
+header .logo .icon {
+  display: grid;
+  place-items: center;
+  width: clamp(40px, 4vw, 60px);
+  height: clamp(40px, 4vw, 60px);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg,#06b6d4,#4f46e5);
+  color: #fff;
+}
+
+/* Home Icon matches logo size */
+.home-icon {
+  display: grid;
+  place-items: center;
+  width: clamp(40px, 4vw, 60px);   /* matches logo icon */
+  height: clamp(40px, 4vw, 60px);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg,#06b6d4,#4f46e5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.home-icon:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.home-icon:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.home-icon .house {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  background: linear-gradient(180deg, #fff 0%, #e6eef6 100%);
+  border-bottom: 2px solid #06b6d4;
+  clip-path: polygon(
+    50% 0%,    /* roof tip */
+    100% 40%,  /* roof right */
+    100% 100%, /* bottom right */
+    0% 100%,   /* bottom left */
+    0% 40%     /* roof left */
+  );
+}
+
+/* Door */
+.home-icon .house::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+  width: 20%;
+  height: 35%;
+  background: var(--bg);
+  border-radius: 1px;
+}
+
+/* Page content */
+.wrap {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: clamp(10px, 2vw, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 ratio */
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000;
+}
+
+iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background: rgba(0,0,0,0.5);
+  border-radius: var(--radius);
+}
+
+.movie-info h1 {
+  font-size: clamp(20px, 3vw, 32px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.movie-info .badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+.movie-info .tags,
+.movie-info .cast-director,
+.movie-info .synopsis {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Responsive media queries */
+@media(max-width:768px){
+  .movie-info h1 {
+    font-size: 24px;
+  }
+}
+
+@media(max-width:480px){
+  header .logo {
+    font-size: 16px;
+  }
+  .wrap {
+    padding: 10px;
+  }
+  .movie-info h1 {
+    font-size: 20px;
+  }
+}
+
+@media(max-width:360px){
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 8px 12px;
+  }
+  
+  header .logo {
+    font-size: 14px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="icon">Y</span>
+    <span>YOTT</span>
+  </div>
+
+  <a href="index.html" class="home-icon" title="Home">
+    <span class="house"></span>
+  </a>
+</header>
+
+<div class="wrap">
+  <div class="video-container">
+    <iframe id="moviePlayer" allowfullscreen allow="autoplay" loading="lazy" src="https://pothabattulavinod.github.io/wp/gangleader"></iframe>
+  </div>
+
+  <div class="movie-info">
+    <h1 id="movieTitle">Nani's Gang Leader<span class="badge"></span></h1>
+    <div class="tags">Telugu / 2019 / Action / Comedy  </div>
+    <div class="cast-director">Cast: Nani Kartikeya Gummakonda Lakshmi</div>
+    <div class="cast-director">Director: Vikram K. Kumar</div>
+    <div class="synopsis">Nani plays the gang leader of five women belonging to different age groups, helping them to plot revenge.</div>
+  </div>
+</div>
+
+</body>
+</html>
