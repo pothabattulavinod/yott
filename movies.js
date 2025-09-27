@@ -1,5 +1,39 @@
 export const movies = [
+
 { 
+    title: "Uppena", 
+    url: "uppena.html", 
+    date: "2021-02-12",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxTrnLr1NHiGrqPyLjErpQ-MdQRuuJMcwraMQPyXC5sg&s=10"
+},
+
+    
+{ 
+    title: "Thandel", 
+    url: "thandel.html", 
+    date: "2025-02-07",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc_PYPZaeL3t2EbopII9_PnTQqrN_hl-4DoqLt92Yeiw&s=10"
+},
+
+    
+{ 
+    title: "Shyam Singha Roy", 
+    url: "shyam.html", 
+    date: "2021-12-24",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRavd6h1d8SHPKvYYIVuBOk7gdWglvBksGcY9AYoIPK1A&s=10"
+},
+    
+    { 
+    title: "Majnu", 
+    url: "majnu.html", 
+    date: "2016-09-23",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0IukwFrTb49KyIUOFEPdoTe6eeAkgIC2hNFOZK2LaUg&s=10"
+},
+    
+    
+    
+    
+    { 
     title: "Hit 3", 
     url: "hit3.html", 
     date: "2025-05-01",
