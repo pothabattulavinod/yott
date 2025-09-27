@@ -1,5 +1,16 @@
 export const movies = [
 
+    
+{ 
+    title: "Ninnu Kori", 
+    url: "ninnukori.html", 
+    date: "2017-07-07",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTk_3jpWoQsvw40_72rPPtn57qCp04Di0cfjKnXhn3ZhA&s=10"
+},
+
+
+    
+
 { 
     title: "Uppena", 
     url: "uppena.html", 
