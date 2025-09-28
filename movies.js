@@ -1,8 +1,25 @@
 export const movies = [
 
+ { 
+    title: "Sita Ramam", 
+    url: "m/sitaram.html", 
+    date: "2022-08-05",
+    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/sita-ramam-et00329656-30-05-2022-06-32-41.jpg"
+},
+
+
+     { 
+    title: "Saripodhaa Sanivaaram", 
+    url: "m/saripodha.html", 
+    date: "2024-08-29",
+    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/saripodhaa-sanivaaram-et00388631-1724078891.jpg"
+},
+
+
+    
     { 
     title: "Salaar Part 1 – Ceasefire", 
-    url: "m/mad.html", 
+    url: "m/salaar.html", 
     date: "2022-12-23",
     poster: "https://m.media-amazon.com/images/M/MV5BNTU0ZjYxOWItOWViMC00YWVlLWJlMGUtZjc1YWU0NTlhY2ZhXkEyXkFqcGc@._V1_.jpg"
 },
