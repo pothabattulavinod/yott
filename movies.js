@@ -1,5 +1,25 @@
 export const movies = [
-{ 
+
+    { 
+    title: "Salaar Part 1 – Ceasefire", 
+    url: "m/mad.html", 
+    date: "2022-12-23",
+    poster: "https://m.media-amazon.com/images/M/MV5BNTU0ZjYxOWItOWViMC00YWVlLWJlMGUtZjc1YWU0NTlhY2ZhXkEyXkFqcGc@._V1_.jpg"
+},
+
+
+    { 
+    title: "Majili ", 
+    url: "m/majili.html", 
+    date: "2019-04-05",
+    poster: "https://m.media-amazon.com/images/S/pv-target-images/6069ba7fb32fdfcf2501135df224fa844d25008a7f54548bce2a8ac7fa6acdbb.jpg"
+},
+
+    
+    
+    
+    
+    { 
     title: "Mad", 
     url: "m/mad.html", 
     date: "2023-10-06",
@@ -12,12 +32,6 @@ export const movies = [
     date: "2023-09-01",
     poster: "https://m.media-amazon.com/images/M/MV5BYTQ2M2UxOWUtOTM5Zi00NmI4LThmODAtNWU3NWJiMTAyMDBlXkEyXkFqcGc@._V1_.jpg"
 },
-
-
-
-
-
-
 
     
 { 
@@ -34,10 +48,6 @@ export const movies = [
     date: "2022-07-10",
     poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/ante-sundaraniki-et00323425-12-05-2022-06-56-55.jpg"
 },
-
-
-
-
 
 
     
