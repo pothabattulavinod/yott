@@ -1,5 +1,28 @@
 export const movies = [
 
+
+{ 
+    title: "Coolie", 
+    url: "m/coolie.html", 
+    date: "2025-08-14", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEO5i0hfYt9TIulGu47EBIEfe7iFj5qnH7DKJ4DxWLPQ&s=10"
+  },
+
+
+    
+
+{ 
+    title: "Kingdom", 
+    url: "m/kingdom.html", 
+    date: "2025-07-31", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3mXKcBACwIzHkE8gIQULkvRLm1BbQk8qL-djWWfttNg&s=10"
+  },
+
+    
+
+    
 { 
     title: "Waltair Veerayya", 
     url: "m/waltair.html", 
@@ -233,7 +256,6 @@ export const movies = [
     title: "Mirai", 
     url: "mirai.html", 
     date: "2025-09-05", 
-    isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAr-jxaZcAKqOt3O67coaD5X9ie_ABH_HBIwvzEx5RcA&s=10"
   },
   { 
