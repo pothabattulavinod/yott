@@ -1,5 +1,23 @@
 export const movies = [
 
+{ 
+    title: "Waltair Veerayya", 
+    url: "m/waltair.html", 
+    date: "2023-01-13",
+    poster: "https://m.media-amazon.com/images/M/MV5BNmExZjk3NTAtMWM0ZC00NjM0LWExY2ItZGZjYWY0ZDI2NWM3XkEyXkFqcGc@._V1_.jpg"
+},
+
+ { 
+    title: "Tuck Jagadish", 
+    url: "m/tuck.html", 
+    date: "2021-09-09",
+    poster: "https://m.media-amazon.com/images/M/MV5BMWUzNjk5NzUtYzU2Ny00MzU2LTk2ZGItZDBiNjM4Y2NmODViXkEyXkFqcGc@._V1_.jpg"
+},
+
+
+
+
+ 
  { 
     title: "Sita Ramam", 
     url: "m/sitaram.html", 
