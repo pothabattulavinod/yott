@@ -2,6 +2,21 @@ export const movies = [
 
     
 { 
+    title: "Aay", 
+    url: "m/aay.html", 
+    date: "2024-08-15",
+    poster: "https://m.media-amazon.com/images/M/MV5BMTc2NzI1OGMtMjRiOC00MzNjLWJlNmQtZWMwNmIwYmY4MGJiXkEyXkFqcGc@._V1_.jpg"
+},
+
+
+    { 
+    title: "Animal ", 
+    url: "animal.html", 
+    date: "2023-12-01",
+    poster: "https://m.media-amazon.com/images/M/MV5BZThmNDg1NjUtNWJhMC00YjA3LWJiMjItNmM4ZDQ5ZGZiN2Y2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
+},
+
+    { 
     title: "Ninnu Kori", 
     url: "ninnukori.html", 
     date: "2017-07-07",
