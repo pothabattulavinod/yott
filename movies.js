@@ -1,4 +1,44 @@
 export const movies = [
+{ 
+    title: "Mad", 
+    url: "m/mad.html", 
+    date: "2023-10-06",
+    poster: "https://m.media-amazon.com/images/M/MV5BMzRhYzQxN2MtMDM5Yi00OThlLWFmMzAtYjc3YWMwNWM4M2ZlXkEyXkFqcGc@._V1_.jpg"
+},
+
+    { 
+    title: "Kushi", 
+    url: "m/kushi.html", 
+    date: "2023-09-01",
+    poster: "https://m.media-amazon.com/images/M/MV5BYTQ2M2UxOWUtOTM5Zi00NmI4LThmODAtNWU3NWJiMTAyMDBlXkEyXkFqcGc@._V1_.jpg"
+},
+
+
+
+
+
+
+
+    
+{ 
+    title: "Hanu-Man", 
+    url: "m/aay.html", 
+    date: "2024-01-12",
+    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/hanu-man-et00311673-1704954533.jpg"
+},
+
+
+    { 
+    title: "Ante Sundaraniki", 
+    url: "m/ante.html", 
+    date: "2022-07-10",
+    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/ante-sundaraniki-et00323425-12-05-2022-06-56-55.jpg"
+},
+
+
+
+
+
 
     
 { 
@@ -11,7 +51,7 @@ export const movies = [
 
     { 
     title: "Animal ", 
-    url: "animal.html", 
+    url: "m/animal.html", 
     date: "2023-12-01",
     poster: "https://m.media-amazon.com/images/M/MV5BZThmNDg1NjUtNWJhMC00YjA3LWJiMjItNmM4ZDQ5ZGZiN2Y2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
 },
