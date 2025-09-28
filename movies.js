@@ -71,7 +71,7 @@ export const movies = [
     
 { 
     title: "Hanu-Man", 
-    url: "m/aay.html", 
+    url: "m/hanuman.html", 
     date: "2024-01-12",
     poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/hanu-man-et00311673-1704954533.jpg"
 },
