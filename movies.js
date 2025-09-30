@@ -2,13 +2,22 @@ export const movies = [
 
 
 { 
+    title: "Junior", 
+    url: "m/junior.html", 
+    date: "2025-09-30", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEOdM6aOSelg1GyHv0WdL9pNHpeGxO5u10w-vA0cYd3g&s=10"
+  },
+
+
+{ 
     title: "The Raja Saab (Trailer)", 
     url: "m/theraja.html", 
     date: "2026-01-09", 
     isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUxcFacP3g2a-hNb9lJT3kzb4gTeX2zR6rkyxIothBaA&s=10"
   },
-
+    
     
 { 
     title: "Coolie", 
