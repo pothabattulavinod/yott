@@ -1,6 +1,16 @@
 export const movies = [
 
+{ 
+    title: "The Paradise", 
+    url: "m/thep.html", 
+    date: "2026-03-26", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3KSeyh-R5BTDyvO6ZKzkuJyrCoitnNNeTGXRYyRJGgw&s=10"
+  },
 
+
+
+    
 { 
     title: "Junior", 
     url: "m/junior.html", 
