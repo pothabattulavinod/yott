@@ -262,7 +262,8 @@ export const movies = [
  { 
     title: "Little Hearts", 
     url: "lh.html", 
-    date: "2025-09-05",
+    date: "2025-10-01",
+     isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC4Le2yAHqP2Pz7neVXQ7GGIJHdau3pimK9yoVT9h6scM0NRwMlTANSFo&s"
   }
 ,
