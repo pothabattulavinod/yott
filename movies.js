@@ -2,6 +2,25 @@ export const movies = [
 
 
 { 
+    title: "War 2", 
+    url: "m/war2.html", 
+    date: "2025-10-09", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKYFMMQztzJzt-Ve0-P3Islaz524aBYTz2oZ3MAd37sA&s=10"
+  },
+    
+
+{ 
+    title: "Premalu", 
+    url: "m/premalu.html", 
+    date: "2024-02-09",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQThYwUeR8CZiMJROuD1f73kR0Bc9lT4oMntNM3JJLVrg&s=10"
+},
+
+
+    
+
+{ 
     title: "Kantara: A Legend Chapter-1", 
     url: "m/ka.html", 
     date: "2025-10-02", 
