@@ -8,6 +8,15 @@ export const movies = [
     isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKYFMMQztzJzt-Ve0-P3Islaz524aBYTz2oZ3MAd37sA&s=10"
   },
+
+
+
+{ 
+    title: "Lucky Bhaskar", 
+    url: "m/luckyb.html", 
+    date: "2024-10-31",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB7WSmsIAaS8rwgkLVnL8VCKS-GuZnCOiWcmcYN6G6lA&s=10"
+},
     
 
 { 
