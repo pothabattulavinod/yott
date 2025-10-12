@@ -1,6 +1,14 @@
 export const movies = [
 
 
+
+{ 
+    title: "Sapta Sagaradaache Ello (Side B)", 
+    url: "m/sapta.html", 
+    date: "2023-11-01",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNFSshx3TVlGblqD43TNhrEUj8b1DBfxm9txW5gD_gDA&s=10"
+},
+    
 { 
     title: "War 2", 
     url: "m/war2.html", 
