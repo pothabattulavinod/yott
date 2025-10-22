@@ -1,6 +1,65 @@
 export const movies = [
 
+{ 
+    title: "Single", 
+    url: "avg/single.html", 
+    date: "2025-05-01",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoMu-5G90i5oSf8DB8sMFNpHQ8_rPb7-Bdu5oxTBCoGQ&s=10"
+},
 
+
+{ 
+    title: "Yeto Vellipoyindhi Manasu  ", 
+    url: "avg/yvp.html", 
+    date: "2012-11-14",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS57nPEtDkBL4kOGxbsucNeHlB6ApJLs7Rga_mLp_4bnw&s=10"
+},
+    
+
+    
+{ 
+    title: "Shatamanam Bhavati ", 
+    url: "avg/satm.html", 
+    date: "2017-01-14",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJy9n4ISDbIcS9LMl2NYz5QKfBHHbu4-izVRHNPPSOEg&s=10"
+},
+
+
+    { 
+    title: "Pilla Zamindar", 
+    url: "avg/pj.html", 
+    date: "2011-10-14",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbMdh2Q3iM3vJ7jxKsbLtnUSy2hnat18460MnBmV_e_w&s=10"
+},
+
+
+    
+{ 
+    title: "Orange", 
+    url: "avg/orange.html", 
+    date: "2010-11-26",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuoBndJ9ma35EemdN3z7aascTKZUp9pci41jUm6qGruQ&s=10"
+},
+
+
+
+{ 
+    title: "Happy Day's", 
+    url: "avg/happydays.html", 
+    date: "2007-10-02",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNL5uLdRP0M7oivYv-FByXJxKw4quMwcJo1rkbrV4xUw&s=10"
+},
+    
+
+{ 
+    title: "Kuberaa", 
+    url: "m/kubera.html", 
+    date: "2025-06-25",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAXWB2BRfGEvKRmLcTLpyogHKofu8E29CX9mWVZ5haMQ&s=10"
+},
+
+
+    
 
 { 
     title: "Sapta Sagaradaache Ello (Side B)", 
