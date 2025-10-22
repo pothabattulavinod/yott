@@ -1,5 +1,13 @@
 export const movies = [
 
+
+{ 
+    title: "Baahubali 1 & 2", 
+    url: "avg/baahubali.html", 
+    date: "2017-04-28",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmCYPdN5BMWaiGzFpfevnJEKG3uC8tsn1_-zFrOdQP6g&s=10"
+},
+    
 { 
     title: "S/O Satyamurthy", 
     url: "avg/sonof.html", 
