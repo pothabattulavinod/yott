@@ -1,6 +1,14 @@
 export const movies = [
 
 { 
+    title: "S/O Satyamurthy", 
+    url: "avg/sonof.html", 
+    date: "2015-04-09",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-kaA3BENbY00GW9CLVl-FEHc1gRGXKpr3Z3w9n6CMYA&s=10"
+},
+
+    
+{ 
     title: "Single", 
     url: "avg/single.html", 
     date: "2025-05-01",
