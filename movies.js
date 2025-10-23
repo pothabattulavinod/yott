@@ -1,5 +1,10 @@
 export const movies = [
-
+{ 
+    title: "Pokiri", 
+    url: "m/Pokiri.html", 
+    date: "2006-04-28",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
+},
 
 { 
     title: "Baahubali 1 & 2", 
@@ -88,7 +93,6 @@ export const movies = [
     title: "War 2", 
     url: "m/war2.html", 
     date: "2025-10-09", 
-    isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKYFMMQztzJzt-Ve0-P3Islaz524aBYTz2oZ3MAd37sA&s=10"
   },
 
@@ -116,7 +120,6 @@ export const movies = [
     title: "Kantara: A Legend Chapter-1", 
     url: "m/ka.html", 
     date: "2025-10-02", 
-    isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbYPo2932HmXY0RL5MMCj_klH8cWdBGe1yKBIWE2xa2g&s=10"
   },
 
@@ -136,7 +139,6 @@ export const movies = [
     title: "Junior", 
     url: "m/junior.html", 
     date: "2025-09-30", 
-    isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEOdM6aOSelg1GyHv0WdL9pNHpeGxO5u10w-vA0cYd3g&s=10"
   },
 
@@ -154,7 +156,6 @@ export const movies = [
     title: "Coolie", 
     url: "m/coolie.html", 
     date: "2025-08-14", 
-    isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEO5i0hfYt9TIulGu47EBIEfe7iFj5qnH7DKJ4DxWLPQ&s=10"
   },
 
@@ -165,7 +166,6 @@ export const movies = [
     title: "Kingdom", 
     url: "m/kingdom.html", 
     date: "2025-07-31", 
-    isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3mXKcBACwIzHkE8gIQULkvRLm1BbQk8qL-djWWfttNg&s=10"
   },
 
@@ -384,7 +384,6 @@ export const movies = [
     title: "Little Hearts", 
     url: "lh.html", 
     date: "2025-10-01",
-     isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC4Le2yAHqP2Pz7neVXQ7GGIJHdau3pimK9yoVT9h6scM0NRwMlTANSFo&s"
   }
 ,
