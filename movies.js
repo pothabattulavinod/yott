@@ -410,7 +410,7 @@ export const movies = [
   { 
     title: "They Call Him OG", 
     url: "og.html", 
-    date: "2025-09-25", 
+    date: "2025-10-23", 
     isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdSZE1333EkF8-5y4Ja4UHji81Kbv4oBaQI25locVVqw&s=10"
   }
