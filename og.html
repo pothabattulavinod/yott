@@ -35,8 +35,7 @@ header .logo .icon { display:grid; place-items:center; width:clamp(40px,4vw,60px
 .video-container { position:relative; width:100%; padding-top:56.25%; border-radius:var(--radius); overflow:hidden; background:#000; }
 iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
 
-.button-container { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:10px; }
-.button-container .btn-group { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.button-container { display:flex; flex-direction:row; justify-content:center; gap:10px; margin-top:10px; }
 .button-container button {
   padding:12px 20px;
   font-size: clamp(14px, 2vw, 18px);
@@ -46,12 +45,8 @@ iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
   border-radius: var(--radius);
   cursor: pointer;
   transition: 0.2s;
-  min-width: 100px;
-  text-align: center;
-  white-space: nowrap;
-  position: relative;
+  min-width: 120px;
 }
-
 .button-container button:hover { background: var(--accent-hover); }
 button.active { background: #fff; color: var(--accent); }
 
@@ -61,7 +56,7 @@ button.active { background: #fff; color: var(--accent); }
 .movie-info .tags, .movie-info .cast-director, .movie-info .synopsis { font-size:14px; color:#9aa4b2; }
 
 @media(max-width:480px){
-  .button-container button { font-size: clamp(12px, 3vw, 16px); min-width: 80px; padding:10px 16px; }
+  .button-container button { font-size: clamp(12px, 3vw, 16px); min-width: 100px; padding:10px 16px; }
 }
 </style>
 </head>
@@ -75,78 +70,46 @@ button.active { background: #fff; color: var(--accent); }
 <div class="wrap">
 
   <div class="video-container">
-    <iframe id="singlePlayer" allowfullscreen allow="autoplay" loading="lazy" src=""></iframe>
+    <iframe id="player" allowfullscreen allow="autoplay" loading="lazy"></iframe>
   </div>
 
   <div class="button-container">
-    <div class="btn-group" id="actionButtons">
-      <button onclick="showMovie()">Watch Movie</button>
-      <button onclick="showSongs()">Watch Songs</button>
-    </div>
-    <div class="btn-group" id="songList" style="display:none;">
-      <button onclick="playSong(0)">Suvvi Suvvi</button>
-      <button onclick="playSong(1)">Firestorm</button>
-    </div>
+    <button onclick="playMovie()" id="movieBtn" class="active">Watch Movie</button>
+    <button onclick="playSongs()" id="songsBtn">Watch Songs</button>
   </div>
 
-  <div class="movie-info" id="movieInfo">
+  <div class="movie-info">
     <h1 id="videoTitle">They Call Him OG <span class="badge">NEW</span></h1>
-    <div class="tags" id="videoTags">Telugu / 2025 / Action / Thriller</div>
-    <div class="cast-director" id="videoCast">Cast: Pawan Kalyan, Emraan Hashmi, Priyanka Arulmohan</div>
-    <div class="cast-director" id="videoDirector">Director: Sujeeth, Ashwin Neal Mani</div>
-    <div class="synopsis" id="videoSynopsis">After vanishing from Mumbai's underworld for a decade, mob boss Ojas Gambheera resurfaces seeking vengeance against rival crime lords.</div>
+    <div class="tags">Telugu / 2025 / Action / Thriller</div>
+    <div class="cast-director">Cast: Pawan Kalyan, Emraan Hashmi, Priyanka Arulmohan</div>
+    <div class="cast-director">Director: Sujeeth, Ashwin Neal Mani</div>
+    <div class="synopsis">After vanishing from Mumbai's underworld for a decade, mob boss Ojas Gambheera resurfaces seeking vengeance against rival crime lords.</div>
   </div>
 
 </div>
 
 <script>
-const movie = { src: "https://pothabattulavinod.github.io/ad/saa2" };
-const songs = [
-  "https://pothabattulavinod.github.io/ad/ogv1",
-  "https://pothabattulavinod.github.io/ad/ogv2"
-];
+const movieSrc = "https://pothabattulavinod.github.io/ad/saa2";
+const songsSrc = "https://pothabattulavinod.github.io/wp/ogvs"; // Default to first song
 
-let current = 'movie'; // track current state (movie or song)
+const player = document.getElementById('player');
+const movieBtn = document.getElementById('movieBtn');
+const songsBtn = document.getElementById('songsBtn');
 
-function showMovie(){
-  current = 'movie';
-  const iframe = document.getElementById('singlePlayer');
-  iframe.src = movie.src;
-  document.getElementById('songList').style.display = 'none';
-  highlightButton(document.querySelectorAll('#actionButtons button'), 0);
+function playMovie() {
+  player.src = movieSrc;
+  movieBtn.classList.add('active');
+  songsBtn.classList.remove('active');
 }
 
-function showSongs(){
-  current = 'song';
-  document.getElementById('songList').style.display = 'flex';
-  playSong(0);
-  highlightButton(document.querySelectorAll('#actionButtons button'), 1);
+function playSongs() {
+  player.src = songsSrc;
+  songsBtn.classList.add('active');
+  movieBtn.classList.remove('active');
 }
-
-function playSong(index){
-  current = 'song';
-  const iframe = document.getElementById('singlePlayer');
-  iframe.src = songs[index];
-  highlightButton(document.querySelectorAll('#songList button'), index);
-}
-
-function highlightButton(buttons, activeIndex){
-  buttons.forEach((btn,i)=>{
-    btn.classList.toggle('active', i===activeIndex);
-  });
-}
-
-// Prevent back button from affecting iframe
-window.onpopstate = function(event){
-  // Do nothing: iframe state remains current
-};
 
 // Auto-play movie on page load
-window.onload = () => { 
-  showMovie(); 
-  // Replace initial state so browser doesn't restore previous iframe
-  history.replaceState({}, '');
-};
+window.onload = playMovie;
 </script>
 
 </body>
