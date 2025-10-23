@@ -69,17 +69,15 @@ button.active { background: #fff; color: var(--accent); }
 
 <header>
   <div class="logo"><span class="icon">Y</span><span>YOTT</span></div>
-  <a href="../index.html" class="home-icon" title="Home"><span class="house"></span></a>
+  <a href="../index.html" class="home-icon"><span class="house"></span></a>
 </header>
 
 <div class="wrap">
 
-  <!-- Single iframe player -->
   <div class="video-container">
     <iframe id="singlePlayer" allowfullscreen allow="autoplay" loading="lazy" src=""></iframe>
   </div>
 
-  <!-- Buttons above movie info -->
   <div class="button-container">
     <div class="btn-group" id="actionButtons">
       <button onclick="showMovie()">Watch Movie</button>
@@ -91,7 +89,6 @@ button.active { background: #fff; color: var(--accent); }
     </div>
   </div>
 
-  <!-- Movie info always visible -->
   <div class="movie-info" id="movieInfo">
     <h1 id="videoTitle">They Call Him OG <span class="badge">NEW</span></h1>
     <div class="tags" id="videoTags">Telugu / 2025 / Action / Thriller</div>
@@ -109,20 +106,27 @@ const songs = [
   "https://pothabattulavinod.github.io/ad/ogv2"
 ];
 
+let current = 'movie'; // track current state (movie or song)
+
 function showMovie(){
-  document.getElementById('singlePlayer').src = movie.src;
+  current = 'movie';
+  const iframe = document.getElementById('singlePlayer');
+  iframe.src = movie.src;
   document.getElementById('songList').style.display = 'none';
   highlightButton(document.querySelectorAll('#actionButtons button'), 0);
 }
 
 function showSongs(){
+  current = 'song';
   document.getElementById('songList').style.display = 'flex';
-  playSong(0); // auto-play first song
+  playSong(0);
   highlightButton(document.querySelectorAll('#actionButtons button'), 1);
 }
 
 function playSong(index){
-  document.getElementById('singlePlayer').src = songs[index];
+  current = 'song';
+  const iframe = document.getElementById('singlePlayer');
+  iframe.src = songs[index];
   highlightButton(document.querySelectorAll('#songList button'), index);
 }
 
@@ -132,8 +136,17 @@ function highlightButton(buttons, activeIndex){
   });
 }
 
+// Prevent back button from affecting iframe
+window.onpopstate = function(event){
+  // Do nothing: iframe state remains current
+};
+
 // Auto-play movie on page load
-window.onload = () => { showMovie(); };
+window.onload = () => { 
+  showMovie(); 
+  // Replace initial state so browser doesn't restore previous iframe
+  history.replaceState({}, '');
+};
 </script>
 
 </body>
