@@ -123,6 +123,16 @@ export const movies = [
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbYPo2932HmXY0RL5MMCj_klH8cWdBGe1yKBIWE2xa2g&s=10"
   },
 
+
+{ 
+    title: "Dude", 
+    url: "m/dude.html", 
+    date: "2025-11-14", 
+    isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR85ZQavqLxNoRR4rLX45EM_8efoF90r5VkIx73xlhSvA&s=10"
+  },
+
+    
     
 { 
     title: "The Paradise", 
