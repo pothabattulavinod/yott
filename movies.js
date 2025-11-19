@@ -5,6 +5,12 @@ export const movies = [
     date: "2006-04-28",
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
+ { 
+    title: "Telusu Kada", 
+    url: "m/telusukada.html", 
+    date: "2025-11-10",
+    poster: "https://m.media-amazon.com/images/M/MV5BNzUzMmYzMDItY2RlNi00YWI4LTk2NDUtMzNiOTBjMjY0OTkxXkEyXkFqcGc@._V1_QL75_UX217.5_.jpg"
+},
 
 { 
     title: "Baahubali 1 & 2", 
