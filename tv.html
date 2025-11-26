@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YOTT — Movies</title>
+<style>
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --muted:#9aa4b2;
+  --accent:#06b6d4;
+  --radius:12px;
+  --maxw:1200px;
+  --gap:18px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:#061021;
+  color:#e6eef6;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+}
+.wrap{width:100%; max-width:var(--maxw); display:flex; flex-direction:column; gap:24px;}
+
+/* Header */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 16px;
+  background:rgba(255,255,255,0.02);
+  border-radius:var(--radius);
+  flex-wrap: wrap;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:inherit;
+}
+.logo{
+  width:40px;
+  height:40px;
+  background:linear-gradient(135deg,#06b6d4,#4f46e5);
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  font-weight:700;
+  font-size:18px;
+  color:#fff;
+}
+.brand h1{font-size:18px; margin:0;}
+.controls{
+  display:flex;
+  flex-wrap: wrap;
+  align-items:center;
+  gap:12px;
+  flex: 1 1 auto;
+  min-width:0;
+}
+.search{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.05);
+  padding:6px 10px;
+  border-radius:var(--radius);
+  flex: 1 1 auto;
+  min-width:0;
+}
+.search input{
+  background:transparent;
+  border:0;
+  outline:0;
+  color:inherit;
+  width:100%;
+  min-width:0;
+}
+.search svg{color:var(--muted);}
+
+/* Welcome message */
+.welcome-msg {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeSlideUp 1s ease forwards;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grid */
+.grid{
+  display:grid;
+  gap:var(--gap);
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  justify-items:center;
+}
+
+/* Card */
+.card{
+  position:relative;
+  width:100%;
+  max-width:220px;
+  background:var(--card);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:transform 0.25s, box-shadow 0.25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.7);
+}
+
+/* Thumbnail container */
+.thumbnail{
+  position:relative;
+  width:100%;
+  aspect-ratio:2/3;
+  border-radius:var(--radius);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Background poster */
+.thumbnail .poster-bg{
+  position:absolute;
+  top:0; left:0; width:100%; height:100%;
+  object-fit:cover;
+  opacity:0.3;
+  filter:brightness(0.7);
+  z-index:1;
+}
+
+/* Front clear small image: fixed size across devices */
+.thumbnail .poster-front{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:100px;       /* fixed width */
+  height:auto;
+  transform:translate(-50%, -50%);
+  object-fit:contain;
+  border-radius:8px;
+  z-index:2;
+}
+
+/* Play button */
+.play-btn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:rgba(6,182,212,0.9);
+  color:#fff;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  transition:transform 0.2s, box-shadow 0.2s;
+  z-index:3;
+}
+.play-btn:hover{
+  transform:translate(-50%,-50%) scale(1.15);
+  box-shadow:0 0 15px rgba(6,182,212,0.7);
+}
+
+/* Overlay for title & badge */
+.overlay{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:10px;
+  background:linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  color:#fff;
+  z-index:4;
+}
+
+/* Title and NEW badge */
+.title{
+  font-weight:600;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap: wrap;
+}
+.title span{
+  background:#06b6d4;
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+  padding:2px 6px;
+  border-radius:4px;
+}
+
+/* No results */
+.no-results{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  padding:40px;
+  background:rgba(255,255,255,0.05);
+  border-radius:var(--radius);
+  text-align:center;
+  color:var(--muted);
+}
+.no-results svg{
+  width:80px;
+  height:80px;
+  stroke:var(--muted);
+  stroke-width:2;
+  fill:none;
+}
+.no-results h3{
+  margin:0;
+  font-size:20px;
+  color:var(--muted);
+}
+.no-results p{
+  margin:0;
+  color:var(--muted);
+}
+
+/* Responsive adjustments */
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+  .welcome-msg { font-size:16px; }
+}
+@media(max-width:400px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));}
+  .card{max-width:100%;}
+  .welcome-msg { font-size:14px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="#"><div class="logo">Y</div><h1>YOTT</h1></a>
+  <div class="controls">
+    <div class="search" title="Search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6"/></svg>
+      <input id="q" type="search" placeholder="Search movies"/>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="welcome-msg" style="font-size:20px; font-weight:bold; text-align:center; margin-bottom:10px;">
+    Welcome to YOTT — Enjoy Streaming
+  </div>
+
+  <div style="font-size:12px; color:#333; background-color:#ffff99; padding:4px 10px; border-radius:4px; display:block; text-align:center; width:fit-content; margin:0 auto 15px;">
+    OG Access Code: 123
+  </div>
+  
+   <div>
+<iframe 
+     src="https://pothabattulavinod.github.io/wp/ytv" 
+    style="width:100%; height:70vh; border:none;" 
+    allowfullscreen>
+</iframe>
+
+     
+
+
+
+ </div>
+
+  <div id="moviesGrid" class="grid"></div>
+</main>
+
+</div>
+
+
+
+
+<script type="module">
+import { movies } from './movies.js'; // External movies.js
+
+const grid=document.getElementById('moviesGrid');
+const qInput=document.getElementById('q');
+
+function render(list){
+  grid.innerHTML='';
+  if(!list.length){
+    grid.innerHTML=`
+      <div class="no-results">
+        <svg viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="30"/>
+          <line x1="20" y1="20" x2="44" y2="44"/>
+          <line x1="44" y1="20" x2="20" y2="44"/>
+        </svg>
+        <h3>No movies found</h3>
+        <p>Try searching with a different keyword</p>
+      </div>`;
+    return;
+  }
+
+  const sorted=[...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  sorted.forEach(movie=>{
+    const card=document.createElement('div'); card.className='card';
+
+    const thumb=document.createElement('div'); thumb.className='thumbnail';
+
+    const bgImg=document.createElement('img');
+    bgImg.className='poster-bg';
+    bgImg.src=movie.poster || 'https://via.placeholder.com/300x450?text=No+Image';
+    bgImg.alt=movie.title;
+    bgImg.onerror=()=>bgImg.src='https://via.placeholder.com/300x450?text=No+Image';
+    thumb.appendChild(bgImg);
+
+    const frontImg=document.createElement('img');
+    frontImg.className='poster-front';
+    frontImg.src=movie.poster || 'https://via.placeholder.com/200x300?text=No+Image';
+    frontImg.alt=movie.title;
+    frontImg.onerror=()=>frontImg.src='https://via.placeholder.com/200x300?text=No+Image';
+    thumb.appendChild(frontImg);
+
+    const play=document.createElement('a'); 
+    play.className='play-btn'; 
+    play.textContent='▶';
+    play.href=movie.url; 
+    play.target="_blank"; 
+    play.rel="noopener noreferrer";
+    thumb.appendChild(play);
+
+    const overlay=document.createElement('div'); overlay.className='overlay';
+    const titleDiv=document.createElement('div'); titleDiv.className='title';
+    titleDiv.textContent=movie.title;
+    if(movie.isNew){
+      const badge=document.createElement('span'); badge.textContent='NEW';
+      titleDiv.appendChild(badge);
+    }
+    overlay.appendChild(titleDiv);
+    thumb.appendChild(overlay);
+
+    card.appendChild(thumb);
+    grid.appendChild(card);
+  });
+}
+
+qInput.addEventListener('input',()=>{
+  const q=qInput.value.toLowerCase();
+  const filtered=movies.filter(m=>m.title.toLowerCase().includes(q));
+  render(filtered);
+});
+
+render(movies);
+</script>
+</body>
+</html>
