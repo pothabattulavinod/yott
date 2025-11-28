@@ -5,6 +5,13 @@ export const movies = [
     date: "2006-04-28",
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
+
+    { 
+    title: "Mass Jathara", 
+    url: "m/massj.html", 
+    date: "2025-11-28",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Mass-jatha--Gallery-08008930-dd5b-11ef-bed0-9d043e521067.jpg"
+},
  { 
     title: "Telusu Kada", 
     url: "m/telusukada.html", 
