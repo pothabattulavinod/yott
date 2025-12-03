@@ -6,7 +6,7 @@ export async function handler(event, context) {
   // 1. LOGIN: Validate Access Code
   // -----------------------------
   if (code) {
-    const apiUrl = "YOUR_GOOGLE_SCRIPT_URL?code=" + code;
+    const apiUrl = "https://script.google.com/macros/s/AKfycbzfYd2TVq92t98vsgFxvP3qwhaLzvXxjH7LRxG1Gb1zDAzL_fc2JAu2S3pRqAwCXqA/exec?code=" + code;
     const response = await fetch(apiUrl);
     const data = await response.json();
 
