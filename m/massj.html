@@ -204,6 +204,34 @@ iframe {
 </head>
 <body>
 
+
+  <script>
+async function verifySession() {
+  // Read session cookie
+  const token = document.cookie.split("session=")[1];
+  if (!token) {
+    window.location.href = "/login.html";
+    return;
+  }
+
+  // Verify token with Netlify
+  const res = await fetch("/.netlify/functions/validate-session", {
+    method: "POST",
+    body: JSON.stringify({ token })
+  });
+
+  const data = await res.json();
+
+  // If invalid → redirect to login
+  if (!data.valid) {
+    window.location.href = "/login.html";
+  }
+}
+
+verifySession();
+</script>
+
+
 <header>
   <div class="logo">
     <span class="icon">Y</span>
