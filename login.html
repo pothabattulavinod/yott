@@ -1,72 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login</title>
-<style>
-body {
-  background:#061021;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  font-family: Inter, sans-serif;
-}
-.box {
-  background:#0b1220;
-  padding:30px;
-  border-radius:10px;
-  width:320px;
-  text-align:center;
-}
-input {
-  width:100%;
-  padding:10px;
-  border:0;
-  margin-top:10px;
-  border-radius:6px;
-}
-button {
-  width:100%;
-  padding:10px;
-  background:#06b6d4;
-  border:0;
-  margin-top:10px;
-  border-radius:6px;
-  color:#fff;
-  font-weight:bold;
-}
-</style>
+  <meta charset="utf-8">
+  <title>Login — YOTT</title>
+  <style>
+    body { background:#061021; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; font-family:Arial, sans-serif; }
+    .box { background:#0b1220; padding:30px; border-radius:8px; width:300px; text-align:center; }
+    input { width:100%; padding:8px; margin:8px 0; border-radius:4px; border:none; }
+    button { padding:10px 20px; background:#06b6d4; border:none; border-radius:4px; color:#fff; cursor:pointer; }
+    .msg { margin-top:10px; color:#f88; }
+  </style>
 </head>
 <body>
-<div class="box">
-  <h2>Enter Access Code</h2>
-  <input id="code" placeholder="Access Code">
-  <button onclick="login()">Enter</button>
-  <p id="msg"></p>
-</div>
+  <div class="box">
+    <h2>Enter Access Code</h2>
+    <input id="code" placeholder="Access Code" />
+    <button onclick="login()">Login</button>
+    <div class="msg" id="msg"></div>
+  </div>
 
-<script>
-async function login() {
-  const code = document.getElementById("code").value;
+  <script>
+    function getDeviceID() {
+      return btoa(navigator.userAgent + navigator.platform);
+    }
 
-  const res = await fetch("/.netlify/functions/validate-session", {
-    method: "POST",
-    body: JSON.stringify({ code })
-  });
+    function getGPS() {
+      return new Promise(resolve => {
+        navigator.geolocation.getCurrentPosition(
+          pos => resolve({lat: pos.coords.latitude, lon: pos.coords.longitude, acc: pos.coords.accuracy}),
+          err => resolve(null),
+          { enableHighAccuracy: true }
+        );
+      });
+    }
 
-  const data = await res.json();
+    async function login() {
+      const code = document.getElementById("code").value.trim();
+      if (!code) {
+        document.getElementById("msg").innerText = "Enter a code";
+        return;
+      }
 
-  if (!data.valid) {
-    document.getElementById("msg").innerText = "Invalid or expired access code";
-    return;
-  }
+      const device = getDeviceID();
+      const gps = await getGPS();
 
-  // Store session token
-  document.cookie = "session=" + data.token + "; path=/";
+      const body = {
+        code,
+        device,
+        lat: gps ? gps.lat : "",
+        lon: gps ? gps.lon : "",
+        acc: gps ? gps.acc : ""
+      };
 
-  window.location.href = "index.html"; 
-}
-</script>
+      const res = await fetch("/.netlify/functions/validate-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+
+      const data = await res.json();
+      if (!data.valid) {
+        document.getElementById("msg").innerText = "Invalid or expired code";
+        return;
+      }
+
+      document.cookie = "session=" + data.token + "; path=/";
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
