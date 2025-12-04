@@ -6,6 +6,15 @@ export const movies = [
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
 
+{ 
+    title: "K.G.F: Chapter 2", 
+    url: "m/kgf2.html", 
+    date: "2022-04-12",
+    poster: "https://m.media-amazon.com/images/S/pv-target-images/ef222e4c367082c8f94315fbf5b62d350547c5e2589a97f12d5414979c64a9fc.jpg"
+},
+
+
+    
     { 
     title: "Mass Jathara", 
     url: "m/massj.html", 
