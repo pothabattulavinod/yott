@@ -12,7 +12,12 @@ export const movies = [
     date: "2022-04-12",
     poster: "https://m.media-amazon.com/images/S/pv-target-images/ef222e4c367082c8f94315fbf5b62d350547c5e2589a97f12d5414979c64a9fc.jpg"
 },
-
+ { 
+    title: "The Girlfriend", 
+    url: "m/thegf.html", 
+    date: "2025-12-05",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe3yc_72pkIeXIVYfVvk9EC81iQF7lR4gtYm2qwVBgwg&s=10"
+},
 
     
     { 
