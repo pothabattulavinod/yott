@@ -6,6 +6,15 @@ export const movies = [
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
 
+
+
+    { 
+    title: "K-Ramp", 
+    url: "m/kramp.html", 
+    date: "2025-08-18",
+    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/k-ramp-et00453678-1760425723.jpg"
+},
+
 { 
     title: "K.G.F: Chapter 2", 
     url: "m/kgf2.html", 
