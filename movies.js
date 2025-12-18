@@ -10,6 +10,7 @@ export const movies = [
     title: "Raju Weds Rambai", 
     url: "m/rwr.html", 
     date: "2025-12-18",
+      isNew: true,
     poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/raju-weds-rambai-et00471442-1763704957.jpg"
 },
 
@@ -173,7 +174,6 @@ export const movies = [
     title: "Dude", 
     url: "m/dude.html", 
     date: "2025-11-14", 
-    isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR85ZQavqLxNoRR4rLX45EM_8efoF90r5VkIx73xlhSvA&s=10"
   },
 
