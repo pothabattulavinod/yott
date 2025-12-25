@@ -7,13 +7,20 @@ export const movies = [
 },
 
  { 
+    title: "Akhanda 2: Thaandavam", 
+    url: "m/ak2.html", 
+    date: "2025-12-19",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Akhanda-2_-(2)-Poster-3e535d00-d4c2-11f0-b45c-35a082a955b8.jpg"
+},
+
+    
+{ 
     title: "Raju Weds Rambai", 
     url: "m/rwr.html", 
     date: "2025-12-18",
       isNew: true,
     poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/raju-weds-rambai-et00471442-1763704957.jpg"
 },
-
 
 
     
