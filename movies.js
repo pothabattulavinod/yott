@@ -16,6 +16,15 @@ export const movies = [
 
 
 
+    
+{ 
+    title: "Andhra King Taluka", 
+    url: "m/akt.html", 
+    date: "2025-12-25",
+      isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVxl-7gfSXkKvQjS4TYpIbOO-NKBdfIk52FE4ZOEBOFecpS4W-2aT_I1s&s=10"
+},
+
 
     
     { 
