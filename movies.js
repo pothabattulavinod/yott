@@ -6,6 +6,19 @@ export const movies = [
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
 
+
+
+    
+
+    
+ { 
+    title: "Mowgli", 
+    url: "m/mowgli.html", 
+    date: "2026-01-01",
+     isNew: true,
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPAaS2IiiIIsv37OPDpqwqtW2G_HhEjuTdhkm92jKH0g&s=10"
+},
+
  { 
     title: "Akhanda 2: Thaandavam", 
     url: "m/ak2.html", 
@@ -18,7 +31,7 @@ export const movies = [
     title: "Raju Weds Rambai", 
     url: "m/rwr.html", 
     date: "2025-12-18",
-      isNew: true,
+      
     poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/raju-weds-rambai-et00471442-1763704957.jpg"
 },
 
@@ -28,7 +41,7 @@ export const movies = [
     title: "Andhra King Taluka", 
     url: "m/akt.html", 
     date: "2025-12-25",
-      isNew: true,
+    
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVxl-7gfSXkKvQjS4TYpIbOO-NKBdfIk52FE4ZOEBOFecpS4W-2aT_I1s&s=10"
 },
 
