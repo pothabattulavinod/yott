@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -204,34 +205,6 @@ iframe {
 </head>
 <body>
 
-
-  <script>
-async function verifySession() {
-  // Read session cookie
-  const token = document.cookie.split("session=")[1];
-  if (!token) {
-    window.location.href = "/login.html";
-    return;
-  }
-
-  // Verify token with Netlify
-  const res = await fetch("/.netlify/functions/validate-session", {
-    method: "POST",
-    body: JSON.stringify({ token })
-  });
-
-  const data = await res.json();
-
-  // If invalid → redirect to login
-  if (!data.valid) {
-    window.location.href = "/login.html";
-  }
-}
-
-verifySession();
-</script>
-
-
 <header>
   <div class="logo">
     <span class="icon">Y</span>
@@ -250,13 +223,19 @@ verifySession();
 
   <div class="movie-info">
     <h1 id="movieTitle">Mass Jathara<span class="badge"></span></h1>
-    <div class="tags">Telugu / 2025 / Action   </div>
-    <div class="cast-director">Cast: Ravi Teja Sreeleela Naveen Chandra
-</div>
+    <div class="tags">Telugu / 2025 / Action / Adventure  </div>
+    <div class="cast-director">Cast: Ravi Teja Sreeleela Naveen Chandra</div>
     <div class="cast-director">Director: Bhanu Bhogavarapu</div>
-    <div class="synopsis"> An honest policeman takes a stand against injustice no matter what. However, he faces his biggest challenge when he is transferred to a village where crime prevails due to a ruthless drug lord. </div>
+    <div class="synopsis"> An honest policeman takes a stand against injustice no matter what. However, he faces his biggest challenge when he is transferred to a village where crime prevails due to a ruthless drug lord.  </div>
   </div>
 </div>
 
 </body>
 </html>
+
+
+
+
+  
+
+
