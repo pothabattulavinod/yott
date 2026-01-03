@@ -9,8 +9,15 @@ export const movies = [
 
 
 
-    
 
+    
+    
+ { 
+    title: "Aan Paavam Pollathathu", 
+    url: "m/aan.html", 
+    date: "2025-11-29",
+    poster: "https://m.media-amazon.com/images/S/pv-target-images/8ac4edb23ea664abd69d6b873077371720425c5c7cb7cb4a21ff2e50adf04db7.jpg"
+},
     
  { 
     title: "Idli Kottu", 
