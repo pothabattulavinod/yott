@@ -25,7 +25,6 @@ export const movies = [
     title: "Mowgli", 
     url: "m/mowgli.html", 
     date: "2026-01-01",
-     isNew: true,
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPAaS2IiiIIsv37OPDpqwqtW2G_HhEjuTdhkm92jKH0g&s=10"
 },
 
