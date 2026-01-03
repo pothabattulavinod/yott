@@ -8,8 +8,18 @@ export const movies = [
 
 
 
+
     
 
+    
+ { 
+    title: "Idli Kottu", 
+    url: "m/idli.html", 
+    date: "2025-10-29",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/idli-Kottu_Gallery-e1d99400-9e15-11f0-a5c5-c7a120984431.jpg"
+},
+
+    
     
  { 
     title: "Mowgli", 
