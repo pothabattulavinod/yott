@@ -47,6 +47,13 @@ body{
   font-size:14px;
 }
 
+/* LOGIN BUTTON CONTAINER */
+#loginContainer{
+  text-align:center;
+  margin-top:10px;
+  display:none;
+}
+
 /* MAIN CONTAINER */
 main.container{
   padding-bottom:100px;
@@ -214,6 +221,9 @@ main.container{
 <!-- SEARCH -->
 <div id="searchBox" class="search">
   <input id="q" type="search" placeholder="Search movies">
+  <div id="loginContainer">
+    <button id="loginBtn" class="btn btn-primary">Login</button>
+  </div>
 </div>
 
 <!-- GRID CONTAINER -->
@@ -247,6 +257,7 @@ import { movies } from './movies.js';
 const grid = document.getElementById('moviesGrid');
 const qInput = document.getElementById('q');
 const searchBox = document.getElementById('searchBox');
+const loginContainer = document.getElementById('loginContainer');
 
 const homeBtn = document.getElementById('homeBtn');
 const searchBtn = document.getElementById('searchBtn');
@@ -318,6 +329,7 @@ function render(list){
 function goHome(){
   searchBox.classList.remove('active');
   qInput.value='';
+  loginContainer.style.display='none';
   render(sortByLatest(movies));
   setActive(homeBtn);
 }
@@ -333,14 +345,16 @@ searchBtn.onclick = ()=>{
 latestBtn.onclick = ()=>{
   searchBox.classList.remove('active');
   qInput.value='';
+  loginContainer.style.display='none';
   render(sortByLatest(latestMovies(movies)));
   setActive(latestBtn);
 };
 
-/* UPDATES AS NEWS FEED WITH PRESERVED DATES AND SORTED DESCENDING */
+/* UPDATES NEWS FEED */
 updatesBtn.onclick = async ()=>{
   searchBox.classList.remove('active');
   qInput.value='';
+  loginContainer.style.display='none';
 
   try {
     const response = await fetch('./update.txt');
@@ -367,7 +381,6 @@ updatesBtn.onclick = async ()=>{
         dateStr = formattedToday;
         content = line;
       }
-      // convert dateStr to Date object for sorting
       const parsedDate = new Date(dateStr);
       return {date: isNaN(parsedDate)?today:parsedDate, dateStr, content};
     });
@@ -391,9 +404,18 @@ updatesBtn.onclick = async ()=>{
   setActive(updatesBtn);
 };
 
-/* SEARCH INPUT */
+/* SEARCH INPUT with Login Easter-Egg */
 qInput.oninput = ()=>{
-  render(sortByLatest(smartSearch(qInput.value,movies)));
+  const val = qInput.value.trim();
+
+  // Show login button only if 2580 typed
+  if(val === '2580'){
+    loginContainer.style.display = 'block';
+  } else {
+    loginContainer.style.display = 'none';
+  }
+
+  render(sortByLatest(smartSearch(val,movies)));
 };
 
 /* EVENTS */
