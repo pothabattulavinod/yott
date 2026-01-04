@@ -89,18 +89,13 @@ main.container{
   aspect-ratio:3/4; /* taller posters */
   border-radius:12px;
   overflow:hidden;
+  display:block;
 }
 
-.poster-bg{
+.thumbnail img{
   width:100%;
   height:100%;
   object-fit:cover;
-  opacity:1; /* fully opaque */
-}
-
-/* remove title overlay completely */
-.overlay, .title{
-  display:none;
 }
 
 /* UPDATES NEWS CARD */
@@ -258,14 +253,14 @@ function latestMovies(list){
   });
 }
 
-/* RENDER MOVIES - SINGLE LARGE POSTER, NO TITLE */
+/* RENDER MOVIES - SINGLE CLICKABLE POSTER */
 function render(list){
   grid.innerHTML = list.length
     ? list.map(movie => `
       <div class="card">
-        <div class="thumbnail">
-          <img class="poster-bg" src="${movie.poster}">
-        </div>
+        <a href="${movie.url}" target="_blank" class="thumbnail">
+          <img src="${movie.poster}" alt="${movie.title}">
+        </a>
       </div>
     `).join('')
     : `<p class="text-center text-muted w-100">No movies found</p>`;
