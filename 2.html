@@ -21,6 +21,7 @@ body{
   color:#fff;
   margin:0;
   padding-bottom:70px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 /* LOGO */
@@ -42,6 +43,7 @@ body{
   color:#fff;
   padding:10px 14px;
   border-radius:10px;
+  font-size:14px;
 }
 
 /* MAIN FIX */
@@ -52,10 +54,10 @@ main.container{
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
   gap:18px;
   justify-items:center;
-  align-items:start; /* ensures proper alignment */
+  align-items:start;
 }
 .card{
   background:var(--card);
@@ -65,12 +67,19 @@ main.container{
   max-width:220px;
   display:flex;
   flex-direction:column;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  transition: transform .2s;
+}
+.card:hover {
+  transform: scale(1.03);
 }
 .thumbnail{
   position:relative;
   width:100%;
-  aspect-ratio:2/3; /* keeps all cards same height */
+  aspect-ratio:2/3; /* uniform height */
   flex-shrink:0;
+  overflow:hidden;
+  border-radius:12px;
 }
 .poster-bg{
   width:100%;
@@ -103,17 +112,23 @@ main.container{
   text-decoration:none;
   z-index:3;
   font-size:20px;
+  transition: background .2s;
+}
+.play-btn:hover{
+  background:#05a2bb;
 }
 .overlay{
   position:absolute;
   bottom:0;
   width:100%;
-  padding:10px;
+  padding:8px 6px;
   background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
   box-sizing:border-box;
+  display:flex;
+  justify-content:center;
 }
 .title{
-  font-size:14px;
+  font-size:13px;
   font-weight:600;
   color:#fff;
   line-height:1.2;
@@ -125,7 +140,7 @@ main.container{
   font-size:10px;
   padding:2px 6px;
   border-radius:4px;
-  margin-left:6px;
+  margin-left:4px;
 }
 
 /* BOTTOM NAV */
@@ -153,6 +168,24 @@ main.container{
 .bottom-nav a.active,
 .bottom-nav a:hover{color:var(--accent)}
 .bottom-nav i{font-size:20px}
+
+/* RESPONSIVE TITLES */
+@media(max-width:500px){
+  .grid{
+    gap:12px;
+  }
+  .poster-front{
+    width:60px;
+  }
+  .title{
+    font-size:12px;
+  }
+  .play-btn{
+    width:40px;
+    height:40px;
+    font-size:16px;
+  }
+}
 </style>
 </head>
 
