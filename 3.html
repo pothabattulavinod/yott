@@ -14,6 +14,7 @@
   --card:#0b1220;
   --accent:#06b6d4;
   --muted:#9aa4b2;
+  --font:'Segoe UI', sans-serif;
 }
 
 body{
@@ -21,7 +22,7 @@ body{
   color:#fff;
   margin:0;
   padding-bottom:70px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:var(--font);
 }
 
 /* LOGO */
@@ -46,7 +47,7 @@ body{
   font-size:14px;
 }
 
-/* MAIN FIX */
+/* MAIN CONTAINER */
 main.container{
   padding-bottom:100px;
 }
@@ -60,7 +61,7 @@ main.container{
   align-items:start;
 }
 
-/* CARD */
+/* MOVIE CARD */
 .card{
   background:var(--card);
   border-radius:12px;
@@ -69,19 +70,18 @@ main.container{
   max-width:220px;
   display:flex;
   flex-direction:column;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  transition: transform .2s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  transition: transform .25s, box-shadow .25s;
 }
-.card:hover {
-  transform: scale(1.03);
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
 }
 
-/* THUMBNAIL FOR MOVIES */
 .thumbnail{
   position:relative;
   width:100%;
   aspect-ratio:2/3;
-  flex-shrink:0;
   overflow:hidden;
   border-radius:12px;
 }
@@ -90,12 +90,11 @@ main.container{
   height:100%;
   object-fit:cover;
   opacity:.35;
-  display:block;
 }
 .poster-front{
   position:absolute;
   width:80px;
-  top:45%;
+  top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   pointer-events:none;
@@ -127,7 +126,6 @@ main.container{
   width:100%;
   padding:8px 6px;
   background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
-  box-sizing:border-box;
   display:flex;
   justify-content:center;
 }
@@ -147,18 +145,21 @@ main.container{
   margin-left:4px;
 }
 
-/* UPDATES CARD */
+/* UPDATES NEWS CARD */
 .update-card{
-  max-width:600px;
+  max-width:700px;
   background:var(--card);
   border-radius:10px;
-  padding:12px 14px;
-  margin-bottom:10px;
+  padding:14px 16px;
+  margin-bottom:12px;
   text-align:left;
   font-size:14px;
-  line-height:1.4;
-  word-wrap:break-word;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  line-height:1.5;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  transition:transform .2s;
+}
+.update-card:hover{
+  transform:translateY(-3px);
 }
 .update-card .date{
   color:var(--accent);
@@ -193,22 +194,12 @@ main.container{
 .bottom-nav a:hover{color:var(--accent)}
 .bottom-nav i{font-size:20px}
 
-/* RESPONSIVE TITLES */
+/* RESPONSIVE */
 @media(max-width:500px){
-  .grid{
-    gap:12px;
-  }
-  .poster-front{
-    width:60px;
-  }
-  .title{
-    font-size:12px;
-  }
-  .play-btn{
-    width:40px;
-    height:40px;
-    font-size:16px;
-  }
+  .grid{gap:12px;}
+  .poster-front{width:60px;}
+  .title{font-size:12px;}
+  .play-btn{width:40px;height:40px;font-size:16px;}
 }
 </style>
 </head>
@@ -346,7 +337,7 @@ latestBtn.onclick = ()=>{
   setActive(latestBtn);
 };
 
-/* UPDATES AS NEWS FEED WITH PRESERVED DATES */
+/* UPDATES AS NEWS FEED WITH PRESERVED DATES AND SORTED DESCENDING */
 updatesBtn.onclick = async ()=>{
   searchBox.classList.remove('active');
   qInput.value='';
@@ -356,31 +347,41 @@ updatesBtn.onclick = async ()=>{
     if(!response.ok) throw new Error('Could not load updates.');
     const text = await response.text();
 
-    const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+    let lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
     if(lines.length === 0){
       grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
       return;
     }
 
-    // today's date in case a line has no date
+    // parse lines with optional date
     const today = new Date();
     const formattedToday = today.toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
 
-    grid.innerHTML = lines.map(line=>{
+    let newsItems = lines.map(line=>{
       const dateMatch = line.match(/^\[(.*?)\]\s*(.*)/);
-      let date, content;
+      let dateStr, content;
       if(dateMatch){
-        date = dateMatch[1];  // use existing date
+        dateStr = dateMatch[1];
         content = dateMatch[2];
       } else {
-        date = formattedToday; // fallback to today
+        dateStr = formattedToday;
         content = line;
       }
-      return `<div class="update-card">
-                <span class="date">[${date}]</span>
-                ${content}
-              </div>`;
-    }).join('');
+      // convert dateStr to Date object for sorting
+      const parsedDate = new Date(dateStr);
+      return {date: isNaN(parsedDate)?today:parsedDate, dateStr, content};
+    });
+
+    // sort descending
+    newsItems.sort((a,b)=>b.date-a.date);
+
+    // render
+    grid.innerHTML = newsItems.map(item=>`
+      <div class="update-card">
+        <span class="date">[${item.dateStr}]</span>
+        ${item.content}
+      </div>
+    `).join('');
 
   } catch(err){
     grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
