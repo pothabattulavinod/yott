@@ -58,7 +58,7 @@ header{
 .player{
   position:relative;
   width:100%;
-  padding-top:56.25%;
+  padding-top:56.25%; /* 16:9 ratio */
   background:#000;
   border-radius:var(--radius);
   overflow:hidden;
@@ -116,6 +116,7 @@ iframe{
 .movie-info h1{
   font-size:26px;
   margin-bottom:8px;
+  word-break:break-word;
 }
 
 /* BADGES BELOW */
@@ -166,6 +167,7 @@ iframe{
   font-size:14px;
   line-height:1.6;
   color:#cfd8e3;
+  word-break:break-word;
 }
 
 /* UPDATES / REVIEWS */
@@ -213,6 +215,41 @@ iframe{
 .bottom-nav a.active,
 .bottom-nav a:hover{color:var(--accent)}
 .bottom-nav i{font-size:20px}
+
+/* RESPONSIVE MEDIA QUERIES */
+@media(max-width:1024px){
+  .movie-info h1{font-size:24px;}
+  .runtime{font-size:12px;}
+  .badge{font-size:10px;padding:3px 6px;}
+}
+
+@media(max-width:768px){
+  .movie-info h1{font-size:22px;}
+  .runtime{font-size:12px;}
+  .badge{font-size:10px;padding:3px 6px;}
+  .meta{font-size:13px;}
+  .synopsis{font-size:13px;}
+  .play-btn{width:60px;height:60px;font-size:28px;}
+}
+
+@media(max-width:480px){
+  header{padding:10px 12px;}
+  .logo{font-size:18px;}
+  .movie-info{padding:12px;}
+  .player{padding-top:56.25%;}
+  .play-btn{width:50px;height:50px;font-size:22px;}
+  .movie-info h1{font-size:20px;}
+  .badge{font-size:9px;padding:2px 5px;}
+  .runtime{font-size:11px;}
+  .meta{font-size:12px;}
+  .synopsis{font-size:12px;}
+}
+
+@media(max-width:360px){
+  .play-btn{width:45px;height:45px;font-size:20px;}
+  .movie-info h1{font-size:18px;}
+  .runtime{font-size:10px;}
+}
 </style>
 </head>
 
@@ -237,7 +274,7 @@ iframe{
   <!-- INFO -->
   <div class="movie-info">
     <h1>Mowgli (2025)</h1>
-<div class="runtime">
+    <div class="runtime">
       <i class="bi bi-clock"></i>
       <span>2hrs 41mins</span>
     </div>
@@ -248,8 +285,6 @@ iframe{
       <span class="badge hd">HD</span>
       <span class="badge low">LOW</span>
     </div>
-
-    
 
     <div class="meta">Telugu • Action • Adventure</div>
 
