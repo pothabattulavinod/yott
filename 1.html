@@ -30,15 +30,10 @@ body{
   padding:16px 0 8px;
   cursor:pointer;
 }
-.logo img{
-  height:42px;
-}
+.logo img{height:42px}
 
 /* SEARCH */
-.search{
-  padding:15px;
-  display:none;
-}
+.search{padding:15px;display:none}
 .search.active{display:block}
 .search input{
   width:100%;
@@ -47,6 +42,11 @@ body{
   color:#fff;
   padding:10px 14px;
   border-radius:10px;
+}
+
+/* MAIN FIX (BOTTOM NAV OVERLAP) */
+main.container{
+  padding-bottom:100px;
 }
 
 /* GRID */
@@ -122,6 +122,7 @@ body{
   justify-content:space-around;
   align-items:center;
   border-top:1px solid rgba(255,255,255,.1);
+  z-index:10;
 }
 .bottom-nav a{
   color:var(--muted);
@@ -133,9 +134,7 @@ body{
   cursor:pointer;
 }
 .bottom-nav a.active,
-.bottom-nav a:hover{
-  color:var(--accent);
-}
+.bottom-nav a:hover{color:var(--accent)}
 .bottom-nav i{font-size:20px}
 </style>
 </head>
@@ -167,7 +166,7 @@ body{
     <i class="bi bi-search"></i>
     <span>Search</span>
   </a>
-  <a>
+  <a id="latestBtn">
     <i class="bi bi-clock-history"></i>
     <span>Latest</span>
   </a>
@@ -183,9 +182,12 @@ import { movies } from './movies.js';
 const grid = document.getElementById('moviesGrid');
 const qInput = document.getElementById('q');
 const searchBox = document.getElementById('searchBox');
+
 const homeBtn = document.getElementById('homeBtn');
 const searchBtn = document.getElementById('searchBtn');
+const latestBtn = document.getElementById('latestBtn');
 const logoBtn = document.getElementById('logoBtn');
+
 const navLinks = document.querySelectorAll('.bottom-nav a');
 
 function setActive(el){
@@ -206,25 +208,39 @@ function smartSearch(q,list){
   });
 }
 
+/* LATEST (30 DAYS) */
+function latestMovies(list){
+  const now = new Date();
+  const past = new Date();
+  past.setDate(now.getDate() - 30);
+
+  return list.filter(m=>{
+    const d = new Date(m.date);
+    return d >= past && d <= now;
+  });
+}
+
 function render(list){
-  grid.innerHTML = list.map(movie=>`
-    <div class="card">
-      <div class="thumbnail">
-        <img class="poster-bg" src="${movie.poster}">
-        <img class="poster-front" src="${movie.poster}">
-        <a class="play-btn" href="${movie.url}" target="_blank">▶</a>
-        <div class="overlay">
-          <div class="title">
-            ${movie.title}
-            ${movie.isNew ? '<span>NEW</span>' : ''}
+  grid.innerHTML = list.length
+    ? list.map(movie=>`
+      <div class="card">
+        <div class="thumbnail">
+          <img class="poster-bg" src="${movie.poster}">
+          <img class="poster-front" src="${movie.poster}">
+          <a class="play-btn" href="${movie.url}" target="_blank">▶</a>
+          <div class="overlay">
+            <div class="title">
+              ${movie.title}
+              ${movie.isNew ? '<span>NEW</span>' : ''}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `).join('')
+    : `<p class="text-center text-muted w-100">No movies found</p>`;
 }
 
-/* HOME / LOGO RESET */
+/* HOME */
 function goHome(){
   searchBox.classList.remove('active');
   qInput.value='';
@@ -232,14 +248,21 @@ function goHome(){
   setActive(homeBtn);
 }
 
+/* EVENTS */
 homeBtn.onclick = goHome;
 logoBtn.onclick = goHome;
 
-/* SEARCH */
 searchBtn.onclick = ()=>{
   searchBox.classList.add('active');
   qInput.focus();
   setActive(searchBtn);
+};
+
+latestBtn.onclick = ()=>{
+  searchBox.classList.remove('active');
+  qInput.value='';
+  render(latestMovies(movies));
+  setActive(latestBtn);
 };
 
 qInput.oninput = ()=>{
