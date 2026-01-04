@@ -346,7 +346,7 @@ latestBtn.onclick = ()=>{
   setActive(latestBtn);
 };
 
-/* UPDATES AS NEWS FEED WITH TIMESTAMP */
+/* UPDATES AS NEWS FEED WITH PRESERVED DATES */
 updatesBtn.onclick = async ()=>{
   searchBox.classList.remove('active');
   qInput.value='';
@@ -356,23 +356,31 @@ updatesBtn.onclick = async ()=>{
     if(!response.ok) throw new Error('Could not load updates.');
     const text = await response.text();
 
-    // split by lines and create cards for each line
     const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
     if(lines.length === 0){
       grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
       return;
     }
 
-    // format date
+    // today's date in case a line has no date
     const today = new Date();
-    const formattedDate = today.toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
+    const formattedToday = today.toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
 
-    grid.innerHTML = lines.map(line=>`
-      <div class="update-card">
-        <span class="date">[${formattedDate}]</span>
-        ${line}
-      </div>
-    `).join('');
+    grid.innerHTML = lines.map(line=>{
+      const dateMatch = line.match(/^\[(.*?)\]\s*(.*)/);
+      let date, content;
+      if(dateMatch){
+        date = dateMatch[1];  // use existing date
+        content = dateMatch[2];
+      } else {
+        date = formattedToday; // fallback to today
+        content = line;
+      }
+      return `<div class="update-card">
+                <span class="date">[${date}]</span>
+                ${content}
+              </div>`;
+    }).join('');
 
   } catch(err){
     grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
