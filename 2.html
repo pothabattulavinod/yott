@@ -75,8 +75,8 @@ main.container{
 }
 .poster-front{
   position:absolute;
-  width:110px;
-  top:50%;
+  width:80px;
+  top:45%;
   left:50%;
   transform:translate(-50%,-50%);
   pointer-events:none;
@@ -96,6 +96,7 @@ main.container{
   justify-content:center;
   text-decoration:none;
   z-index:3;
+  font-size:20px;
 }
 .overlay{
   position:absolute;
@@ -103,6 +104,15 @@ main.container{
   width:100%;
   padding:10px;
   background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+  box-sizing:border-box;
+}
+.title{
+  font-size:14px;
+  font-weight:600;
+  color:#fff;
+  line-height:1.2;
+  text-align:center;
+  word-break:break-word;
 }
 .title span{
   background:var(--accent);
