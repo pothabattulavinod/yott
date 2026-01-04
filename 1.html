@@ -6,7 +6,251 @@
   
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-E6E43CJJDT"></script>
-<script>
+<script><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YOTT — Movies</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#061021;
+  --card:#0b1220;
+  --accent:#06b6d4;
+  --muted:#9aa4b2;
+}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  margin:0;
+  padding-bottom:70px;
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  justify-content:center;
+  padding:16px 0 8px;
+}
+.logo img{
+  height:42px;
+}
+
+/* SEARCH */
+.search{
+  padding:15px;
+  display:none;
+}
+.search.active{display:block}
+.search input{
+  width:100%;
+  background:rgba(255,255,255,.1);
+  border:none;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:18px;
+  justify-items:center;
+}
+.card{
+  background:var(--card);
+  border-radius:12px;
+  overflow:hidden;
+  width:100%;
+  max-width:220px;
+}
+.thumbnail{
+  position:relative;
+  aspect-ratio:2/3;
+}
+.poster-bg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.3;
+}
+.poster-front{
+  position:absolute;
+  width:100px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+.play-btn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:var(--accent);
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  z-index:2;
+}
+.overlay{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:10px;
+  background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+}
+.title span{
+  background:var(--accent);
+  font-size:10px;
+  padding:2px 6px;
+  border-radius:4px;
+  margin-left:6px;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#0b1220;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.bottom-nav a{
+  color:var(--muted);
+  font-size:12px;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.bottom-nav a.active,
+.bottom-nav a:hover{
+  color:var(--accent);
+}
+.bottom-nav i{font-size:20px}
+</style>
+</head>
+
+<body>
+
+<!-- LOGO -->
+<div class="logo">
+  <img src="ONEV.png" alt="ONEV Logo">
+</div>
+
+<!-- SEARCH -->
+<div id="searchBox" class="search">
+  <input id="q" type="search" placeholder="Search movies">
+</div>
+
+<!-- MOVIES -->
+<main class="container">
+  <div id="moviesGrid" class="grid"></div>
+</main>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a id="homeBtn" class="active">
+    <i class="bi bi-house"></i>
+    <span>Home</span>
+  </a>
+  <a id="searchBtn">
+    <i class="bi bi-search"></i>
+    <span>Search</span>
+  </a>
+  <a>
+    <i class="bi bi-clock-history"></i>
+    <span>Latest</span>
+  </a>
+  <a>
+    <i class="bi bi-bell"></i>
+    <span>Updates</span>
+  </a>
+</div>
+
+<script type="module">
+import { movies } from './movies.js';
+
+const grid = document.getElementById('moviesGrid');
+const qInput = document.getElementById('q');
+const searchBox = document.getElementById('searchBox');
+const homeBtn = document.getElementById('homeBtn');
+const searchBtn = document.getElementById('searchBtn');
+const navLinks = document.querySelectorAll('.bottom-nav a');
+
+function setActive(el){
+  navLinks.forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function normalize(str){
+  return str.toLowerCase().replace(/[\s\.\-_,]/g,'');
+}
+
+function smartSearch(q,list){
+  const words=q.trim().split(/\s+/).map(normalize);
+  return list.filter(m=>{
+    const t=normalize(m.title);
+    return words.every(w=>t.includes(w));
+  });
+}
+
+function render(list){
+  grid.innerHTML = list.map(movie=>`
+    <div class="card">
+      <div class="thumbnail">
+        <img class="poster-bg" src="${movie.poster}">
+        <img class="poster-front" src="${movie.poster}">
+        <a class="play-btn" href="${movie.url}" target="_blank">▶</a>
+        <div class="overlay">
+          <div class="title">
+            ${movie.title}
+            ${movie.isNew ? '<span>NEW</span>' : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+homeBtn.onclick = ()=>{
+  searchBox.classList.remove('active');
+  qInput.value='';
+  render(movies);
+  setActive(homeBtn);
+};
+
+searchBtn.onclick = ()=>{
+  searchBox.classList.toggle('active');
+  qInput.focus();
+  setActive(searchBtn);
+};
+
+qInput.oninput = ()=>{
+  render(smartSearch(qInput.value,movies));
+};
+
+render(movies);
+</script>
+
+</body>
+</html>
+
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
