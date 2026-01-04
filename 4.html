@@ -32,7 +32,6 @@ body{
   padding:16px 0 8px;
   cursor:pointer;
 }
-.logo img{height:42px}
 
 /* SEARCH */
 .search{padding:15px;display:none}
@@ -62,7 +61,7 @@ main.container{
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns:repeat(4, 1fr); /* 4 columns */
   gap:18px;
   justify-items:center;
   align-items:start;
@@ -74,7 +73,6 @@ main.container{
   border-radius:12px;
   overflow:hidden;
   width:100%;
-  max-width:220px;
   display:flex;
   flex-direction:column;
   box-shadow: 0 3px 10px rgba(0,0,0,0.6);
@@ -85,71 +83,24 @@ main.container{
   box-shadow: 0 8px 20px rgba(0,0,0,0.7);
 }
 
+/* LARGER POSTER */
 .thumbnail{
-  position:relative;
   width:100%;
-  aspect-ratio:2/3;
-  overflow:hidden;
+  aspect-ratio:3/4; /* taller posters */
   border-radius:12px;
+  overflow:hidden;
 }
+
 .poster-bg{
   width:100%;
   height:100%;
   object-fit:cover;
-  opacity:.35;
+  opacity:1; /* fully opaque */
 }
-.poster-front{
-  position:absolute;
-  width:80px;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  pointer-events:none;
-}
-.play-btn{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:var(--accent);
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  z-index:3;
-  font-size:20px;
-  transition: background .2s;
-}
-.play-btn:hover{
-  background:#05a2bb;
-}
-.overlay{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  padding:8px 6px;
-  background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
-  display:flex;
-  justify-content:center;
-}
-.title{
-  font-size:13px;
-  font-weight:600;
-  color:#fff;
-  line-height:1.2;
-  text-align:center;
-  word-break:break-word;
-}
-.title span{
-  background:var(--accent);
-  font-size:10px;
-  padding:2px 6px;
-  border-radius:4px;
-  margin-left:4px;
+
+/* remove title overlay completely */
+.overlay, .title{
+  display:none;
 }
 
 /* UPDATES NEWS CARD */
@@ -204,20 +155,8 @@ main.container{
 /* RESPONSIVE */
 @media(max-width:500px){
   .grid{
-    grid-template-columns:repeat(4, 1fr); /* 4 columns mobile */
+    grid-template-columns:repeat(4, 1fr);
     gap:12px;
-  }
-  .poster-front{
-    display:none; /* hide front poster on mobile */
-  }
-  .play-btn{
-    display:none; /* hide play button on mobile */
-  }
-  .title{
-    font-size:12px;
-  }
-  .card{
-    max-width:100%;
   }
 }
 </style>
@@ -305,12 +244,10 @@ function smartSearch(q,list){
   });
 }
 
-/* SORT BY DATE (LATEST FIRST) */
 function sortByLatest(list){
   return [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
 }
 
-/* LATEST (30 DAYS) */
 function latestMovies(list){
   const now = new Date();
   const past = new Date();
@@ -321,23 +258,13 @@ function latestMovies(list){
   });
 }
 
-/* RENDER MOVIES */
+/* RENDER MOVIES - SINGLE LARGE POSTER, NO TITLE */
 function render(list){
   grid.innerHTML = list.length
-    ? list.map(movie=>`
+    ? list.map(movie => `
       <div class="card">
         <div class="thumbnail">
           <img class="poster-bg" src="${movie.poster}">
-          <img class="poster-front" src="${movie.poster}">
-          <a class="play-btn" href="${movie.url}" target="_blank">
-            <i class="bi bi-play-fill"></i>
-          </a>
-          <div class="overlay">
-            <div class="title">
-              ${movie.title}
-              ${movie.isNew ? '<span>NEW</span>' : ''}
-            </div>
-          </div>
         </div>
       </div>
     `).join('')
