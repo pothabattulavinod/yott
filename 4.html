@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YOTT — Movies</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#061021;
+  --card:#0b1220;
+  --accent:#06b6d4;
+  --muted:#9aa4b2;
+  --font:'Segoe UI', sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  margin:0;
+  padding-bottom:70px;
+  font-family:var(--font);
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  justify-content:center;
+  padding:16px 0 8px;
+  cursor:pointer;
+}
+.logo img{height:42px}
+
+/* SEARCH */
+.search{padding:15px;display:none}
+.search.active{display:block}
+.search input{
+  width:100%;
+  background:rgba(255,255,255,.1);
+  border:none;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+/* LOGIN BUTTON CONTAINER */
+#loginContainer{
+  text-align:center;
+  margin-top:10px;
+  display:none;
+}
+
+/* MAIN CONTAINER */
+main.container{
+  padding-bottom:100px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+  gap:18px;
+  justify-items:center;
+  align-items:start;
+}
+
+/* MOVIE CARD */
+.card{
+  background:var(--card);
+  border-radius:12px;
+  overflow:hidden;
+  width:100%;
+  max-width:220px;
+  display:flex;
+  flex-direction:column;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  transition: transform .25s, box-shadow .25s;
+}
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+}
+
+.thumbnail{
+  position:relative;
+  width:100%;
+  aspect-ratio:2/3;
+  overflow:hidden;
+  border-radius:12px;
+}
+.poster-bg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.35;
+}
+.poster-front{
+  position:absolute;
+  width:80px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.play-btn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:var(--accent);
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  z-index:3;
+  font-size:20px;
+  transition: background .2s;
+}
+.play-btn:hover{
+  background:#05a2bb;
+}
+.overlay{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:8px 6px;
+  background:linear-gradient(to top,rgba(0,0,0,.9),transparent);
+  display:flex;
+  justify-content:center;
+}
+.title{
+  font-size:13px;
+  font-weight:600;
+  color:#fff;
+  line-height:1.2;
+  text-align:center;
+  word-break:break-word;
+}
+.title span{
+  background:var(--accent);
+  font-size:10px;
+  padding:2px 6px;
+  border-radius:4px;
+  margin-left:4px;
+}
+
+/* UPDATES NEWS CARD */
+.update-card{
+  max-width:700px;
+  background:var(--card);
+  border-radius:10px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  text-align:left;
+  font-size:14px;
+  line-height:1.5;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  transition:transform .2s;
+}
+.update-card:hover{
+  transform:translateY(-3px);
+}
+.update-card .date{
+  color:var(--accent);
+  font-size:12px;
+  margin-bottom:6px;
+  display:block;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#0b1220;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid rgba(255,255,255,.1);
+  z-index:10;
+}
+.bottom-nav a{
+  color:var(--muted);
+  font-size:12px;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  cursor:pointer;
+}
+.bottom-nav a.active,
+.bottom-nav a:hover{color:var(--accent)}
+.bottom-nav i{font-size:20px}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+  .grid{
+    grid-template-columns:repeat(4, 1fr); /* 4 columns mobile */
+    gap:12px;
+  }
+  .poster-front{
+    display:none; /* hide front poster on mobile */
+  }
+  .play-btn{
+    display:none; /* hide play button on mobile */
+  }
+  .title{
+    font-size:12px;
+  }
+  .card{
+    max-width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGO -->
+<div class="logo" id="logoBtn">
+  <span style="
+    font-size:26px;
+    font-weight:600;
+    letter-spacing:1px;
+    color:#ffffff;
+    user-select:none;
+  ">
+    1V <strong style="color:#06b6d4;font-weight:700;">MOVIES</strong>
+  </span>
+</div>
+
+<!-- SEARCH -->
+<div id="searchBox" class="search">
+  <input id="q" type="search" placeholder="Search movies">
+  <div id="loginContainer">
+    <button id="loginBtn" class="btn btn-primary">Login</button>
+  </div>
+</div>
+
+<!-- GRID CONTAINER -->
+<main class="container">
+  <div id="moviesGrid" class="grid"></div>
+</main>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a id="homeBtn" class="active">
+    <i class="bi bi-house"></i>
+    <span>Home</span>
+  </a>
+  <a id="searchBtn">
+    <i class="bi bi-search"></i>
+    <span>Search</span>
+  </a>
+  <a id="latestBtn">
+    <i class="bi bi-clock-history"></i>
+    <span>Latest</span>
+  </a>
+  <a id="updatesBtn">
+    <i class="bi bi-bell"></i>
+    <span>Updates</span>
+  </a>
+</div>
+
+<script type="module">
+import { movies } from './movies.js';
+
+const grid = document.getElementById('moviesGrid');
+const qInput = document.getElementById('q');
+const searchBox = document.getElementById('searchBox');
+const loginContainer = document.getElementById('loginContainer');
+
+const homeBtn = document.getElementById('homeBtn');
+const searchBtn = document.getElementById('searchBtn');
+const latestBtn = document.getElementById('latestBtn');
+const updatesBtn = document.getElementById('updatesBtn');
+const logoBtn = document.getElementById('logoBtn');
+
+const navLinks = document.querySelectorAll('.bottom-nav a');
+
+function setActive(el){
+  navLinks.forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function normalize(str){
+  return str.toLowerCase().replace(/[\s\.\-_,]/g,'');
+}
+
+function smartSearch(q,list){
+  if(!q.trim()) return list;
+  const words=q.trim().split(/\s+/).map(normalize);
+  return list.filter(m=>{
+    const t=normalize(m.title);
+    return words.every(w=>t.includes(w));
+  });
+}
+
+/* SORT BY DATE (LATEST FIRST) */
+function sortByLatest(list){
+  return [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
+}
+
+/* LATEST (30 DAYS) */
+function latestMovies(list){
+  const now = new Date();
+  const past = new Date();
+  past.setDate(now.getDate() - 30);
+  return list.filter(m=>{
+    const d = new Date(m.date);
+    return d >= past && d <= now;
+  });
+}
+
+/* RENDER MOVIES */
+function render(list){
+  grid.innerHTML = list.length
+    ? list.map(movie=>`
+      <div class="card">
+        <div class="thumbnail">
+          <img class="poster-bg" src="${movie.poster}">
+          <img class="poster-front" src="${movie.poster}">
+          <a class="play-btn" href="${movie.url}" target="_blank">
+            <i class="bi bi-play-fill"></i>
+          </a>
+          <div class="overlay">
+            <div class="title">
+              ${movie.title}
+              ${movie.isNew ? '<span>NEW</span>' : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('')
+    : `<p class="text-center text-muted w-100">No movies found</p>`;
+}
+
+/* HOME */
+function goHome(){
+  searchBox.classList.remove('active');
+  qInput.value='';
+  loginContainer.style.display='none';
+  render(sortByLatest(movies));
+  setActive(homeBtn);
+}
+
+/* SEARCH */
+searchBtn.onclick = ()=>{
+  searchBox.classList.add('active');
+  qInput.focus();
+  setActive(searchBtn);
+};
+
+/* LATEST */
+latestBtn.onclick = ()=>{
+  searchBox.classList.remove('active');
+  qInput.value='';
+  loginContainer.style.display='none';
+  render(sortByLatest(latestMovies(movies)));
+  setActive(latestBtn);
+};
+
+/* UPDATES NEWS FEED */
+updatesBtn.onclick = async ()=>{
+  searchBox.classList.remove('active');
+  qInput.value='';
+  loginContainer.style.display='none';
+
+  try {
+    const response = await fetch('./update.txt');
+    if(!response.ok) throw new Error('Could not load updates.');
+    const text = await response.text();
+
+    let lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+    if(lines.length === 0){
+      grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
+      return;
+    }
+
+    const today = new Date();
+    const formattedToday = today.toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
+
+    let newsItems = lines.map(line=>{
+      const dateMatch = line.match(/^\[(.*?)\]\s*(.*)/);
+      let dateStr, content;
+      if(dateMatch){
+        dateStr = dateMatch[1];
+        content = dateMatch[2];
+      } else {
+        dateStr = formattedToday;
+        content = line;
+      }
+      const parsedDate = new Date(dateStr);
+      return {date: isNaN(parsedDate)?today:parsedDate, dateStr, content};
+    });
+
+    newsItems.sort((a,b)=>b.date-a.date);
+
+    grid.innerHTML = newsItems.map(item=>`
+      <div class="update-card">
+        <span class="date">[${item.dateStr}]</span>
+        ${item.content}
+      </div>
+    `).join('');
+
+  } catch(err){
+    grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
+    console.error(err);
+  }
+
+  setActive(updatesBtn);
+};
+
+/* SEARCH INPUT with Login Easter-Egg */
+qInput.oninput = ()=>{
+  const val = qInput.value.trim();
+
+  if(val === '2580'){
+    loginContainer.style.display = 'block';
+  } else {
+    loginContainer.style.display = 'none';
+  }
+
+  render(sortByLatest(smartSearch(val,movies)));
+};
+
+/* EVENTS */
+homeBtn.onclick = goHome;
+logoBtn.onclick = goHome;
+
+/* INITIAL LOAD */
+render(sortByLatest(movies));
+</script>
+
+</body>
+</html>
