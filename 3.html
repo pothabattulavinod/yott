@@ -59,6 +59,8 @@ main.container{
   justify-items:center;
   align-items:start;
 }
+
+/* CARD */
 .card{
   background:var(--card);
   border-radius:12px;
@@ -73,10 +75,12 @@ main.container{
 .card:hover {
   transform: scale(1.03);
 }
+
+/* THUMBNAIL FOR MOVIES */
 .thumbnail{
   position:relative;
   width:100%;
-  aspect-ratio:2/3; /* uniform height */
+  aspect-ratio:2/3;
   flex-shrink:0;
   overflow:hidden;
   border-radius:12px;
@@ -143,6 +147,20 @@ main.container{
   margin-left:4px;
 }
 
+/* UPDATES CARD */
+.update-card{
+  max-width:600px;
+  background:var(--card);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:10px;
+  text-align:left;
+  font-size:14px;
+  line-height:1.4;
+  word-wrap:break-word;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
 /* BOTTOM NAV */
 .bottom-nav{
   position:fixed;
@@ -201,7 +219,7 @@ main.container{
   <input id="q" type="search" placeholder="Search movies">
 </div>
 
-<!-- MOVIES -->
+<!-- GRID CONTAINER -->
 <main class="container">
   <div id="moviesGrid" class="grid"></div>
 </main>
@@ -322,21 +340,32 @@ latestBtn.onclick = ()=>{
   setActive(latestBtn);
 };
 
-/* UPDATES */
+/* UPDATES AS NEWS FEED */
 updatesBtn.onclick = async ()=>{
   searchBox.classList.remove('active');
   qInput.value='';
+
   try {
     const response = await fetch('./update.txt');
     if(!response.ok) throw new Error('Could not load updates.');
     const text = await response.text();
-    grid.innerHTML = `<div class="card" style="padding:20px;text-align:center;max-width:1000px;">
-                        <pre style="white-space:pre-wrap;color:#fff;font-size:14px;text-align:left;">${text}</pre>
-                      </div>`;
+
+    // split by lines and create cards for each line
+    const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+    if(lines.length === 0){
+      grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
+      return;
+    }
+
+    grid.innerHTML = lines.map(line=>`
+      <div class="update-card">${line}</div>
+    `).join('');
+
   } catch(err){
     grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
     console.error(err);
   }
+
   setActive(updatesBtn);
 };
 
