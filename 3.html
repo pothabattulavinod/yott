@@ -160,6 +160,12 @@ main.container{
   word-wrap:break-word;
   box-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
+.update-card .date{
+  color:var(--accent);
+  font-size:12px;
+  margin-bottom:6px;
+  display:block;
+}
 
 /* BOTTOM NAV */
 .bottom-nav{
@@ -340,7 +346,7 @@ latestBtn.onclick = ()=>{
   setActive(latestBtn);
 };
 
-/* UPDATES AS NEWS FEED */
+/* UPDATES AS NEWS FEED WITH TIMESTAMP */
 updatesBtn.onclick = async ()=>{
   searchBox.classList.remove('active');
   qInput.value='';
@@ -357,8 +363,15 @@ updatesBtn.onclick = async ()=>{
       return;
     }
 
+    // format date
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
+
     grid.innerHTML = lines.map(line=>`
-      <div class="update-card">${line}</div>
+      <div class="update-card">
+        <span class="date">[${formattedDate}]</span>
+        ${line}
+      </div>
     `).join('');
 
   } catch(err){
