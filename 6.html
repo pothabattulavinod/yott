@@ -18,11 +18,6 @@
   --font:'Segoe UI', sans-serif;
 }
 
-/* Hide cursor as much as browsers allow */
-html,body,*{
-  cursor:none !important;
-}
-
 body{
   background:var(--bg);
   color:#fff;
@@ -36,6 +31,7 @@ body{
   display:flex;
   justify-content:center;
   padding:16px 0 8px;
+  cursor:pointer;
 }
 
 /* SEARCH */
@@ -48,41 +44,91 @@ body{
   color:#fff;
   padding:10px 14px;
   border-radius:10px;
+  font-size:14px;
+}
+
+/* LOGIN BUTTON CONTAINER */
+#loginContainer{
+  text-align:center;
+  margin-top:10px;
+  display:none;
+}
+
+/* MAIN CONTAINER */
+main.container{
+  padding-bottom:100px;
 }
 
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(4, 1fr);
   gap:18px;
+  justify-items:center;
+  align-items:start;
 }
 
-/* CARD */
+/* MOVIE CARD */
 .card{
   background:var(--card);
   border-radius:12px;
-  width:100%;
   overflow:hidden;
-  box-shadow:0 3px 10px rgba(0,0,0,.6);
-  transition:transform .2s;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  transition: transform .25s, box-shadow .25s;
+  outline: none;
 }
-
+.card:hover,
 .card:focus{
-  outline:3px solid var(--accent);
-  transform:scale(1.06);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+  z-index:2;
 }
 
-/* POSTER */
+/* LARGER POSTER */
 .thumbnail{
+  width:100%;
   aspect-ratio:3/4;
+  border-radius:12px;
+  overflow:hidden;
+  display:block;
 }
+
 .thumbnail img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* NAV */
+/* UPDATES NEWS CARD */
+.update-card{
+  max-width:700px;
+  background:var(--card);
+  border-radius:10px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  text-align:left;
+  font-size:14px;
+  line-height:1.5;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  transition:transform .2s;
+}
+.update-card:hover,
+.update-card:focus{
+  transform:translateY(-3px) scale(1.03);
+  outline:none;
+  box-shadow:0 0 10px var(--accent);
+}
+.update-card .date{
+  color:var(--accent);
+  font-size:12px;
+  margin-bottom:6px;
+  display:block;
+}
+
+/* BOTTOM NAV */
 .bottom-nav{
   position:fixed;
   bottom:0;
@@ -93,8 +139,8 @@ body{
   justify-content:space-around;
   align-items:center;
   border-top:1px solid rgba(255,255,255,.1);
+  z-index:10;
 }
-
 .bottom-nav a{
   color:var(--muted);
   font-size:12px;
@@ -102,15 +148,21 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
+  cursor:pointer;
+  outline: none;
 }
-
+.bottom-nav a.active,
+.bottom-nav a:hover,
 .bottom-nav a:focus{
   color:var(--accent);
-  outline:none;
 }
 
+/* RESPONSIVE */
 @media(max-width:500px){
-  .grid{grid-template-columns:repeat(3,1fr)}
+  .grid{
+    grid-template-columns:repeat(3, 1fr);
+    gap:12px;
+  }
 }
 </style>
 </head>
@@ -119,108 +171,214 @@ body{
 
 <!-- LOGO -->
 <div class="logo" id="logoBtn" tabindex="0">
-  <span style="font-size:26px;font-weight:600;">
-    1V <strong style="color:#06b6d4;">MOVIES</strong>
+  <span style="
+    font-size:26px;
+    font-weight:600;
+    letter-spacing:1px;
+    color:#ffffff;
+    user-select:none;
+  ">
+    1V <strong style="color:#06b6d4;font-weight:700;">MOVIES</strong>
   </span>
 </div>
 
 <!-- SEARCH -->
 <div id="searchBox" class="search">
   <input id="q" type="search" placeholder="Search movies">
+  <div id="loginContainer">
+    <button id="loginBtn" class="btn btn-primary" tabindex="0">Login</button>
+  </div>
 </div>
 
-<!-- GRID -->
+<!-- GRID CONTAINER -->
 <main class="container">
   <div id="moviesGrid" class="grid"></div>
 </main>
 
-<!-- NAV -->
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <a id="homeBtn" tabindex="0"><i class="bi bi-house"></i><span>Home</span></a>
-  <a id="searchBtn" tabindex="0"><i class="bi bi-search"></i><span>Search</span></a>
-  <a id="latestBtn" tabindex="0"><i class="bi bi-clock-history"></i><span>Latest</span></a>
+  <a id="homeBtn" class="active" tabindex="0">
+    <i class="bi bi-house"></i>
+    <span>Home</span>
+  </a>
+  <a id="searchBtn" tabindex="0">
+    <i class="bi bi-search"></i>
+    <span>Search</span>
+  </a>
+  <a id="latestBtn" tabindex="0">
+    <i class="bi bi-clock-history"></i>
+    <span>Latest</span>
+  </a>
+  <a id="updatesBtn" tabindex="0">
+    <i class="bi bi-bell"></i>
+    <span>Updates</span>
+  </a>
 </div>
 
 <script type="module">
 import { movies } from './movies.js';
 
 const grid = document.getElementById('moviesGrid');
+const qInput = document.getElementById('q');
 const searchBox = document.getElementById('searchBox');
-const q = document.getElementById('q');
+const loginContainer = document.getElementById('loginContainer');
 
-let lastIndex = 0;
-let initialized = false;
+const homeBtn = document.getElementById('homeBtn');
+const searchBtn = document.getElementById('searchBtn');
+const latestBtn = document.getElementById('latestBtn');
+const updatesBtn = document.getElementById('updatesBtn');
+const logoBtn = document.getElementById('logoBtn');
 
-function render(list){
-  grid.innerHTML = list.map(m=>`
-    <div class="card" tabindex="0" data-url="${m.url}">
-      <div class="thumbnail">
-        <img src="${m.poster}">
-      </div>
-    </div>
-  `).join('');
-  setupNavigation();
+const navLinks = document.querySelectorAll('.bottom-nav a');
+
+function setActive(el){
+  navLinks.forEach(a=>a.classList.remove('active'));
+  el.classList.add('active');
 }
 
-function setupNavigation(){
-  const cards = [...document.querySelectorAll('.card')];
-  if(!cards.length) return;
+function normalize(str){
+  return str.toLowerCase().replace(/[\s\.\-_,]/g,'');
+}
 
-  const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
-
-  cards.forEach((card,i)=>{
-    card.onfocus = ()=> lastIndex = i;
-
-    card.onkeydown = e=>{
-      let n = i;
-
-      if(e.key === 'ArrowRight') n = i+1;
-      if(e.key === 'ArrowLeft') n = i-1;
-      if(e.key === 'ArrowDown') n = i+cols;
-      if(e.key === 'ArrowUp') n = i-cols;
-
-      if(cards[n]){
-        cards[n].focus();
-        e.preventDefault();
-      }
-
-      if(e.key === 'Enter'){
-        window.open(card.dataset.url,'_blank');
-      }
-    };
+function smartSearch(q,list){
+  if(!q.trim()) return list;
+  const words=q.trim().split(/\s+/).map(normalize);
+  return list.filter(m=>{
+    const t=normalize(m.title);
+    return words.every(w=>t.includes(w));
   });
-
-  if(!initialized){
-    cards[lastIndex]?.focus();
-    initialized = true;
-  }
 }
 
-function sortLatest(list){
+function sortByLatest(list){
   return [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
 }
 
-homeBtn.onclick = ()=>{
-  searchBox.classList.remove('active');
-  render(sortLatest(movies));
-};
+function latestMovies(list){
+  const now = new Date();
+  const past = new Date();
+  past.setDate(now.getDate() - 30);
+  return list.filter(m=>{
+    const d = new Date(m.date);
+    return d >= past && d <= now;
+  });
+}
 
+/* RENDER MOVIES */
+function render(list){
+  grid.innerHTML = list.length
+    ? list.map((movie,index) => `
+      <div class="card" tabindex="0" data-url="${movie.url}" data-index="${index}">
+        <div class="thumbnail">
+          <img src="${movie.poster}" alt="${movie.title}">
+        </div>
+      </div>
+    `).join('')
+    : `<p class="text-center text-muted w-100">No movies found</p>`;
+
+  const first = document.querySelector('.card');
+  if(first) first.focus();
+}
+
+/* HOME */
+function goHome(){
+  searchBox.classList.remove('active');
+  qInput.value='';
+  loginContainer.style.display='none';
+  render(sortByLatest(movies));
+  setActive(homeBtn);
+}
+
+/* SEARCH */
 searchBtn.onclick = ()=>{
   searchBox.classList.add('active');
-  q.focus();
+  qInput.focus();
+  setActive(searchBtn);
 };
 
-latestBtn.onclick = ()=> render(sortLatest(movies));
-
-q.oninput = ()=>{
-  render(sortLatest(
-    movies.filter(m=>m.title.toLowerCase().includes(q.value.toLowerCase()))
-  ));
+/* LATEST */
+latestBtn.onclick = ()=>{
+  searchBox.classList.remove('active');
+  qInput.value='';
+  loginContainer.style.display='none';
+  render(sortByLatest(latestMovies(movies)));
+  setActive(latestBtn);
 };
 
-logoBtn.onclick = ()=> homeBtn.click();
+/* UPDATES NEWS FEED */
+updatesBtn.onclick = async ()=>{
+  searchBox.classList.remove('active');
+  qInput.value='';
+  loginContainer.style.display='none';
+  try {
+    const response = await fetch('./update.txt');
+    if(!response.ok) throw new Error('Could not load updates.');
+    const text = await response.text();
+    let lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
+    if(lines.length === 0){
+      grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
+      return;
+    }
+    const today = new Date();
+    const formattedToday = today.toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
+    let newsItems = lines.map(line=>{
+      const dateMatch = line.match(/^\[(.*?)\]\s*(.*)/);
+      let dateStr, content;
+      if(dateMatch){ dateStr = dateMatch[1]; content = dateMatch[2]; }
+      else{ dateStr = formattedToday; content=line; }
+      const parsedDate = new Date(dateStr);
+      return {date: isNaN(parsedDate)?today:parsedDate, dateStr, content};
+    });
+    newsItems.sort((a,b)=>b.date-a.date);
+    grid.innerHTML = newsItems.map(item=>`
+      <div class="update-card" tabindex="0">
+        <span class="date">[${item.dateStr}]</span>
+        ${item.content}
+      </div>
+    `).join('');
+  } catch(err){
+    grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
+    console.error(err);
+  }
+  setActive(updatesBtn);
+};
 
-render(sortLatest(movies));
+/* SEARCH INPUT with Login Easter-Egg */
+qInput.oninput = ()=>{
+  const val = qInput.value.trim();
+  loginContainer.style.display = val === '2580' ? 'block' : 'none';
+  render(sortByLatest(smartSearch(val,movies)));
+};
+
+/* EVENTS */
+homeBtn.onclick = goHome;
+logoBtn.onclick = goHome;
+
+/* INITIAL LOAD */
+render(sortByLatest(movies));
+
+/* TV Remote / Arrow Navigation */
+document.addEventListener("keydown", (e)=>{
+  const focusables = Array.from(document.querySelectorAll('a, button, input, .card, .update-card, .logo'));
+  const index = focusables.indexOf(document.activeElement);
+  if(index===-1) return;
+
+  let nextIndex = index;
+  const columns = window.innerWidth <= 500 ? 3 : 4;
+
+  switch(e.key){
+    case "ArrowRight": nextIndex = index+1; break;
+    case "ArrowLeft": nextIndex = index-1; break;
+    case "ArrowDown": nextIndex = index+columns; break;
+    case "ArrowUp": nextIndex = index-columns; break;
+    case "Enter":
+    case "OK":
+      const el = document.activeElement;
+      if(el.dataset?.url) window.open(el.dataset.url,'_self');
+      else el.click?.();
+      return;
+  }
+  if(focusables[nextIndex]) focusables[nextIndex].focus();
+});
 </script>
 
 </body>
