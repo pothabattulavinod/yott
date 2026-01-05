@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +18,11 @@
   --font:'Segoe UI', sans-serif;
 }
 
+/* 🔥 HIDE POINTER COMPLETELY */
+*{
+  cursor:none !important;
+}
+
 body{
   background:var(--bg);
   color:#fff;
@@ -30,7 +36,6 @@ body{
   display:flex;
   justify-content:center;
   padding:16px 0 8px;
-  cursor:pointer;
 }
 
 /* SEARCH */
@@ -73,7 +78,7 @@ body{
 
 .card:focus{
   outline:3px solid var(--accent);
-  transform:scale(1.05);
+  transform:scale(1.06);
   z-index:5;
 }
 
@@ -81,30 +86,12 @@ body{
 .thumbnail{
   width:100%;
   aspect-ratio:3/4;
-  display:block;
 }
 
 .thumbnail img{
   width:100%;
   height:100%;
   object-fit:cover;
-}
-
-/* UPDATES */
-.update-card{
-  max-width:700px;
-  background:var(--card);
-  border-radius:10px;
-  padding:14px 16px;
-  margin-bottom:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.5);
-}
-
-.update-card .date{
-  color:var(--accent);
-  font-size:12px;
-  display:block;
-  margin-bottom:6px;
 }
 
 /* BOTTOM NAV */
@@ -181,7 +168,6 @@ const grid = document.getElementById('moviesGrid');
 const q = document.getElementById('q');
 const searchBox = document.getElementById('searchBox');
 const loginContainer = document.getElementById('loginContainer');
-
 const navLinks = document.querySelectorAll('.bottom-nav a');
 
 function normalize(s){
@@ -200,7 +186,7 @@ function sortLatest(list){
 
 /* RENDER */
 function render(list){
-  grid.innerHTML = list.map((m,i)=>`
+  grid.innerHTML = list.map(m=>`
     <div class="card" tabindex="0" data-url="${m.url}">
       <div class="thumbnail">
         <img src="${m.poster}" alt="${m.title}">
@@ -234,7 +220,7 @@ function setupTVNavigation(){
 
 /* NAV KEYS */
 navLinks.forEach(btn=>{
-  btn.onkeydown=e=>{if(e.key==='Enter')btn.click();}
+  btn.onkeydown=e=>{ if(e.key==='Enter') btn.click(); };
 });
 
 /* EVENTS */
@@ -251,6 +237,13 @@ logoBtn.onclick=()=>homeBtn.click();
 
 /* LOAD */
 render(sortLatest(movies));
+</script>
+
+<script>
+/* 🔥 DISABLE MOUSE COMPLETELY (REMOTE ONLY) */
+['mousemove','mousedown','mouseup','click','touchstart'].forEach(ev=>{
+  document.addEventListener(ev,e=>e.preventDefault(),{passive:false});
+});
 </script>
 
 </body>
