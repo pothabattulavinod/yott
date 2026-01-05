@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YOTT — Movies</title>
+<title>1V Movies — TV Mode</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -24,6 +24,7 @@ body{
   margin:0;
   padding-bottom:70px;
   font-family:var(--font);
+  cursor: none; /* Hide system cursor */
 }
 
 /* LOGO */
@@ -31,7 +32,11 @@ body{
   display:flex;
   justify-content:center;
   padding:16px 0 8px;
-  cursor:pointer;
+  cursor: pointer;
+}
+.logo:focus {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* SEARCH */
@@ -47,11 +52,14 @@ body{
   font-size:14px;
 }
 
-/* LOGIN BUTTON CONTAINER */
+/* LOGIN BUTTON */
 #loginContainer{
   text-align:center;
   margin-top:10px;
   display:none;
+}
+#loginBtn:focus{
+  outline: 3px solid var(--accent);
 }
 
 /* MAIN CONTAINER */
@@ -80,11 +88,10 @@ main.container{
   transition: transform .25s, box-shadow .25s;
   outline: none;
 }
-.card:hover,
 .card:focus{
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-  z-index:2;
+  box-shadow: 0 0 15px var(--accent);
+  z-index: 2;
 }
 
 /* LARGER POSTER */
@@ -93,9 +100,7 @@ main.container{
   aspect-ratio:3/4;
   border-radius:12px;
   overflow:hidden;
-  display:block;
 }
-
 .thumbnail img{
   width:100%;
   height:100%;
@@ -113,19 +118,12 @@ main.container{
   font-size:14px;
   line-height:1.5;
   box-shadow:0 2px 8px rgba(0,0,0,0.5);
-  transition:transform .2s;
-}
-.update-card:hover,
-.update-card:focus{
-  transform:translateY(-3px) scale(1.03);
+  transition: transform .2s;
   outline:none;
-  box-shadow:0 0 10px var(--accent);
 }
-.update-card .date{
-  color:var(--accent);
-  font-size:12px;
-  margin-bottom:6px;
-  display:block;
+.update-card:focus{
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 10px var(--accent);
 }
 
 /* BOTTOM NAV */
@@ -149,10 +147,9 @@ main.container{
   flex-direction:column;
   align-items:center;
   cursor:pointer;
-  outline: none;
+  outline:none;
 }
 .bottom-nav a.active,
-.bottom-nav a:hover,
 .bottom-nav a:focus{
   color:var(--accent);
 }
@@ -171,13 +168,7 @@ main.container{
 
 <!-- LOGO -->
 <div class="logo" id="logoBtn" tabindex="0">
-  <span style="
-    font-size:26px;
-    font-weight:600;
-    letter-spacing:1px;
-    color:#ffffff;
-    user-select:none;
-  ">
+  <span style="font-size:26px;font-weight:600;letter-spacing:1px;color:#fff;user-select:none;">
     1V <strong style="color:#06b6d4;font-weight:700;">MOVIES</strong>
   </span>
 </div>
@@ -190,7 +181,7 @@ main.container{
   </div>
 </div>
 
-<!-- GRID CONTAINER -->
+<!-- GRID -->
 <main class="container">
   <div id="moviesGrid" class="grid"></div>
 </main>
@@ -266,8 +257,8 @@ function latestMovies(list){
 /* RENDER MOVIES */
 function render(list){
   grid.innerHTML = list.length
-    ? list.map((movie,index) => `
-      <div class="card" tabindex="0" data-url="${movie.url}" data-index="${index}">
+    ? list.map((movie,index)=>`
+      <div class="card" tabindex="0" data-url="${movie.url}">
         <div class="thumbnail">
           <img src="${movie.poster}" alt="${movie.title}">
         </div>
@@ -313,20 +304,20 @@ updatesBtn.onclick = async ()=>{
     const response = await fetch('./update.txt');
     if(!response.ok) throw new Error('Could not load updates.');
     const text = await response.text();
-    let lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
-    if(lines.length === 0){
+    let lines = text.split(/\r?\n/).filter(line=>line.trim()!=='');
+    if(lines.length===0){
       grid.innerHTML = `<p class="text-center text-muted w-100">No updates available</p>`;
       return;
     }
     const today = new Date();
-    const formattedToday = today.toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
+    const formattedToday = today.toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'});
     let newsItems = lines.map(line=>{
       const dateMatch = line.match(/^\[(.*?)\]\s*(.*)/);
       let dateStr, content;
-      if(dateMatch){ dateStr = dateMatch[1]; content = dateMatch[2]; }
-      else{ dateStr = formattedToday; content=line; }
+      if(dateMatch){ dateStr=dateMatch[1]; content=dateMatch[2]; }
+      else{ dateStr=formattedToday; content=line; }
       const parsedDate = new Date(dateStr);
-      return {date: isNaN(parsedDate)?today:parsedDate, dateStr, content};
+      return {date:isNaN(parsedDate)?today:parsedDate, dateStr, content};
     });
     newsItems.sort((a,b)=>b.date-a.date);
     grid.innerHTML = newsItems.map(item=>`
@@ -342,11 +333,10 @@ updatesBtn.onclick = async ()=>{
   setActive(updatesBtn);
 };
 
-/* SEARCH INPUT with Login Easter-Egg */
+/* SEARCH INPUT Easter Egg */
 qInput.oninput = ()=>{
-  const val = qInput.value.trim();
-  loginContainer.style.display = val === '2580' ? 'block' : 'none';
-  render(sortByLatest(smartSearch(val,movies)));
+  loginContainer.style.display = qInput.value.trim() === '2580' ? 'block' : 'none';
+  render(sortByLatest(smartSearch(qInput.value, movies)));
 };
 
 /* EVENTS */
@@ -356,8 +346,9 @@ logoBtn.onclick = goHome;
 /* INITIAL LOAD */
 render(sortByLatest(movies));
 
-/* TV Remote / Arrow Navigation */
-document.addEventListener("keydown", (e)=>{
+/* TV Remote Navigation: FULL CONTROL */
+document.addEventListener("keydown", e=>{
+  e.preventDefault(); // Prevent cursor movement
   const focusables = Array.from(document.querySelectorAll('a, button, input, .card, .update-card, .logo'));
   const index = focusables.indexOf(document.activeElement);
   if(index===-1) return;
@@ -366,16 +357,17 @@ document.addEventListener("keydown", (e)=>{
   const columns = window.innerWidth <= 500 ? 3 : 4;
 
   switch(e.key){
-    case "ArrowRight": nextIndex = index+1; break;
-    case "ArrowLeft": nextIndex = index-1; break;
-    case "ArrowDown": nextIndex = index+columns; break;
-    case "ArrowUp": nextIndex = index-columns; break;
+    case "ArrowRight": nextIndex=index+1; break;
+    case "ArrowLeft":  nextIndex=index-1; break;
+    case "ArrowDown":  nextIndex=index+columns; break;
+    case "ArrowUp":    nextIndex=index-columns; break;
     case "Enter":
     case "OK":
       const el = document.activeElement;
       if(el.dataset?.url) window.open(el.dataset.url,'_self');
       else el.click?.();
       return;
+    default: return;
   }
   if(focusables[nextIndex]) focusables[nextIndex].focus();
 });
