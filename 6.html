@@ -18,8 +18,8 @@
   --font:'Segoe UI', sans-serif;
 }
 
-/* 🔥 HIDE POINTER COMPLETELY */
-*{
+/* Hide cursor as much as browsers allow */
+html,body,*{
   cursor:none !important;
 }
 
@@ -48,22 +48,13 @@ body{
   color:#fff;
   padding:10px 14px;
   border-radius:10px;
-  font-size:14px;
-}
-
-/* LOGIN */
-#loginContainer{
-  text-align:center;
-  margin-top:10px;
-  display:none;
 }
 
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(4, 1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:18px;
-  justify-items:center;
 }
 
 /* CARD */
@@ -73,28 +64,25 @@ body{
   width:100%;
   overflow:hidden;
   box-shadow:0 3px 10px rgba(0,0,0,.6);
-  transition:transform .2s, box-shadow .2s;
+  transition:transform .2s;
 }
 
 .card:focus{
   outline:3px solid var(--accent);
   transform:scale(1.06);
-  z-index:5;
 }
 
 /* POSTER */
 .thumbnail{
-  width:100%;
   aspect-ratio:3/4;
 }
-
 .thumbnail img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* BOTTOM NAV */
+/* NAV */
 .bottom-nav{
   position:fixed;
   bottom:0;
@@ -116,15 +104,11 @@ body{
   align-items:center;
 }
 
-.bottom-nav a.active,
 .bottom-nav a:focus{
   color:var(--accent);
   outline:none;
 }
 
-.bottom-nav i{font-size:20px}
-
-/* RESPONSIVE */
 @media(max-width:500px){
   .grid{grid-template-columns:repeat(3,1fr)}
 }
@@ -143,9 +127,6 @@ body{
 <!-- SEARCH -->
 <div id="searchBox" class="search">
   <input id="q" type="search" placeholder="Search movies">
-  <div id="loginContainer">
-    <button class="btn btn-primary">Login</button>
-  </div>
 </div>
 
 <!-- GRID -->
@@ -155,95 +136,91 @@ body{
 
 <!-- NAV -->
 <div class="bottom-nav">
-  <a id="homeBtn" class="active" tabindex="0"><i class="bi bi-house"></i><span>Home</span></a>
+  <a id="homeBtn" tabindex="0"><i class="bi bi-house"></i><span>Home</span></a>
   <a id="searchBtn" tabindex="0"><i class="bi bi-search"></i><span>Search</span></a>
   <a id="latestBtn" tabindex="0"><i class="bi bi-clock-history"></i><span>Latest</span></a>
-  <a id="updatesBtn" tabindex="0"><i class="bi bi-bell"></i><span>Updates</span></a>
 </div>
 
 <script type="module">
 import { movies } from './movies.js';
 
 const grid = document.getElementById('moviesGrid');
-const q = document.getElementById('q');
 const searchBox = document.getElementById('searchBox');
-const loginContainer = document.getElementById('loginContainer');
-const navLinks = document.querySelectorAll('.bottom-nav a');
+const q = document.getElementById('q');
 
-function normalize(s){
-  return s.toLowerCase().replace(/[\s\.\-_]/g,'');
-}
+let lastIndex = 0;
+let initialized = false;
 
-function smartSearch(q,list){
-  if(!q.trim()) return list;
-  const words = q.split(/\s+/).map(normalize);
-  return list.filter(m=>words.every(w=>normalize(m.title).includes(w)));
-}
-
-function sortLatest(list){
-  return [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
-}
-
-/* RENDER */
 function render(list){
   grid.innerHTML = list.map(m=>`
     <div class="card" tabindex="0" data-url="${m.url}">
       <div class="thumbnail">
-        <img src="${m.poster}" alt="${m.title}">
+        <img src="${m.poster}">
       </div>
     </div>
   `).join('');
-  setupTVNavigation();
+  setupNavigation();
 }
 
-/* TV NAVIGATION */
-function setupTVNavigation(){
+function setupNavigation(){
   const cards = [...document.querySelectorAll('.card')];
   if(!cards.length) return;
 
   const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
 
   cards.forEach((card,i)=>{
+    card.onfocus = ()=> lastIndex = i;
+
     card.onkeydown = e=>{
-      let n=i;
-      if(e.key==='ArrowRight') n=i+1;
-      if(e.key==='ArrowLeft') n=i-1;
-      if(e.key==='ArrowDown') n=i+cols;
-      if(e.key==='ArrowUp') n=i-cols;
-      if(cards[n]){cards[n].focus();e.preventDefault();}
-      if(e.key==='Enter') window.open(card.dataset.url,'_blank');
+      let n = i;
+
+      if(e.key === 'ArrowRight') n = i+1;
+      if(e.key === 'ArrowLeft') n = i-1;
+      if(e.key === 'ArrowDown') n = i+cols;
+      if(e.key === 'ArrowUp') n = i-cols;
+
+      if(cards[n]){
+        cards[n].focus();
+        e.preventDefault();
+      }
+
+      if(e.key === 'Enter'){
+        window.open(card.dataset.url,'_blank');
+      }
     };
   });
 
-  cards[0].focus();
+  if(!initialized){
+    cards[lastIndex]?.focus();
+    initialized = true;
+  }
 }
 
-/* NAV KEYS */
-navLinks.forEach(btn=>{
-  btn.onkeydown=e=>{ if(e.key==='Enter') btn.click(); };
-});
+function sortLatest(list){
+  return [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
+}
 
-/* EVENTS */
-homeBtn.onclick=()=>{searchBox.classList.remove('active');render(sortLatest(movies));};
-searchBtn.onclick=()=>{searchBox.classList.add('active');q.focus();};
-latestBtn.onclick=()=>{searchBox.classList.remove('active');render(sortLatest(movies));};
-
-q.oninput=()=>{
-  loginContainer.style.display=q.value==='2580'?'block':'none';
-  render(sortLatest(smartSearch(q.value,movies)));
+homeBtn.onclick = ()=>{
+  searchBox.classList.remove('active');
+  render(sortLatest(movies));
 };
 
-logoBtn.onclick=()=>homeBtn.click();
+searchBtn.onclick = ()=>{
+  searchBox.classList.add('active');
+  q.focus();
+};
 
-/* LOAD */
+latestBtn.onclick = ()=> render(sortLatest(movies));
+
+q.oninput = ()=>{
+  render(sortLatest(
+    movies.filter(m=>m.title.toLowerCase().includes(q.value.toLowerCase()))
+  ));
+};
+
+logoBtn.onclick = ()=> homeBtn.click();
+
 render(sortLatest(movies));
-</script>
-
-<script>
-/* 🔥 DISABLE MOUSE COMPLETELY (REMOTE ONLY) */
-['mousemove','mousedown','mouseup','click','touchstart'].forEach(ev=>{
-  document.addEventListener(ev,e=>e.preventDefault(),{passive:false});
-});
 </script>
 
 </body>
