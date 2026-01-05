@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YOTT — Movies</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#061021;
+  --card:#0b1220;
+  --accent:#06b6d4;
+  --muted:#9aa4b2;
+  --font:'Segoe UI', sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:#fff;
+  margin:0;
+  padding-bottom:70px;
+  font-family:var(--font);
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  justify-content:center;
+  padding:16px 0 8px;
+  cursor:pointer;
+}
+
+/* SEARCH */
+.search{padding:15px;display:none}
+.search.active{display:block}
+.search input{
+  width:100%;
+  background:rgba(255,255,255,.1);
+  border:none;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+/* LOGIN */
+#loginContainer{
+  text-align:center;
+  margin-top:10px;
+  display:none;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:18px;
+  justify-items:center;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:12px;
+  width:100%;
+  overflow:hidden;
+  box-shadow:0 3px 10px rgba(0,0,0,.6);
+  transition:transform .2s, box-shadow .2s;
+}
+
+.card:focus{
+  outline:3px solid var(--accent);
+  transform:scale(1.05);
+  z-index:5;
+}
+
+/* POSTER */
+.thumbnail{
+  width:100%;
+  aspect-ratio:3/4;
+  display:block;
+}
+
+.thumbnail img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* UPDATES */
+.update-card{
+  max-width:700px;
+  background:var(--card);
+  border-radius:10px;
+  padding:14px 16px;
+  margin-bottom:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+.update-card .date{
+  color:var(--accent);
+  font-size:12px;
+  display:block;
+  margin-bottom:6px;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#0b1220;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+
+.bottom-nav a{
+  color:var(--muted);
+  font-size:12px;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:focus{
+  color:var(--accent);
+  outline:none;
+}
+
+.bottom-nav i{font-size:20px}
+
+/* RESPONSIVE */
+@media(max-width:500px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGO -->
+<div class="logo" id="logoBtn" tabindex="0">
+  <span style="font-size:26px;font-weight:600;">
+    1V <strong style="color:#06b6d4;">MOVIES</strong>
+  </span>
+</div>
+
+<!-- SEARCH -->
+<div id="searchBox" class="search">
+  <input id="q" type="search" placeholder="Search movies">
+  <div id="loginContainer">
+    <button class="btn btn-primary">Login</button>
+  </div>
+</div>
+
+<!-- GRID -->
+<main class="container">
+  <div id="moviesGrid" class="grid"></div>
+</main>
+
+<!-- NAV -->
+<div class="bottom-nav">
+  <a id="homeBtn" class="active" tabindex="0"><i class="bi bi-house"></i><span>Home</span></a>
+  <a id="searchBtn" tabindex="0"><i class="bi bi-search"></i><span>Search</span></a>
+  <a id="latestBtn" tabindex="0"><i class="bi bi-clock-history"></i><span>Latest</span></a>
+  <a id="updatesBtn" tabindex="0"><i class="bi bi-bell"></i><span>Updates</span></a>
+</div>
+
+<script type="module">
+import { movies } from './movies.js';
+
+const grid = document.getElementById('moviesGrid');
+const q = document.getElementById('q');
+const searchBox = document.getElementById('searchBox');
+const loginContainer = document.getElementById('loginContainer');
+
+const navLinks = document.querySelectorAll('.bottom-nav a');
+
+function normalize(s){
+  return s.toLowerCase().replace(/[\s\.\-_]/g,'');
+}
+
+function smartSearch(q,list){
+  if(!q.trim()) return list;
+  const words = q.split(/\s+/).map(normalize);
+  return list.filter(m=>words.every(w=>normalize(m.title).includes(w)));
+}
+
+function sortLatest(list){
+  return [...list].sort((a,b)=>new Date(b.date)-new Date(a.date));
+}
+
+/* RENDER */
+function render(list){
+  grid.innerHTML = list.map((m,i)=>`
+    <div class="card" tabindex="0" data-url="${m.url}">
+      <div class="thumbnail">
+        <img src="${m.poster}" alt="${m.title}">
+      </div>
+    </div>
+  `).join('');
+  setupTVNavigation();
+}
+
+/* TV NAVIGATION */
+function setupTVNavigation(){
+  const cards = [...document.querySelectorAll('.card')];
+  if(!cards.length) return;
+
+  const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+
+  cards.forEach((card,i)=>{
+    card.onkeydown = e=>{
+      let n=i;
+      if(e.key==='ArrowRight') n=i+1;
+      if(e.key==='ArrowLeft') n=i-1;
+      if(e.key==='ArrowDown') n=i+cols;
+      if(e.key==='ArrowUp') n=i-cols;
+      if(cards[n]){cards[n].focus();e.preventDefault();}
+      if(e.key==='Enter') window.open(card.dataset.url,'_blank');
+    };
+  });
+
+  cards[0].focus();
+}
+
+/* NAV KEYS */
+navLinks.forEach(btn=>{
+  btn.onkeydown=e=>{if(e.key==='Enter')btn.click();}
+});
+
+/* EVENTS */
+homeBtn.onclick=()=>{searchBox.classList.remove('active');render(sortLatest(movies));};
+searchBtn.onclick=()=>{searchBox.classList.add('active');q.focus();};
+latestBtn.onclick=()=>{searchBox.classList.remove('active');render(sortLatest(movies));};
+
+q.oninput=()=>{
+  loginContainer.style.display=q.value==='2580'?'block':'none';
+  render(sortLatest(smartSearch(q.value,movies)));
+};
+
+logoBtn.onclick=()=>homeBtn.click();
+
+/* LOAD */
+render(sortLatest(movies));
+</script>
+
+</body>
+</html>
