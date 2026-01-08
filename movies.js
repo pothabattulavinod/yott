@@ -38,7 +38,7 @@ export const movies = [
  { 
     title: "Akhanda 2: Thaandavam", 
     url: "m/ak2.html", 
-    date: "2025-12-19",
+    date: "2026-01-08",
     poster: "https://cdn.district.in/movies-assets/images/cinema/Akhanda-2_-(2)-Poster-3e535d00-d4c2-11f0-b45c-35a082a955b8.jpg"
 },
 
