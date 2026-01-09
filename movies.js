@@ -244,7 +244,7 @@ export const movies = [
 
 
 { 
-    title: "The Raja Saab (Trailer)", 
+    title: "The Raja Saab (Full Movie)", 
     url: "m/theraja.html", 
     date: "2026-01-09", 
     isNew: true,
