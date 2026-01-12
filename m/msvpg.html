@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mana Shankara Vara Prasad Garu (2026) — oneV Movies</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0b0f1a;
+  --card:#0f1625;
+  --accent:#06b6d4;
+  --muted:#9aa4b2;
+  --radius:10px;
+  --text:#e6eef6;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  padding-bottom:70px;
+}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 18px;
+  background:rgba(0,0,0,.65);
+}
+
+.logo{
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:1px;
+}
+.logo strong{color:var(--accent)}
+
+.home-btn{
+  font-size:22px;
+  color:#fff;
+}
+
+/* MAIN */
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:14px;
+}
+
+/* PLAYER */
+.player{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  background:#000;
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+
+iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  display:none;
+}
+
+.poster-layer{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,.25)),
+    url('https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/medium/mana-shankaravaraprasad-garu-et00457184-1755858474.jpg') /* Replace with actual poster URL if available */
+    center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:5;
+}
+
+.play-btn{
+  width:72px;
+  height:72px;
+  background:var(--accent);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  color:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  transition:.2s;
+}
+.poster-layer:hover .play-btn{transform:scale(1.08)}
+
+.movie-info{
+  margin-top:18px;
+  background:rgba(0,0,0,.45);
+  padding:18px;
+  border-radius:var(--radius);
+}
+
+.movie-info h1{
+  font-size:26px;
+  margin-bottom:8px;
+  word-break:break-word;
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.badge{
+  font-size:11px;
+  font-weight:600;
+  padding:4px 8px;
+  border-radius:4px;
+  background:#1f2937;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.badge.age{background:#b91c1c;}
+.badge.sub{background:#2563eb;}
+.badge.quality{background:#059669;}
+.badge.hd{background:#7c3aed;}
+.badge.low{background:#374151;}
+
+.runtime{
+  font-size:13px;
+  color:#cbd5e1;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.runtime i{
+  color:var(--accent);
+  font-size:14px;
+}
+
+.meta{
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.synopsis{
+  font-size:14px;
+  line-height:1.6;
+  color:#cfd8e3;
+  word-break:break-word;
+}
+
+#contentArea{margin-top:20px}
+
+.update-card{
+  background:var(--card);
+  padding:14px 16px;
+  border-radius:8px;
+  margin-bottom:12px;
+  font-size:14px;
+  box-shadow:0 3px 10px rgba(0,0,0,.5);
+}
+
+.update-card .date{
+  color:var(--accent);
+  font-size:12px;
+  display:block;
+  margin-bottom:6px;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#0b1220;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid rgba(255,255,255,.1);
+  z-index:10;
+}
+
+.bottom-nav a{
+  color:var(--muted);
+  font-size:12px;
+  text-decoration:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:hover{color:var(--accent)}
+.bottom-nav i{font-size:20px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">1V <strong>MOVIES</strong></div>
+  <a href="../index.html" class="home-btn"><i class="bi bi-house"></i></a>
+</header>
+
+<div class="wrap">
+
+  <div class="player">
+    <iframe id="videoFrame" allowfullscreen allow="autoplay"></iframe>
+
+    <div class="poster-layer" id="playOverlay">
+      <div class="play-btn"><i class="bi bi-play-fill"></i></div>
+    </div>
+  </div>
+
+  <div class="movie-info">
+    <h1>Mana Shankara Vara Prasad Garu (2026)</h1>
+    <div class="runtime">
+      <i class="bi bi-clock"></i>
+      <span>2hrs 45mins</span>
+    </div>
+    <div class="badges">
+      <span class="badge age">12+</span>
+      <span class="badge sub">SUB</span>
+      <span class="badge quality">4K</span>
+      <span class="badge hd">HD</span>
+      <span class="badge low">LOW</span>
+    </div>
+
+    <div class="meta">Telugu • Drama • Family</div>
+
+    <div class="synopsis">
+      Shankara Vara Prasad, a devoted and principled man, navigates the challenges of modern life while upholding his family legacy, learning valuable life lessons along the way.
+    </div>
+  </div>
+
+  <div id="contentArea"></div>
+</div>
+
+<nav class="bottom-nav">
+  <a id="watchTab" class="active">
+    <i class="bi bi-play-circle-fill"></i>
+    <span>Watch</span>
+  </a>
+  <a id="reviewTab">
+    <i class="bi bi-star-fill"></i>
+    <span>Review</span>
+  </a>
+  <a id="updatesTab">
+    <i class="bi bi-bell-fill"></i>
+    <span>Updates</span>
+  </a>
+</nav>
+
+<script>
+const iframe = document.getElementById('videoFrame');
+const overlay = document.getElementById('playOverlay');
+const contentArea = document.getElementById('contentArea');
+
+const watchTab = document.getElementById('watchTab');
+const reviewTab = document.getElementById('reviewTab');
+const updatesTab = document.getElementById('updatesTab');
+const tabs = [watchTab,reviewTab,updatesTab];
+
+const VIDEO_URL = "https://pothabattulavinod.github.io/ad/ad2";
+
+function setActive(tab){
+  tabs.forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+}
+
+overlay.onclick = ()=>{
+  overlay.style.display='none';
+  iframe.style.display='block';
+  iframe.src = VIDEO_URL + "?autoplay=1";
+};
+
+async function loadUpdates(){
+  contentArea.innerHTML='';
+  try{
+    const res = await fetch('./updates.txt');
+    const text = await res.text();
+    const lines = text.split(/\r?\n/).filter(l=>l.trim());
+    contentArea.innerHTML = lines.map(l=>{
+      const m = l.match(/^\[(.*?)\]\s*(.*)/);
+      return `
+        <div class="update-card">
+          <span class="date">${m?m[1]:'Update'}</span>
+          ${m?m[2]:l}
+        </div>`;
+    }).join('');
+  }catch{
+    contentArea.innerHTML='<p style="color:#9aa4b2">No updates available</p>';
+  }
+}
+
+watchTab.onclick=()=>{
+  contentArea.innerHTML='';
+  setActive(watchTab);
+};
+
+reviewTab.onclick=()=>{
+  loadUpdates();
+  setActive(reviewTab);
+};
+
+updatesTab.onclick=()=>{
+  loadUpdates();
+  setActive(updatesTab);
+};
+</script>
+
+</body>
+</html>
