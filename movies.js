@@ -10,6 +10,16 @@ export const movies = [
 
 
 
+    { 
+    title: "Mana Shankara Vara Prasad Garu", 
+    url: "m/msvpg.html", 
+    date: "2026-01-12",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Mana_7_Gallery-c5e64d00-ebc3-11f0-977a-694ab334a0f2.jpg"
+},
+
+
+
+
     
     
  { 
