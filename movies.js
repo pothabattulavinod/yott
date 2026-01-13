@@ -11,6 +11,16 @@ export const movies = [
 
 
     { 
+    title: "Bhartha Mahasayulaku Wignyapthi", 
+    url: "m/bmw.html", 
+    date: "2026-01-13",
+    poster: "https://images.plex.tv/photo?size=large-1920&scale=1&url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2F8YFFbBiX8EMUCUHEewc4hxJ7Xyg.jpg"
+},
+
+
+
+
+    { 
     title: "Mana Shankara Vara Prasad Garu", 
     url: "m/msvpg.html", 
     date: "2026-01-12",
