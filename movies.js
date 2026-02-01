@@ -19,6 +19,23 @@ export const movies = [
 
 
 
+    { 
+    title: "Champion", 
+    url: "m/ch.html", 
+    date: "2026-01-23",
+    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/champion-et00465763-1762839329.jpg"
+},
+
+    { 
+    title: "Dhurandhar", 
+    url: "m/dh.html", 
+    date: "2026-01-31",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3Ia-d_uAzpCqGfT-GuASkWaC7e1pfpa3FtkBBLDBD79NsdLMbbY4K76My&s=10"
+},
+
+    
+
+
 
     { 
     title: "Mana Shankara Vara Prasad Garu", 
