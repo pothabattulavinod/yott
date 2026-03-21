@@ -14,6 +14,13 @@ export const movies = [
     poster: "https://cdn.district.in/movies-assets/images/cinema/Couple-Friendly_Gallery-3880f5d0-7839-11f0-bf18-ef07befd2b97.jpg"
 },
 
+    { 
+    title: "Vishnu Vinyasam", 
+    url: "m/vv.html", 
+    date: "2026-03-20",
+    poster: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/vishnu-vinyasam-et00487219-1772008232.jpg"
+},
+
 
 
     
