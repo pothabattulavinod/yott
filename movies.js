@@ -25,7 +25,7 @@ export const movies = [
     title: "With Love", 
     url: "m/wl.html", 
     date: "2026-03-12",
-    poster: "https://cdn.district.in/movies-assets/images/cinema/Couple-Friendly_Gallery-3880f5d0-7839-11f0-bf18-ef07befd2b97.jpg"
+    poster: "https://static.toiimg.com/photo/127858294.cms"
 },
 
 
