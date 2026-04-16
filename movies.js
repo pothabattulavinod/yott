@@ -8,11 +8,22 @@ export const movies = [
 
 
 { 
+    title: "Ustaad Bhagat Singh", 
+    url: "m/ubs.html", 
+    date: "2026-04-15",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLwGv9KLdeP2zr2QEmJX07OpAlKAHaaDvyPB3b9djep8CK-NcFteOV-O02&s=10"
+},
+
+
+    
+{ 
     title: "Couple Friendly", 
     url: "m/cf.html", 
     date: "2026-03-13",
     poster: "https://cdn.district.in/movies-assets/images/cinema/Couple-Friendly_Gallery-3880f5d0-7839-11f0-bf18-ef07befd2b97.jpg"
 },
+
+    
 
     { 
     title: "Vishnu Vinyasam", 
