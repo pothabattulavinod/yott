@@ -7,6 +7,14 @@ export const movies = [
 },
 
 
+    { 
+    title: "Dacoit", 
+    url: "m/dac.html", 
+    date: "2026-05-08",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Dacoit_Poster-649ec270-3312-11f1-b3d5-d331ad8039d4.jpg"
+},
+
+
 { 
     title: "Ustaad Bhagat Singh", 
     url: "m/ubs.html", 
