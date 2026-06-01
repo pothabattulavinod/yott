@@ -7,6 +7,17 @@ export const movies = [
 },
 
 
+
+
+
+
+        { 
+    title: "Godari Gattupaina", 
+    url: "m/ggp.html", 
+    date: "2026-06-01",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJaAjzj-ve7zMjHJ3guks8OBOYmcbumCz66HI5cd7NwJmzzLoEX5T_BnQ&s=10"
+},
+
     { 
     title: "Dacoit", 
     url: "m/dac.html", 
