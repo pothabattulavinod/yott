@@ -6,7 +6,14 @@ export const movies = [
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
 
+{ 
+    title: "peddi", 
+    url: "m/peddi.html", 
+    date: "2026-06-05",
+    poster: "https://cdn.district.in/movies-assets/images/cinema/Peddi_new-17707850-5436-11f1-aa6c-1be757dca935.jpg"
+},
 
+    
 
 
 
