@@ -1,185 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>TV Remote Bubble Menu</title>
+<title>TV Remote Test</title>
 
 <style>
 body{
-    margin:0;
     background:#111;
-    color:white;
-    font-family:Arial,sans-serif;
-    overflow:hidden;
+    color:#fff;
+    font-family:Arial;
+    padding:20px;
 }
 
-#content{
-    padding:40px;
+#status{
+    font-size:40px;
+    margin:20px 0;
 }
 
-#bubble{
-    position:fixed;
-    right:30px;
-    bottom:30px;
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:#2196f3;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:36px;
-    border:none;
-    cursor:pointer;
-    z-index:1000;
-}
-
-#bubble:focus,
-#bubble.focused{
-    outline:5px solid yellow;
-    transform:scale(1.1);
-}
-
-#menu{
-    position:fixed;
-    right:30px;
-    bottom:130px;
-    width:250px;
-    display:none;
-    z-index:1001;
-}
-
-.menu-item{
-    background:#333;
-    padding:18px;
-    margin-bottom:8px;
-    font-size:20px;
-}
-
-.menu-item.focused{
-    background:#2196f3;
-    outline:4px solid yellow;
+#log{
+    white-space:pre-wrap;
+    border:1px solid #555;
+    padding:10px;
+    height:300px;
+    overflow:auto;
 }
 </style>
 </head>
 <body>
 
-<div id="content">
-    <h1>TV Browser Demo</h1>
-    <p>Use your TV remote.</p>
-    <p>Press OK on the bubble to open menu.</p>
-    <p>Use UP and DOWN to navigate.</p>
-</div>
+<h1>TV Remote Test</h1>
 
-<button id="bubble" tabindex="0">⚙</button>
+<div id="status">Waiting...</div>
 
-<div id="menu">
-    <div class="menu-item">Settings</div>
-    <div class="menu-item">Accessibility</div>
-    <div class="menu-item">Help</div>
-    <div class="menu-item">Exit</div>
-</div>
+<div id="log"></div>
 
 <script>
-const bubble = document.getElementById("bubble");
-const menu = document.getElementById("menu");
-const items = document.querySelectorAll(".menu-item");
 
-let menuOpen = false;
-let currentIndex = 0;
+const statusBox = document.getElementById("status");
+const logBox = document.getElementById("log");
 
-function focusBubble() {
-    bubble.focus();
-    bubble.classList.add("focused");
+let success = false;
+
+function log(msg){
+    console.log(msg);
+    logBox.innerHTML += msg + "<br>";
 }
 
-function removeMenuFocus() {
-    items.forEach(item => item.classList.remove("focused"));
-}
+window.onerror = function(message, source, line, col, error){
+    statusBox.innerHTML = "ERROR";
+    log(
+        "ERROR: " + message +
+        " | line: " + line +
+        " | col: " + col
+    );
+};
 
-function updateMenuFocus() {
-    removeMenuFocus();
-    items[currentIndex].classList.add("focused");
-}
+document.addEventListener("keydown", function(e){
 
-function openMenu() {
-    menuOpen = true;
-    menu.style.display = "block";
-    bubble.classList.remove("focused");
-    currentIndex = 0;
-    updateMenuFocus();
-}
+    log(
+        "KEY = " + e.key +
+        " | CODE = " + e.keyCode
+    );
 
-function closeMenu() {
-    menuOpen = false;
-    menu.style.display = "none";
-    removeMenuFocus();
-    focusBubble();
-}
-
-window.addEventListener("load", () => {
-    focusBubble();
-});
-
-document.addEventListener("keydown", (e) => {
-
-    console.log("KEY:", e.key, e.keyCode);
-
-    if (!menuOpen) {
-
-        if (
-            e.key === "Enter" ||
-            e.keyCode === 13
-        ) {
-            openMenu();
-        }
-
-    } else {
-
-        if (
-            e.key === "ArrowUp" ||
-            e.keyCode === 38
-        ) {
-            currentIndex--;
-            if (currentIndex < 0) {
-                currentIndex = items.length - 1;
-            }
-            updateMenuFocus();
-        }
-
-        else if (
-            e.key === "ArrowDown" ||
-            e.keyCode === 40
-        ) {
-            currentIndex++;
-            if (currentIndex >= items.length) {
-                currentIndex = 0;
-            }
-            updateMenuFocus();
-        }
-
-        else if (
-            e.key === "Enter" ||
-            e.keyCode === 13
-        ) {
-            alert("Selected: " +
-                items[currentIndex].textContent);
-        }
-
-        else if (
-            e.key === "Escape" ||
-            e.key === "Backspace" ||
-            e.keyCode === 27 ||
-            e.keyCode === 461 ||
-            e.keyCode === 10009
-        ) {
-            closeMenu();
-        }
+    if(
+        e.key === "Enter" ||
+        e.keyCode === 13
+    ){
+        success = true;
+        statusBox.innerHTML = "YES";
+        log("SUCCESS: OK button detected");
     }
 });
 
-bubble.addEventListener("click", openMenu);
+setTimeout(function(){
+
+    if(!success){
+        statusBox.innerHTML = "NO";
+        log("NO OK BUTTON DETECTED");
+    }
+
+},10000);
+
 </script>
 
 </body>
