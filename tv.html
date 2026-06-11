@@ -2,191 +2,57 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TV Remote Debug</title>
-
+<title>TV OK Test</title>
 <style>
 body{
     background:#111;
-    color:#fff;
-    font-family:Arial,sans-serif;
-    padding:20px;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+    padding-top:100px;
 }
 
-#focusBtn{
-    width:300px;
-    height:80px;
-    font-size:24px;
-    margin-bottom:20px;
-}
-
-#focusBtn:focus{
-    outline:5px solid yellow;
-}
-
-#status{
-    font-size:32px;
-    margin-bottom:20px;
-}
-
-#log{
-    border:1px solid #555;
-    padding:10px;
-    height:400px;
-    overflow:auto;
-    word-wrap:break-word;
+#result{
+    font-size:50px;
 }
 </style>
 </head>
 <body>
 
-<h2>TV Remote Debug Tool</h2>
-
-<button id="focusBtn" tabindex="0">
-FOCUS TEST BUTTON
-</button>
-
-<div id="status">Waiting for remote input...</div>
-
-<div id="log"></div>
+<div id="result">Waiting...</div>
 
 <script>
 
-const statusEl = document.getElementById("status");
-const logEl = document.getElementById("log");
-const btn = document.getElementById("focusBtn");
+const result = document.getElementById("result");
 
-function log(msg){
-    console.log(msg);
+document.addEventListener("pointerdown", function(e){
 
-    const div = document.createElement("div");
-    div.textContent = msg;
+    result.innerHTML = "YES";
 
-    logEl.prepend(div);
-}
-
-window.onload = function(){
-
-    btn.focus();
-
-    statusEl.textContent =
-        "Button focused. Press remote keys.";
-
-    log("PAGE LOADED");
-    log("BUTTON FOCUSED");
-};
-
-window.onerror = function(
-    message,
-    source,
-    line,
-    column,
-    error
-){
-    statusEl.textContent = "ERROR DETECTED";
-
-    log(
-        "ERROR => " +
-        message +
-        " line:" +
-        line
-    );
-};
-
-document.addEventListener("focusin", function(e){
-
-    log(
-        "FOCUS => " +
-        e.target.tagName
-    );
+    console.log("OK button detected via POINTERDOWN");
 
 });
 
 document.addEventListener("click", function(e){
 
-    statusEl.textContent =
-        "CLICK RECEIVED";
+    result.innerHTML = "YES";
 
-    log(
-        "CLICK => " +
-        e.target.tagName
-    );
+    console.log("OK button detected via CLICK");
 
-}, true);
+});
 
-document.addEventListener("pointerdown", function(){
+window.onerror = function(msg){
 
-    log("POINTERDOWN");
+    result.innerHTML = "ERROR";
 
-}, true);
+    console.error(msg);
 
-document.addEventListener("pointerup", function(){
-
-    log("POINTERUP");
-
-}, true);
-
-document.addEventListener("keydown", function(e){
-
-    statusEl.textContent =
-        "KEY RECEIVED";
-
-    log(
-        "KEYDOWN => " +
-        " key=" + e.key +
-        " code=" + e.code +
-        " keyCode=" + e.keyCode +
-        " which=" + e.which
-    );
-
-    if(
-        e.key === "Enter" ||
-        e.keyCode === 13 ||
-        e.keyCode === 23 ||
-        e.keyCode === 66
-    ){
-        statusEl.textContent =
-            "YES - OK BUTTON DETECTED";
-
-        log(
-            "SUCCESS => OK BUTTON DETECTED"
-        );
-    }
-
-}, true);
-
-document.addEventListener("keyup", function(e){
-
-    log(
-        "KEYUP => " +
-        " key=" + e.key +
-        " code=" + e.code +
-        " keyCode=" + e.keyCode
-    );
-
-}, true);
-
-document.addEventListener("keypress", function(e){
-
-    log(
-        "KEYPRESS => " +
-        " key=" + e.key +
-        " keyCode=" + e.keyCode
-    );
-
-}, true);
+};
 
 setTimeout(function(){
 
-    if(
-        statusEl.textContent ===
-        "Waiting for remote input..."
-        ||
-        statusEl.textContent ===
-        "Button focused. Press remote keys."
-    ){
-        statusEl.textContent =
-            "NO INPUT DETECTED";
+    if(result.innerHTML === "Waiting..."){
+        result.innerHTML = "NO";
     }
 
 },10000);
