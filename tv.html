@@ -1,85 +1,154 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>TV Focus Navigation</title>
 
 <style>
+html,
+body,
+*{
+    cursor:none !important;
+}
+
 body{
+    margin:0;
     background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+}
+
+.container{
     display:flex;
-    gap:20px;
     justify-content:center;
-    margin-top:200px;
+    gap:30px;
+    margin-top:250px;
 }
 
 .item{
-    width:200px;
-    height:100px;
+    width:220px;
+    height:120px;
     background:#333;
-    color:white;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:24px;
+    font-size:28px;
+    border-radius:10px;
+    transition:.2s;
 }
 
 .focused{
-    outline:5px solid yellow;
-    transform:scale(1.1);
+    outline:6px solid yellow;
+    transform:scale(1.08);
+    background:#2196f3;
+}
+
+#status{
+    position:fixed;
+    top:20px;
+    left:20px;
+    font-size:24px;
 }
 </style>
 </head>
 <body>
 
-<div class="item focused">Home</div>
-<div class="item">Movies</div>
-<div class="item">Settings</div>
+<div id="status">
+Focused: Home
+</div>
+
+<div class="container">
+    <div class="item focused">Home</div>
+    <div class="item">Movies</div>
+    <div class="item">Settings</div>
+    <div class="item">Profile</div>
+</div>
 
 <script>
 
-const items = document.querySelectorAll('.item');
+const items = document.querySelectorAll(".item");
+const statusBox = document.getElementById("status");
+
 let current = 0;
 
-function updateFocus() {
-    items.forEach(el =>
-        el.classList.remove('focused')
-    );
+function updateFocus(){
 
-    items[current]
-        .classList.add('focused');
+    items.forEach(el=>{
+        el.classList.remove("focused");
+    });
+
+    items[current].classList.add("focused");
+
+    statusBox.textContent =
+        "Focused: " +
+        items[current].textContent;
 }
 
-document.addEventListener('keydown', e => {
+function selectCurrent(){
 
-    if(e.key === 'ArrowRight'){
+    statusBox.textContent =
+        "Selected: " +
+        items[current].textContent;
+
+    alert(
+        "Selected: " +
+        items[current].textContent
+    );
+}
+
+document.addEventListener("keydown",(e)=>{
+
+    if(
+        e.key === "ArrowRight" ||
+        e.keyCode === 39
+    ){
         current =
-          (current + 1) % items.length;
+        (current + 1) %
+        items.length;
+
         updateFocus();
     }
 
-    if(e.key === 'ArrowLeft'){
+    if(
+        e.key === "ArrowLeft" ||
+        e.keyCode === 37
+    ){
         current =
-          (current - 1 + items.length)
-          % items.length;
+        (current - 1 + items.length) %
+        items.length;
+
         updateFocus();
     }
 
-    if(e.key === 'Enter'){
-        alert(
-          'Selected: ' +
-          items[current].textContent
-        );
+    if(
+        e.key === "Enter" ||
+        e.keyCode === 13
+    ){
+        selectCurrent();
     }
 
 });
 
-document.addEventListener('pointerdown', () => {
+document.addEventListener("pointerdown",()=>{
 
-    alert(
-      'Selected: ' +
-      items[current].textContent
-    );
+    selectCurrent();
+
+});
+
+window.onload = ()=>{
+
+    updateFocus();
+
+    document.body.focus();
+
+};
+
+document.addEventListener("mousemove",(e)=>{
+
+    e.preventDefault();
 
 });
 
