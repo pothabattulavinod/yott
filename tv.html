@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>TV Focus Navigation</title>
+<title>TV Navigation Demo</title>
 
 <style>
+
 html,
 body,
 *{
@@ -16,141 +17,173 @@ body,
 body{
     margin:0;
     background:#111;
-    color:white;
     font-family:Arial,sans-serif;
+    color:white;
     overflow:hidden;
 }
 
-.container{
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    margin-top:250px;
+.header{
+    padding:30px;
+    font-size:40px;
 }
 
-.item{
-    width:220px;
-    height:120px;
+.row{
+    display:flex;
+    gap:25px;
+    padding:40px;
+}
+
+.card{
+    width:260px;
+    height:150px;
     background:#333;
+    border-radius:12px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:28px;
-    border-radius:10px;
-    transition:.2s;
+    font-size:30px;
+    transition:all .2s;
 }
 
-.focused{
+.card.focused{
+    background:#2196f3;
     outline:6px solid yellow;
     transform:scale(1.08);
-    background:#2196f3;
 }
 
-#status{
+#message{
     position:fixed;
-    top:20px;
     left:20px;
+    bottom:20px;
     font-size:24px;
 }
+
 </style>
 </head>
 <body>
 
-<div id="status">
-Focused: Home
+<div class="header">
+TV Navigation
 </div>
 
-<div class="container">
-    <div class="item focused">Home</div>
-    <div class="item">Movies</div>
-    <div class="item">Settings</div>
-    <div class="item">Profile</div>
+<div class="row">
+    <div class="card focused">Home</div>
+    <div class="card">Movies</div>
+    <div class="card">Series</div>
+    <div class="card">Sports</div>
+    <div class="card">Settings</div>
+</div>
+
+<div id="message">
+Focused: Home
 </div>
 
 <script>
 
-const items = document.querySelectorAll(".item");
-const statusBox = document.getElementById("status");
+const cards =
+    document.querySelectorAll(".card");
+
+const message =
+    document.getElementById("message");
 
 let current = 0;
 
 function updateFocus(){
 
-    items.forEach(el=>{
-        el.classList.remove("focused");
+    cards.forEach(card=>{
+        card.classList.remove("focused");
     });
 
-    items[current].classList.add("focused");
+    cards[current]
+        .classList.add("focused");
 
-    statusBox.textContent =
+    message.innerHTML =
         "Focused: " +
-        items[current].textContent;
+        cards[current].textContent;
 }
 
 function selectCurrent(){
 
-    statusBox.textContent =
-        "Selected: " +
-        items[current].textContent;
+    const text =
+        cards[current].textContent;
+
+    message.innerHTML =
+        "Selected: " + text;
+
+    console.log(
+        "Selected:",
+        text
+    );
 
     alert(
-        "Selected: " +
-        items[current].textContent
+        "Selected: " + text
     );
 }
 
-document.addEventListener("keydown",(e)=>{
+document.addEventListener(
+    "keydown",
+    function(e){
 
-    if(
-        e.key === "ArrowRight" ||
-        e.keyCode === 39
-    ){
-        current =
-        (current + 1) %
-        items.length;
+        if(
+            e.key === "ArrowRight" ||
+            e.keyCode === 39
+        ){
 
-        updateFocus();
+            current++;
+
+            if(
+                current >= cards.length
+            ){
+                current = 0;
+            }
+
+            updateFocus();
+        }
+
+        else if(
+            e.key === "ArrowLeft" ||
+            e.keyCode === 37
+        ){
+
+            current--;
+
+            if(
+                current < 0
+            ){
+                current =
+                    cards.length - 1;
+            }
+
+            updateFocus();
+        }
+
+        else if(
+            e.key === "Enter" ||
+            e.keyCode === 13
+        ){
+
+            selectCurrent();
+        }
     }
+);
 
-    if(
-        e.key === "ArrowLeft" ||
-        e.keyCode === 37
-    ){
-        current =
-        (current - 1 + items.length) %
-        items.length;
+document.addEventListener(
+    "pointerdown",
+    function(){
 
-        updateFocus();
-    }
-
-    if(
-        e.key === "Enter" ||
-        e.keyCode === 13
-    ){
         selectCurrent();
+
     }
+);
 
-});
-
-document.addEventListener("pointerdown",()=>{
-
-    selectCurrent();
-
-});
-
-window.onload = ()=>{
+window.onload = function(){
 
     updateFocus();
 
-    document.body.focus();
+    document.body.style.cursor =
+        "none";
 
 };
-
-document.addEventListener("mousemove",(e)=>{
-
-    e.preventDefault();
-
-});
 
 </script>
 
