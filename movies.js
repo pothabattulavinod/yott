@@ -6,6 +6,17 @@ export const movies = [
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
 
+
+
+
+{ 
+    title: "Veerabhadrudu", 
+    url: "m/veerab.html", 
+    date: "2026-06-12",
+    poster: "https://www.cinejosh.com/reviewsimg/big/Veerabhadrudu-Review_1778851411691-1778851413168.jpg"
+},
+
+    
 { 
     title: "peddi", 
     url: "m/peddi.html", 
