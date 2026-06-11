@@ -2,60 +2,86 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TV OK Test</title>
+<title>TV Focus Navigation</title>
+
 <style>
 body{
     background:#111;
-    color:white;
-    font-family:Arial;
-    text-align:center;
-    padding-top:100px;
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    margin-top:200px;
 }
 
-#result{
-    font-size:50px;
+.item{
+    width:200px;
+    height:100px;
+    background:#333;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.focused{
+    outline:5px solid yellow;
+    transform:scale(1.1);
 }
 </style>
 </head>
 <body>
 
-<div id="result">Waiting...</div>
+<div class="item focused">Home</div>
+<div class="item">Movies</div>
+<div class="item">Settings</div>
 
 <script>
 
-const result = document.getElementById("result");
+const items = document.querySelectorAll('.item');
+let current = 0;
 
-document.addEventListener("pointerdown", function(e){
+function updateFocus() {
+    items.forEach(el =>
+        el.classList.remove('focused')
+    );
 
-    result.innerHTML = "YES";
+    items[current]
+        .classList.add('focused');
+}
 
-    console.log("OK button detected via POINTERDOWN");
+document.addEventListener('keydown', e => {
 
-});
-
-document.addEventListener("click", function(e){
-
-    result.innerHTML = "YES";
-
-    console.log("OK button detected via CLICK");
-
-});
-
-window.onerror = function(msg){
-
-    result.innerHTML = "ERROR";
-
-    console.error(msg);
-
-};
-
-setTimeout(function(){
-
-    if(result.innerHTML === "Waiting..."){
-        result.innerHTML = "NO";
+    if(e.key === 'ArrowRight'){
+        current =
+          (current + 1) % items.length;
+        updateFocus();
     }
 
-},10000);
+    if(e.key === 'ArrowLeft'){
+        current =
+          (current - 1 + items.length)
+          % items.length;
+        updateFocus();
+    }
+
+    if(e.key === 'Enter'){
+        alert(
+          'Selected: ' +
+          items[current].textContent
+        );
+    }
+
+});
+
+document.addEventListener('pointerdown', () => {
+
+    alert(
+      'Selected: ' +
+      items[current].textContent
+    );
+
+});
 
 </script>
 
