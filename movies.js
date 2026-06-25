@@ -8,6 +8,14 @@ export const movies = [
 
 
 
+{ 
+    title: "Carmeni Selvam", 
+    url: "m/CS26.html", 
+    date: "2026-06-12",
+    poster: "https://axdxht1orlhu.compat.objectstorage.ap-hyderabad-1.oraclecloud.com/statictelugu.filmyfocus.com/wp-content/uploads/2026/04/Carmeni-Selvam-Review-Rating.jpg"
+},
+    
+
 
 { 
     title: "Veerabhadrudu", 
