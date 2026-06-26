@@ -30,7 +30,7 @@ export const movies = [
     title: "Veerabhadrudu", 
     url: "m/veerab.html", 
     date: "2026-06-12",
-    poster: "https://www.cinejosh.com/reviewsimg/big/Veerabhadrudu-Review_1778851411691-1778851413168.jpg"
+    poster: "https://statictelugu.filmyfocus.com/wp-content/uploads/2026/05/Veerabhadrudu-Movie-Review-and-Rating-in-Telugu.jpg"
 },
 
     
