@@ -6,6 +6,15 @@ export const movies = [
     poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqfoQqV8okbiGiDO0hPRvXZ9jOyKvugDAAGaMqkPnDrw&s=10"
 },
 
+{ 
+    title: "Satyam Sundaram", 
+    url: "m/sss.html", 
+    date: "2025-10-25",
+    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6xdQUPMA-WzRceZO8vTyi8Jfu9c8W5IshcCVNkkAhmJZmF1mBoiZ-W8k&s=10"
+},
+    
+
+    
 
 
 { 
