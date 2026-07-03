@@ -11,7 +11,7 @@ export const movies = [
     title: "Blast Zone", 
     url: "m/blast.html", 
     date: "2026-07-02",
-    poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd3xD0ZCkcdWdDWoYhm0nx60ccgAD9Z4e4pU6B_4c0Ay1lVmwDITOk6jIy&s=10"
+    poster: "https://statictelugu.filmyfocus.com/wp-content/uploads/2026/05/Blast-Zone-TEL-Title-1.jpg"
 },
 
 
