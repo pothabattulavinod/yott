@@ -54,7 +54,7 @@ export const movies = [
 { 
     title: "peddi", 
     url: "m/peddi.html", 
-    date: "2026-06-05",
+    date: "2026-07-09",
     poster: "https://cdn.district.in/movies-assets/images/cinema/Peddi_new-17707850-5436-11f1-aa6c-1be757dca935.jpg"
 },
 
