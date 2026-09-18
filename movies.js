@@ -7,6 +7,13 @@ export const movies = [
 },
 
 
+{ 
+    title: "Irumudi", 
+    url: "m/iru.html", 
+    date: "2026-09-18",
+    poster: "https://m.media-amazon.com/images/M/MV5BMWEyYzAyMGQtMjQ2YS00MTUyLTk0YjQtYmJhYWVjODU0OTliXkEyXkFqcGc@._V1_.jpg"
+},
+    
         { 
     title: "Blast Zone", 
     url: "m/blast.html", 
